@@ -45,26 +45,18 @@ export const API_CONFIG = {
 
   // AI服务配置
   DEEPSEEK: {
+    API_KEY: process.env.DEEPSEEK_API_KEY!,
     API_URL: process.env.DEEPSEEK_API_URL || 'https://api.deepseek.com/chat/completions',
     MODEL: 'deepseek-chat',
   },
   NANOBANANA: {
+    API_KEY: process.env.APICORE_AI_KEY!,
     API_URL: process.env.NANOBANANA_API_URL || 'https://kg-api.cloud/v1/chat/completions',
     MODEL: 'gpt-5-chat-latest',
   },
+
 } as const
 
-// 模板颜色配置
-export const TEMPLATE_COLORS = {
-  A: { bg: "#FAFAFA", text: "#1A1A1A", accent: "#FF6B35" },
-  B: { bg: "#FFFFFF", text: "#1A1A1A", accent: "#4ECDC4" },
-  C: { bg: "#F8F9FA", text: "#2D3748", accent: "#4169E1" },
-  D: { bg: "#F8F9FA", text: "#1A1A1A", accent: "#4ECDC4" },
-  E: { bg: "linear-gradient(135deg, #6C7CE7, #A8E6CF)", text: "#1A1A1A", accent: "#FFD700" },
-  F: { bg: "#FFF8DC", text: "#2D3748", accent: "#FF6B6B" },
-  G: { bg: "#FFFEF7", text: "#1A1A1A", accent: "#FFEB3B" },
-  H: { bg: "#FFFFFF", text: "#1A1A1A", accent: "#FF4444" },
-} as const
 
 // 错误消息常量
 export const ERROR_MESSAGES = {
@@ -121,9 +113,4 @@ export const PROMPT_CONSTANTS = {
     'paper_texture', 'glow', 'scallop_header', 'torn_edge'
   ],
 
-  // 布局蓝图
-  LAYOUT_BLUEPRINTS: [
-    'hero_checklist_cta', 'tabs_checklist_cta', 'two_col_subject_cta',
-    'meme_poster', 'notebook_paper', 'info_cards_grid'
-  ],
 } as const

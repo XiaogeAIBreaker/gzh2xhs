@@ -1,21 +1,21 @@
 import { XIAOHONGSHU_COPYTEXT_PROMPT } from '@/lib/prompts'
-import { config } from '@/lib/config'
+import { API_CONFIG } from '@/constants'
 
 export async function generateXiaohongshuCopytext(text: string): Promise<string> {
   const prompt = XIAOHONGSHU_COPYTEXT_PROMPT.replace('{{CONTENT}}', text)
 
   try {
-    const response = await fetch(config.deepseek.apiUrl, {
+    const response = await fetch(API_CONFIG.DEEPSEEK.API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${config.deepseek.apiKey}`,
+        'Authorization': `Bearer ${API_CONFIG.DEEPSEEK.API_KEY}`,
       },
       body: JSON.stringify({
-        model: config.deepseek.model,
+        model: API_CONFIG.DEEPSEEK.MODEL,
         messages: [{ role: 'user', content: prompt }],
-        temperature: 0.7,
-        max_tokens: 4000,
+        temperature: API_CONFIG.DEFAULT_TEMPERATURE,
+        max_tokens: API_CONFIG.DEFAULT_MAX_TOKENS,
       }),
     })
 

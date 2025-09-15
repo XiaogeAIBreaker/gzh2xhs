@@ -1,7 +1,7 @@
 import { DeepSeekService } from './deepseek'
 import { NanoBananaService } from './nanobanana'
 import { AIModel } from '@/types'
-import { config } from '@/lib/config'
+import { API_CONFIG } from '@/constants'
 
 export * from './types'
 export { DeepSeekService } from './deepseek'
@@ -32,15 +32,15 @@ export function createAIService(model: AIModel) {
   switch (model) {
     case 'deepseek':
       return new DeepSeekService({
-        apiKey: config.deepseek.apiKey,
-        apiUrl: config.deepseek.apiUrl,
-        model: config.deepseek.model,
+        apiKey: API_CONFIG.DEEPSEEK.API_KEY,
+        apiUrl: API_CONFIG.DEEPSEEK.API_URL,
+        model: API_CONFIG.DEEPSEEK.MODEL,
       })
     case 'nanobanana':
       return new NanoBananaService({
-        apiKey: config.nanobanana.apiKey,
-        apiUrl: config.nanobanana.apiUrl,
-        model: config.nanobanana.model,
+        apiKey: API_CONFIG.NANOBANANA.API_KEY,
+        apiUrl: API_CONFIG.NANOBANANA.API_URL,
+        model: API_CONFIG.NANOBANANA.MODEL,
       })
     default:
       throw new Error(`不支持的AI模型: ${model}`)
