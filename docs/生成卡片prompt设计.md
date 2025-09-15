@@ -1,233 +1,352 @@
-给你一套**两段式（分析→渲染）生产级提示词**
-结构：A=“分析与设计JSON”，B=“按JSON渲染SVG”。我把**系统提示词**和**用户提示词**都写好了，还给了**JSON Schema**与**回退规则**。
+# 小红书卡片生成提示词设计文档
+
+基于项目代码实际实现的**生产级提示词设计**，与 `src/lib/prompts.ts` 完全同步。
+
+## 系统架构概述
+
+### 处理流程
+```
+文本输入 → AI模型选择 → 第一阶段分析 → 第二阶段渲染 → 图片转换 → 卡片输出
+```
+
+### 核心特性
+- **两阶段处理**：分析设计 → SVG渲染，确保质量稳定
+- **三款式分类**：simple/standard/rich 对应信息密度低/中/高
+- **双AI支持**：DeepSeek和NanoBanana使用统一提示词模板
+- **完美emoji支持**：通过Playwright浏览器引擎确保emoji正确显示
 
 ---
 
-# A 阶段｜分析与设计 JSON（只输出 JSON）
+## 第一阶段：内容分析与设计JSON生成
 
-### A-1 System（放到 system 或第一条指令里）
-
-```
-你是“卡片内容设计器”。任务：阅读公众号正文，判断内容类型，选择最合适的小红书卡片模板（T1~T6），
-并输出唯一一个 JSON 设计稿。禁止输出任何解释或多余文本。
-
-可用模板：
-- T1 大字钩子（强观点/短句）
-- T2 便签笔记（叙事/段落 + 荧光高亮）
-- T3 极简标题 + 线稿人设（清单/合集/人设）
-- T4 长文封面（插画区 + 字数/时长信息条）
-- T5 工具清单信息图（多分组表格/网格）
-- T6 手帐贴纸风（月报/成绩单/要点清单）
-
-判定规则（从高到低）：
-1) 若正文以“我/我们”的经历叙述为主，含时间线/段落 → T2
-2) 若主题是“合集/大全/清单/目录/工具库”且想强化人设 → T3，否则若明显是“分组清单/横评/多Logo/多品类” → T5
-3) 若是长文迁移/系列封面，需要“字数/阅读时长/副标题” → T4
-4) 若是一句强观点/反常识金句，适合大字高对比 → T1
-5) 若是月度复盘/成绩单/目标清单，适合贴纸点阵 → T6
-若不确定，回退 T1。
-
-安全与合规：
-- 涉及未成年人与性/羞辱的措辞统一改写为“偏见/刻板印象/校园审美压力”的议题表达。
-- 禁用“保证/唯一/永久/包赚”等夸张词；品牌 Logo 仅作为占位字母，不复刻商标。
-
-配色：
-- 若用户未提供，自动推断一组 palette：{bg,text,accent}，注意对比度≥WCAG AA。
-- 背景建议柔和浅色，文本深灰 #111~#333，强调色与背景有足够对比度。
-
-输出要求：
-- 严格输出下述 JSON Schema 的对象，UTF-8，无注释，无多余字段。
-- 所有文本字段中文每行长度建议≤14字（渲染时再二次换行）。
-```
-
-### A-2 User（每次调用时给）
+### 系统提示词 (STAGE_A_SYSTEM_PROMPT)
 
 ```
-原文：<<<{{公众号正文或摘要}}>>>
-可选主色：{{如 "#DDF6D8" 或留空}}
-可选强调色：{{如 "#FFC6E0" 或留空}}
-目标受众：{{如 “职场新人/开发者/妈妈群体/泛用户” }}
-内容意图：{{观点/叙事/清单/封面/信息图/复盘}}（可空）
-```
+你是"小红书封面设计分析器"。
+按照用户指定的款式（simple/standard/rich）生成唯一一个设计 JSON；
+只输出 JSON，不要任何解释文字。
 
-### A-3 JSON Schema（放在 A 的 system 里或追加一段“严格遵循”）
+三款式说明：
+- simple（标题为主，信息少）：仅 1–2 行强冲击标题；可选 1–2 个关键词高亮；无需长段正文
+- standard（中等信息，清单）：3–5 条要点清单；标题中等偏大，可有 CTA；结构简洁
+- rich（信息量大，图解）：6–9 条要点或 2–3 段摘要；可分区/卡片化展示，层级清晰
 
-```json
+配色和风格（模型动态给出）：
+- 返回 palette：{bg, text, accent, accent2?}；确保对比度≥WCAG AA；
+- 根据内容语气和主题自动挑选风格标记 style_tokens（如 halftone、hl_marker、sticker、dashed_card、paper_texture、glow、scallop_header、torn_edge 等）。
+
+输出 JSON Schema：
 {
-  "type": "object",
-  "required": ["chosen_template", "palette", "payload"],
-  "properties": {
-    "chosen_template": { "enum": ["T1","T2","T3","T4","T5","T6"] },
-    "palette": {
-      "type": "object",
-      "required": ["bg","text","accent"],
-      "properties": {
-        "bg": { "type": "string" },
-        "text": { "type": "string" },
-        "accent": { "type": "string" }
-      }
-    },
-    "payload": {
-      "type": "object",
-      "description": "模板专属数据，仅填对应模板字段",
-      "properties": {
-        "title_lines": { "type": "array", "items": { "type": "string" }, "minItems": 2, "maxItems": 4 },
-        "highlights": { "type": "array", "items": { "type": "string" } },
-
-        "paras": { "type": "array", "items": { "type": "string" }, "minItems": 1, "maxItems": 4 },
-        "note_header": { "type": "string" },
-
-        "avatar_prompt": { "type": "string" },
-
-        "word_count": { "type": "integer" },
-        "read_time_min": { "type": "integer" },
-        "subtitle": { "type": "string" },
-        "illustration_prompt": { "type": "string" },
-
-        "sections": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": ["name", "items"],
-            "properties": {
-              "name": { "type": "string" },
-              "items": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "required": ["label"],
-                  "properties": {
-                    "label": { "type": "string" },
-                    "note": { "type": "string" }
-                  }
-                },
-                "minItems": 2, "maxItems": 8
-              }
-            }
-          },
-          "minItems": 2, "maxItems": 6
-        },
-
-        "bullets": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": ["text"],
-            "properties": {
-              "emoji": { "type": "string" },
-              "text": { "type": "string" }
-            }
-          },
-          "minItems": 3, "maxItems": 6
-        }
-      },
-      "additionalProperties": false
-    },
-    "ab_test": {
-      "type": "object",
-      "properties": {
-        "cover_variant_b": {
-          "type": "object",
-          "properties": {
-            "title_lines": { "type": "array", "items": { "type": "string" } },
-            "accent": { "type": "string" }
-          }
-        }
-      }
-    },
-    "compliance": {
-      "type": "object",
-      "properties": {
-        "rephrased_risky": { "type": "array", "items": { "type": "string" } },
-        "disclaimers": { "type": "array", "items": { "type": "string" } }
-      }
-    }
+  "template_type": "simple" | "standard" | "rich",
+  "palette": { "bg": string, "text": string, "accent": string, "accent2"?: string },
+  "title_lines": string[],
+  "highlights"?: string[],
+  "content"?: string,
+  "layout"?: "center" | "left" | "right",
+  "style_tokens"?: string[],
+  "layout_blueprint"?: "hero_checklist_cta" | "tabs_checklist_cta" | "two_col_subject_cta" | "meme_poster" | "notebook_paper" | "info_cards_grid",
+  "topic_tags"?: string[],
+  "pillars"?: string[],
+  "typography"?: { "mode": "title_dominant" | "balanced" | "dense", "title_area_ratio": number, "title_font_px"?: number, "max_title_lines"?: number },
+  "info_density"?: "low" | "medium" | "high",
+  "bullet_target"?: number,
+  "image_slots"?: number,
+  "title_emphasis"?: Array<{ "text": string, "style": "hl_marker" | "accent_box" | "underline", "color"?: string }>,
+  "modules"?: {
+    "badges"?: Array<{ "text": string, "style": "explosion" | "pill" | "ribbon", "pos"?: "tl" | "tr" | "bl" | "br" }>,
+    "bullets"?: Array<{ "icon": "check" | "arrow" | "number", "text": string }>,
+    "cta"?: { "text": string, "style": "tape" | "sticker" }
   },
-  "additionalProperties": false
+  "background"?: { "texture": "paper" | "grid" | "none", "intensity": number },
+  "subject"?: { "image"?: string, "cutout"?: boolean, "outline"?: boolean },
+  "decoration_intensity"?: number,
+  "content_density"?: number
 }
 ```
 
-> 生成逻辑提示：
->
-> * T1 用 `title_lines` + `highlights`
-> * T2 用 `paras`（40–60字/段）+ `highlights` + `note_header`
-> * T3 用 `title_lines`（3行为佳）+ `avatar_prompt`
-> * T4 用 `title_lines[0]` 作为主标题 + `subtitle` + `word_count/read_time_min` + `illustration_prompt`
-> * T5 用 `sections[]`（2–6组，每组≤6项）
-> * T6 用 `title_lines[0]` 作为主标题 + `bullets[]`（带或不带 `emoji`）
+### 用户提示词格式
+
+```
+原文：<<<{输入文本}>>>
+STYLE_MODE：{simple|standard|rich}
+可选主色：{颜色值或留空}
+可选强调色：{颜色值或留空}
+目标受众：{如"泛用户"、"职场新人"等}
+内容意图：{观点表达、知识分享等}
+```
 
 ---
 
-# B 阶段｜SVG 渲染（只输出 `<svg>`）
+## 第二阶段：SVG渲染
 
-### B-1 System
+### 系统提示词 (STAGE_B_SYSTEM_PROMPT)
 
 ```
-你是“SVG 渲染器”。只根据输入的设计 JSON 输出一个可直接渲染的 <svg>，
-画布固定 width="1242" height="1656" viewBox="0 0 1242 1656"。禁止输出除 <svg> 以外的任何字符。
+你是"小红书爆款SVG渲染器"。只根据输入的设计 JSON 输出一个 <svg>，
+画布固定 width="1080" height="1440" viewBox="0 0 1080 1440"（3:4比例）。禁止输出除 <svg> 外的任何字符。
 
 通用规则：
-- 背景填充 palette.bg；文本颜色用 palette.text；强调用 palette.accent。
-- 字体回退："PingFang SC, HarmonyOS Sans, Noto Sans CJK SC, Microsoft YaHei, Arial"
-- 每行≤14汉字；遇长行自动断行；坐标尽量为整数。
-- 重要文本 paint-order: stroke fill; stroke:#000; stroke-width:0.5。
-- 仅使用 SVG 原生元素，不使用 <foreignObject>、外链图片或脚本。
-- 若模板缺字段，按回退策略补齐（见下），但不得改变模板类型。
+- 背景填充 palette.bg；文本颜色 palette.text；强调用 palette.accent/或 accent2；
+- 字体回退："Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "PingFang SC", "Microsoft YaHei", "Arial", sans-serif；
+- 每行≤14汉字；使用 <tspan> 自动断行；坐标尽量为整数；
+- 重要文本 paint-order: stroke fill; stroke:#000; stroke-width:0.8；
+- 仅使用 SVG 原生元素，不使用 <foreignObject>、外链图片或脚本；
+- Emoji：直接使用 Unicode 字符；包含 emoji 的文本必须指定包含 emoji 字体的 font-family；
+- 覆盖目标：文本+模块覆盖画布 55–75%；不足则放大字号或补齐 bullets。
 
-模板渲染：
-- T1：大字 3–5 行左对齐；对 payload.highlights 的词添加圆角矩形底条（accent, 不盖住笔画）；左上或右下简洁装饰。
-- T2：顶部 1 行“便签”头（抽象形，不使用商标外观）；正文渲染 payload.paras（段间距>行距），对 highlights 加半透明荧光底条。
-- T3：三行标题居中；下半部绘制简洁线稿头像（用 path/ellipse/rect 组合），不外链图片。
-- T4：上 40% 几何插画区（折线/硬币/屏幕等抽象图形）；中部信息条：“全文{word_count}字｜阅读约{read_time_min}分钟”；下部主副标题。
-- T5：主标题（如无，取“AI工具合集”）；渲染 sections[]：左侧圆角区头 + 右侧 4~5 列网格；无真实 Logo 时放首字母占位。
-- T6：点阵 pattern 背景；标题+日期（若无日期忽略）；渲染 bullets[]，前缀 emoji（若有）；随机 2–3 个几何贴纸（低饱和、轻阴影）。
+布局蓝图（layout_blueprint 可选）：
+- meme_poster（simple）：标题占比 0.65–0.75，允许标题强调（hl_marker/underline/accent_box）；可加入贴纸/爆炸等装饰。
+- hero_checklist_cta / tabs_checklist_cta（standard）：3–5 条 bullets 的卡片/清单；底部 CTA；chips 行可两行。
+- info_cards_grid（rich）：2×2 或 1×3 卡片网格；每卡一行标题+一行补充；可配 icon 点缀（几何图形）。
 
-回退策略：
-- 缺 palette → 使用 {bg:"#FFFFFF", text:"#222222", accent:"#2A6AFF"}
-- T1 若无 highlights → 不绘制高亮。
-- T2 若无 highlights → 正常渲染段落。
-- T4 若无 word_count/read_time_min → 省略信息条。
-- T5 若 sectons 数组过长 → 取前 5 组，每组最多 6 项。
-- T6 若 bullets 为空 → 回退 T1 样式渲染 title_lines。
+style_tokens 提示：
+halftone：点阵 pattern，opacity≈0.15；hl_marker：半透明荧光条；sticker：白描边贴纸；dashed_card：虚线卡片；
+paper_texture：轻微纸纹；glow：主体光晕；scallop_header：波浪页眉；torn_edge：撕纸边。
 ```
 
-### B-2 User
+### 用户提示词格式
 
 ```
-设计JSON：<<<{{A阶段产出的JSON}}>>>
+样式：{simple|standard|rich}
+设计JSON：<<<{第一阶段生成的JSON}>>>
 ```
 
 ---
 
-## 质量守则（放在任一阶段的 system 末尾）
+## 实际代码实现映射
 
-* 顶层 `<svg>` 必须包含 `width/height/viewBox` 并与 1242×1656 一致。
-* 颜色空间 sRGB；白底或统一纯色底。
-* 文本字号：主标题≥96，正文≥46（以 1242 宽为基准）。
-* 阴影/模糊滤镜的 `stdDeviation` 与目标像素匹配，避免发灰。
-* 不出现未授权品牌 Logo；敏感议题保持中性表达。
+### 核心常量配置 (`src/constants/index.ts`)
 
----
+```typescript
+// 画布尺寸
+APP_CONSTANTS.CARD_SIZE = { WIDTH: 1080, HEIGHT: 1440 }
 
-## 一键调用顺序（给后端/编排用）
+// 字体配置
+APP_CONSTANTS.EMOJI_FONTS = [
+  "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
+  "PingFang SC", "Microsoft YaHei", "Arial"
+]
 
-1. `POST /llm`（A 阶段，system=A-1，user=A-2）→ **JSON**
-2. 校验 JSON（按上面 Schema；必要时自动修复/截断长文）
-3. `POST /llm`（B 阶段，system=B-1，user=B-2）→ **SVG**
-4. 用 RESVG/Sharp 栅格化 → PNG/WebP（1242×1656，必要时 2x/3x）
+// 布局参数
+PROMPT_CONSTANTS.LAYOUT = {
+  MAX_CHARS_PER_LINE: 14,
+  CONTENT_COVERAGE_MIN: 55,
+  CONTENT_COVERAGE_MAX: 75,
+  TITLE_AREA_RATIO_SIMPLE: 0.65,
+  TITLE_AREA_RATIO_SIMPLE_MAX: 0.75
+}
 
----
-
-## 可选：A 阶段“自检-修复”提示词（当 JSON 校验失败时）
-
+// 预定义配色方案
+TEMPLATE_COLORS = {
+  A: { bg: "#FAFAFA", text: "#1A1A1A", accent: "#FF6B35" },
+  B: { bg: "#FFFFFF", text: "#1A1A1A", accent: "#4ECDC4" },
+  C: { bg: "#F8F9FA", text: "#2D3748", accent: "#4169E1" },
+  // ... A-H 共8套配色
+}
 ```
-上一次输出的 JSON 不符合 Schema。请在不改变 chosen_template 的前提下：
-1) 截断超长行至≤14字并合理断句；2) 缺失字段按回退策略补齐；
-3) sections 超限则截断；bullets 不足则补至3条。
-只输出修复后的 JSON。
-原JSON：<<<{{上次JSON}}>>>
+
+### TypeScript接口定义 (`src/types/index.ts`)
+
+```typescript
+// 核心设计JSON结构（简化版）
+export interface DesignJSON {
+  template_type: 'simple' | 'standard' | 'rich'
+  palette: { bg: string; text: string; accent: string }
+  title_lines: string[]
+  content?: string
+  highlights?: string[]
+  layout?: 'center' | 'left' | 'right'
+}
+
+// 生成选项
+export interface GenerationOptions {
+  styleChoice?: 'simple' | 'standard' | 'rich'
+  mainColor?: string
+  accentColor?: string
+  audience?: string
+  intent?: string
+}
+```
+
+### AI服务实现 (`src/services/`)
+
+```typescript
+// DeepSeek服务 (两阶段处理)
+export class DeepSeekService extends AIService {
+  async process(text: string, options?: GenerationOptions): Promise<AIServiceResult> {
+    // 第一阶段：分析与设计JSON生成
+    const designJson = await this.executeStageA(text, options)
+
+    // 第二阶段：SVG渲染
+    const svgContent = await this.executeStageB(designJson, options)
+
+    return { svgContent, designJson }
+  }
+}
+
+// NanoBanana服务 (复用相同提示词模板)
+export class NanoBananaService extends AIService {
+  // 使用相同的process()逻辑和提示词模板
+}
 ```
 
 ---
 
-把这两段放进你的编排里，就能稳定实现“先分析风格→再产 SVG”。需要我再给一个\*\*实测样例（输入正文→A阶段JSON→B阶段SVG）\*\*也行，我可以直接用你之前的任一文章跑一遍。
+## API调用流程
+
+### 请求格式 (POST /api/generate)
+
+```json
+{
+  "text": "公众号文章内容",
+  "model": "deepseek" | "nanobanana",
+  "style": "simple" | "standard" | "rich"
+}
+```
+
+### 响应格式
+
+```json
+{
+  "success": true,
+  "cards": [
+    {
+      "id": "uuid",
+      "imageUrl": "data:image/png;base64,xxx",
+      "template": "standard",
+      "model": "deepseek"
+    }
+  ],
+  "copytext": "生成的小红书文案"
+}
+```
+
+### 处理流程
+
+1. **输入验证**：检查文本长度 (≤2000字符)、模型类型
+2. **AI服务调用**：
+   - Stage A: 文本分析 → 设计JSON
+   - Stage B: JSON → SVG代码
+3. **图像转换**：
+   - SVG → PNG: 使用 Playwright (支持emoji)
+   - Base64 → PNG: 使用 Sharp (多策略处理)
+4. **错误处理**：统一使用 ERROR_MESSAGES 常量
+
+---
+
+## 图像渲染技术细节
+
+### SVG到PNG转换 (`src/lib/image-converter.ts`)
+
+```typescript
+// 使用Playwright解决emoji渲染问题
+export async function convertSvgToPng(svgContent: string): Promise<Buffer> {
+  const browser = await chromium.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  })
+
+  // 创建HTML包装，包含emoji字体
+  const htmlContent = `
+    <html>
+      <head>
+        <style>
+          body { font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "PingFang SC", sans-serif; }
+          svg { width: 1080px; height: 1440px; }
+        </style>
+      </head>
+      <body>${svgContent}</body>
+    </html>
+  `
+
+  // 浏览器截图 → PNG
+  const pngBuffer = await page.screenshot({
+    type: 'png',
+    clip: { x: 0, y: 0, width: 1080, height: 1440 }
+  })
+
+  return pngBuffer
+}
+```
+
+---
+
+## 质量保证标准
+
+### 输出验证清单
+
+- [ ] SVG包含正确的 width="1080" height="1440" viewBox="0 0 1080 1440"
+- [ ] 配色方案对比度≥WCAG AA标准
+- [ ] 每行文字≤14个汉字，正确使用 `<tspan>` 换行
+- [ ] Emoji使用Unicode字符且指定正确字体
+- [ ] 文本覆盖率在55-75%范围内
+- [ ] 重要文本使用描边效果 (stroke-width:0.8)
+
+### 错误处理规范
+
+```typescript
+// 统一错误信息 (ERROR_MESSAGES 常量)
+const ERROR_MESSAGES = {
+  EMPTY_INPUT: '请输入要转换的内容',
+  TEXT_TOO_LONG: '内容长度不能超过2000字',
+  API_CALL_FAILED: 'AI API调用失败',
+  INVALID_JSON: '返回的JSON格式无效',
+  INVALID_SVG: '未返回有效的SVG内容',
+  IMAGE_CONVERSION_FAILED: '图片转换失败'
+}
+```
+
+---
+
+## 开发调试指南
+
+### 本地测试方法
+
+```bash
+# 启动开发服务器
+npm run dev
+
+# 测试API调用
+curl -X POST http://localhost:3000/api/generate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "text": "测试文章内容",
+    "model": "deepseek",
+    "style": "standard"
+  }'
+```
+
+### 常见问题排查
+
+1. **Emoji显示异常**
+   - 确认安装 Playwright: `npx playwright install chromium`
+   - 检查字体配置是否包含emoji字体
+
+2. **AI API调用失败**
+   - 验证 `.env.local` 中的API密钥配置
+   - 检查API服务可用性和配额
+
+3. **SVG渲染错误**
+   - 验证JSON格式是否符合DesignJSON接口
+   - 检查画布尺寸和字体配置
+
+4. **图片转换失败**
+   - 确认服务器内存充足 (建议≥2GB)
+   - 检查Playwright浏览器进程是否正常关闭
+
+---
+
+## 版本同步信息
+
+**文档版本**: 2024-09-15 (重构后)
+**代码依赖**:
+- `src/lib/prompts.ts` - 提示词模板定义
+- `src/constants/index.ts` - 配置常量管理
+- `src/types/index.ts` - TypeScript类型定义
+- `src/services/` - AI服务实现
+
+**更新策略**: 当上述文件变更时，需同步更新本文档
+
+---
+
+*本文档与项目代码实现保持100%同步，可直接用于生产环境部署和AI模型调优。*

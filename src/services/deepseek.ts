@@ -1,5 +1,6 @@
-import { AIService, AIServiceResult } from './types'
+import { AIService, AIServiceResult, GenerationOptions, AIMessage } from './types'
 import { DesignJSON } from '@/types'
+import { ERROR_MESSAGES } from '@/constants'
 import {
   DEEPSEEK_STAGE_A_SYSTEM,
   DEEPSEEK_STAGE_B_SYSTEM,
@@ -22,39 +23,81 @@ import {
  * ```
  */
 export class DeepSeekService extends AIService {
-  async process(text: string): Promise<AIServiceResult> {
-    // 阶段A：分析与设计JSON
-    const stageAMessages = [
+  constructor(config: any) {
+    super(config, 'DeepSeek')
+  }
+
+  /**
+   * 处理文本内容，生成小红书卡片
+   *
+   * @param text 输入文本
+   * @param options 生成选项
+   * @returns Promise<AIServiceResult> 处理结果
+   */
+  async process(text: string, options?: GenerationOptions): Promise<AIServiceResult> {
+    this.logInfo('开始处理文本', { textLength: text.length, options })
+
+    try {
+      // 阶段A：分析与设计JSON生成
+      const designJson = await this.executeStageA(text, options)
+
+      // 阶段B：SVG渲染
+      const svgContent = await this.executeStageB(designJson, options)
+
+      this.logInfo('处理完成', {
+        designTemplate: designJson.template_type,
+        svgLength: svgContent.length
+      })
+
+      return { svgContent, designJson }
+    } catch (error) {
+      this.logError('处理失败', error)
+      throw error
+    }
+  }
+
+  /**
+   * 执行阶段A：生成设计JSON
+   */
+  private async executeStageA(text: string, options?: GenerationOptions): Promise<DesignJSON> {
+    this.logInfo('开始阶段A - 设计分析')
+
+    const messages: AIMessage[] = [
       { role: 'system', content: DEEPSEEK_STAGE_A_SYSTEM },
-      { role: 'user', content: createStageAUserPrompt(text) }
+      { role: 'user', content: createStageAUserPrompt(text, { styleChoice: options?.styleChoice }) }
     ]
 
-    const jsonResponse = await this.callAPI(stageAMessages)
-    console.log('DeepSeek Stage A 原始响应:', jsonResponse)
+    const jsonResponse = await this.callAPI(messages)
+    this.logInfo('阶段A 响应获取成功', { responseLength: jsonResponse.length })
 
-    let designJson: DesignJSON
-    try {
-      const cleanJsonResponse = this.cleanJsonResponse(jsonResponse)
-      designJson = JSON.parse(cleanJsonResponse)
-      console.log('DeepSeek Stage A 解析成功:', designJson)
-    } catch (error) {
-      console.error('DeepSeek Stage A JSON解析失败:', error)
-      console.log('原始响应:', jsonResponse)
-      throw new Error('DeepSeek 返回的JSON格式无效')
+    const cleanJsonResponse = this.cleanJsonResponse(jsonResponse)
+    const designJson = this.parseJsonResponse<DesignJSON>(cleanJsonResponse)
+
+    // 验证设计JSON的基本结构
+    if (!designJson.template_type || !designJson.palette) {
+      this.logError('设计JSON缺少必要字段', designJson)
+      throw new Error(`${ERROR_MESSAGES.INVALID_JSON}: 缺少必要字段`)
     }
 
-    // 阶段B：SVG渲染
-    const stageBMessages = [
+    this.logInfo('阶段A 完成', { templateType: designJson.template_type })
+    return designJson
+  }
+
+  /**
+   * 执行阶段B：生成SVG
+   */
+  private async executeStageB(designJson: DesignJSON, options?: GenerationOptions): Promise<string> {
+    this.logInfo('开始阶段B - SVG渲染')
+
+    const messages: AIMessage[] = [
       { role: 'system', content: DEEPSEEK_STAGE_B_SYSTEM },
-      { role: 'user', content: createStageBUserPrompt(jsonResponse) }
+      { role: 'user', content: createStageBUserPrompt(JSON.stringify(designJson), options?.styleChoice) }
     ]
 
-    const svgResponse = await this.callAPI(stageBMessages)
+    const svgResponse = await this.callAPI(messages)
     const svgContent = this.extractSvgContent(svgResponse)
 
-    return {
-      svgContent,
-      designJson
-    }
+    this.logInfo('阶段B 完成', { svgLength: svgContent.length })
+    return svgContent
   }
 }

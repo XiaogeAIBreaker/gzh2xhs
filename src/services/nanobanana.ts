@@ -1,5 +1,6 @@
-import { AIService, AIServiceResult } from './types'
+import { AIService, AIServiceResult, GenerationOptions, AIMessage } from './types'
 import { DesignJSON } from '@/types'
+import { ERROR_MESSAGES } from '@/constants'
 import {
   NANOBANANA_STAGE_A_SYSTEM,
   NANOBANANA_STAGE_B_SYSTEM,
@@ -24,43 +25,104 @@ import {
  * ```
  */
 export class NanoBananaService extends AIService {
-  async process(text: string): Promise<AIServiceResult> {
-    // 阶段A：分析与设计JSON
-    const stageAPrompt = createNanoBananaStageAUserPrompt(text)
+  constructor(config: any) {
+    super(config, 'NanoBanana')
+  }
 
-    console.log('Nano Banana Stage A 开始...')
-    const jsonResponse = await this.callAPI([
-      { role: 'system', content: NANOBANANA_STAGE_A_SYSTEM },
-      { role: 'user', content: [{ type: 'text', text: stageAPrompt }] }
-    ])
+  /**
+   * 处理文本内容，生成小红书卡片
+   *
+   * @param text 输入文本
+   * @param options 生成选项
+   * @returns Promise<AIServiceResult> 处理结果
+   */
+  async process(text: string, options?: GenerationOptions): Promise<AIServiceResult> {
+    this.logInfo('开始处理文本', { textLength: text.length, options })
 
-    let designJson: DesignJSON
     try {
-      // 尝试从响应中提取JSON
-      const jsonMatch = jsonResponse.match(/\{[\s\S]*\}/)
-      const jsonString = jsonMatch ? jsonMatch[0] : jsonResponse
-      designJson = JSON.parse(jsonString)
-      console.log('Nano Banana Stage A 成功，模板类型:', designJson.template_type)
+      // 阶段A：分析与设计JSON生成
+      const designJson = await this.executeStageA(text, options)
+
+      // 阶段B：SVG渲染
+      const svgContent = await this.executeStageB(designJson, options)
+
+      this.logInfo('处理完成', {
+        designTemplate: designJson.template_type,
+        svgLength: svgContent.length
+      })
+
+      return { svgContent, designJson }
     } catch (error) {
-      console.log('Nano Banana Stage A JSON 解析失败')
-      throw new Error('Nano Banana Stage A JSON 解析失败')
+      this.logError('处理失败', error)
+      throw error
+    }
+  }
+
+  /**
+   * 执行阶段A：生成设计JSON
+   */
+  private async executeStageA(text: string, options?: GenerationOptions): Promise<DesignJSON> {
+    this.logInfo('开始阶段A - 设计分析')
+
+    const userPrompt = createNanoBananaStageAUserPrompt(text, { styleChoice: options?.styleChoice })
+
+    const messages: AIMessage[] = [
+      { role: 'system', content: NANOBANANA_STAGE_A_SYSTEM },
+      { role: 'user', content: [{ type: 'text', text: userPrompt }] }
+    ]
+
+    const jsonResponse = await this.callAPI(messages)
+    this.logInfo('阶段A 响应获取成功', { responseLength: jsonResponse.length })
+
+    const designJson = this.extractAndParseJson(jsonResponse)
+
+    // 验证设计JSON的基本结构
+    if (!designJson.template_type || !designJson.palette) {
+      this.logError('设计JSON缺少必要字段', designJson)
+      throw new Error(`${ERROR_MESSAGES.INVALID_JSON}: 缺少必要字段`)
     }
 
-    // 阶段B：SVG渲染
-    const stageBPrompt = createNanoBananaStageBUserPrompt(JSON.stringify(designJson))
+    this.logInfo('阶段A 完成', { templateType: designJson.template_type })
+    return designJson
+  }
 
-    console.log('Nano Banana Stage B 开始...')
-    const svgResponse = await this.callAPI([
+  /**
+   * 执行阶段B：生成SVG
+   */
+  private async executeStageB(designJson: DesignJSON, options?: GenerationOptions): Promise<string> {
+    this.logInfo('开始阶段B - SVG渲染')
+
+    const userPrompt = createNanoBananaStageBUserPrompt(JSON.stringify(designJson), options?.styleChoice)
+
+    const messages: AIMessage[] = [
       { role: 'system', content: NANOBANANA_STAGE_B_SYSTEM },
-      { role: 'user', content: [{ type: 'text', text: stageBPrompt }] }
-    ])
+      { role: 'user', content: [{ type: 'text', text: userPrompt }] }
+    ]
 
+    const svgResponse = await this.callAPI(messages)
     const svgContent = this.extractSvgContent(svgResponse)
-    console.log('Nano Banana 两步法成功完成')
 
-    return {
-      svgContent,
-      designJson
+    this.logInfo('阶段B 完成', { svgLength: svgContent.length })
+    return svgContent
+  }
+
+  /**
+   * 从响应中提取并解析JSON - NanoBanana特有的处理逻辑
+   */
+  private extractAndParseJson(response: string): DesignJSON {
+    try {
+      // 尝试从响应中提取JSON对象
+      const jsonMatch = response.match(/\{[\s\S]*\}/)
+      if (!jsonMatch) {
+        this.logError('未找到JSON对象', response.substring(0, 200))
+        throw new Error(ERROR_MESSAGES.INVALID_JSON)
+      }
+
+      const jsonString = jsonMatch[0]
+      return this.parseJsonResponse<DesignJSON>(jsonString)
+    } catch (error) {
+      this.logError('JSON提取和解析失败', { error, response: response.substring(0, 200) })
+      throw new Error(`${ERROR_MESSAGES.INVALID_JSON}: NanoBanana响应格式错误`)
     }
   }
 }

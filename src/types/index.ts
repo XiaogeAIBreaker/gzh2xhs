@@ -1,8 +1,8 @@
 // AI模型类型
 export type AIModel = 'deepseek' | 'nanobanana'
 
-// 卡片模板类型 (A-H型分类)
-export type CardTemplate = 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H'
+// 卡片模板类型（三款式：信息密度导向）
+export type CardTemplate = 'simple' | 'standard' | 'rich'
 
 // 色彩方案
 export interface ColorPalette {
@@ -33,6 +33,8 @@ export interface GeneratedCard {
 export interface AppState {
   inputText: string
   selectedModel: AIModel
+  /** 三款式：信息量少/中等/大 */
+  selectedStyle?: 'simple' | 'standard' | 'rich'
   isGenerating: boolean
   generatedCards: GeneratedCard[]
   generatedCopytext: string

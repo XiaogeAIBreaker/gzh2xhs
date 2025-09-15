@@ -28,23 +28,47 @@ This is a Next.js 14 application that converts WeChat public account articles in
 Input Text → AI Service Selection → AI Analysis (2-stage) → SVG Generation → PNG Rendering → Card Output
 ```
 
-**Stage A (Analysis):** AI extracts content and generates design JSON with template type (A-H), color palette, and content structure.
+**Stage A (Analysis):** AI extracts content and generates design JSON with template type (simple/standard/rich), color palette, and content structure.
 
 **Stage B (Rendering):** AI converts design JSON into SVG markup with proper emoji support.
+
+### Recent Architecture Improvements (Code Refactoring)
+
+**Unified Constants System:**
+- All configuration centralized in `src/constants/index.ts`
+- Eliminated hardcoded values across the codebase
+- `APP_CONSTANTS`, `API_CONFIG`, `TEMPLATE_COLORS`, `ERROR_MESSAGES`, `PROMPT_CONSTANTS`
+
+**Enhanced Error Handling:**
+- Standardized error messages through `ERROR_MESSAGES` constant
+- Comprehensive logging system in `AIService` base class
+- Consistent error propagation across all services
+
+**Improved Type Safety:**
+- Unified `GenerationOptions` interface (eliminated duplication)
+- Enhanced TypeScript definitions with proper inheritance
+- Removed unused interfaces and consolidated types
 
 ### Key Architecture Components
 
 **AI Services (`src/services/`):**
-- **Modular Design**: Independent `DeepSeekService` and `NanoBananaService` classes
+- **Modular Design**: Independent `DeepSeekService` and `NanoBananaService` classes extending `AIService` base class
 - **No Fallback Logic**: User-selected model failure results in direct error (no auto-switching)
 - **Service Factory**: `createAIService(model)` creates appropriate service instance
-- **Unified Interface**: Both services implement `AIService` abstract class
-- Template validation for 8 card types (A-H classification system)
+- **Unified Interface**: Both services implement standardized `AIService` abstract class with:
+  - `callAPI()` - Common API calling logic with error handling
+  - `cleanJsonResponse()` - JSON cleaning and validation
+  - `extractSvgContent()` - SVG extraction and validation
+  - `logError()` / `logInfo()` - Consistent logging patterns
+- Template validation for style types (simple/standard/rich classification system)
 
 **Image Rendering (`src/lib/image-converter.ts`):**
 - **Critical:** Uses Playwright browser engine instead of Sharp for emoji support
 - `convertSvgToPng()` - Wraps SVG in HTML page and screenshots with Chromium
-- Emoji fonts: Configured via `APP_CONSTANTS.EMOJI_FONTS`
+- `convertBase64ToPng()` - Multi-method Sharp processing with fallback strategies
+- **Configuration Centralized**: All rendering config moved to `APP_CONSTANTS` and `IMAGE_CONVERTER_CONFIG`
+- **Error Handling**: Standardized error messages and proper resource cleanup
+- Emoji fonts: Configured via `APP_CONSTANTS.EMOJI_FONTS` array
 
 **API Routes:**
 - `/api/generate` - Simplified generation endpoint, no complex fallback logic
@@ -52,15 +76,20 @@ Input Text → AI Service Selection → AI Analysis (2-stage) → SVG Generation
 
 **State Management:**
 - **React Context**: `AppProvider` and `useApp()` hook for global state
+- **Enhanced Context**: Added `useAppSelector()` and `useAppActions()` convenience hooks
 - **Custom Hooks**: `useCardGeneration()` and `useExport()` for business logic
+- **Improved Actions**: Semantic action naming and better state validation
 - **No Props Drilling**: Components access state through Context
 
-### Template System (A-H Classification)
+### Template System (Style Classification)
 
-The app generates cards based on 8 template types:
-- **A-H types** defined in `DesignJSON` interface
-- Each type has different layout, color schemes, and content emphasis
-- Templates determined by AI analysis of input content sentiment/structure
+The app generates cards based on 3 style types:
+- **simple**: 1-2 strong impact title lines with minimal content
+- **standard**: 3-5 point checklist with moderate information density
+- **rich**: 6-9 points or 2-3 content sections with high information density
+- Style selection determined by AI analysis of input content structure and complexity
+- **Color Schemes**: Centralized in `TEMPLATE_COLORS` constant with 8 predefined palettes (A-H)
+- Templates use standardized `GenerationOptions` interface for consistent configuration
 
 ### Environment Variables
 
@@ -86,11 +115,13 @@ TURSO_AUTH_TOKEN=your_database_token_here
 - Performance impact: +300ms per card, +100MB memory usage
 - Fonts used: Configured in `APP_CONSTANTS.EMOJI_FONTS` array
 
-**AI Processing (Simplified Architecture):**
-- **No More Fallback Chain**: Each AI service operates independently
-- **Direct Error Handling**: Service failure results in immediate error response
+**AI Processing (Enhanced Architecture):**
+- **No Fallback Chain**: Each AI service operates independently with clear error boundaries
+- **Unified Error Handling**: Standardized error messages from `ERROR_MESSAGES` constant
 - **Two-Stage Processing**: Both DeepSeek and NanoBanana use analysis → rendering pipeline
-- **JSON Cleaning**: Responses are cleaned of markdown wrappers but no fallback generation
+- **Enhanced Logging**: Comprehensive logging at each processing stage via `AIService` base class
+- **JSON Cleaning**: Robust response cleaning with multiple fallback patterns
+- **Configuration-Driven**: Prompts managed through `PROMPT_CONFIG` for maintainability
 
 **Memory Management:**
 - Playwright browser instances must be properly closed in finally blocks
@@ -112,11 +143,13 @@ TURSO_AUTH_TOKEN=your_database_token_here
 - Update `TEMPLATE_COLORS` constant in `src/constants/index.ts`
 - Test emoji rendering with Playwright pipeline
 
-**Error Handling Philosophy:**
-- **Fail Fast**: No complex fallback chains, let errors surface to users
-- **Clear Messages**: Provide specific error information for debugging
-- **Service Isolation**: Each AI service handles its own errors independently
-- **User Feedback**: Always inform users of specific failure reasons
+**Error Handling Philosophy (Enhanced):**
+- **Fail Fast**: No complex fallback chains, let errors surface to users with clear context
+- **Centralized Messages**: All error messages defined in `ERROR_MESSAGES` constant for consistency
+- **Service Isolation**: Each AI service handles its own errors via `AIService` base class methods
+- **Comprehensive Logging**: Detailed error logging with context via `logError()` method
+- **User Feedback**: Standardized error responses with specific failure reasons
+- **Type Safety**: Error handling with proper TypeScript types and validation
 
 ## Performance Considerations
 
@@ -124,6 +157,42 @@ TURSO_AUTH_TOKEN=your_database_token_here
 - Memory usage: ~150MB per Chromium instance
 - Consider implementing browser instance pooling for high-load scenarios
 - SVG optimization happens before Playwright rendering
+- **Post-Refactoring**: Reduced memory leaks through better resource cleanup and centralized config
+
+## Code Refactoring Summary (Latest)
+
+### Key Improvements Achieved
+
+**1. Eliminated Code Duplication:**
+- Removed duplicate interfaces (`PromptGenerationOptions` → unified `GenerationOptions`)
+- Centralized canvas size definitions (removed from multiple files)
+- Unified browser configuration (single source in `APP_CONSTANTS`)
+
+**2. Constants Centralization:**
+- **`src/constants/index.ts`** now contains all configuration:
+  - `APP_CONSTANTS` - Core app settings (sizes, timeouts, fonts)
+  - `API_CONFIG` - API endpoints and default parameters
+  - `TEMPLATE_COLORS` - Color palette definitions (A-H)
+  - `ERROR_MESSAGES` - Standardized error text
+  - `PROMPT_CONSTANTS` - Prompt generation configuration
+
+**3. Enhanced Error Handling:**
+- Unified error message system prevents inconsistent error text
+- `AIService` base class provides standard logging methods
+- Proper error context and debugging information
+- TypeScript-safe error handling patterns
+
+**4. Improved Maintainability:**
+- Clear separation of concerns between services
+- Configuration-driven design reduces hardcoding
+- Better code organization with private methods
+- Comprehensive type safety improvements
+
+**5. Development Benefits:**
+- Single source of truth for all constants
+- Easier configuration changes (one file to update)
+- Consistent error messages across all services
+- Better debugging with structured logging
 
 ## File Structure Context
 

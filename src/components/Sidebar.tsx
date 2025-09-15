@@ -21,6 +21,9 @@ export function Sidebar() {
   const handleModelChange = (model: AIModel) => {
     updateState({ selectedModel: model })
   }
+  const handleStyleChange = (style: 'simple' | 'standard' | 'rich') => {
+    updateState({ selectedStyle: style })
+  }
 
   const handleGenerate = async () => {
     await generateCard(state.inputText, state.selectedModel)
@@ -90,6 +93,33 @@ export function Sidebar() {
               直接生成图片（高质量）
             </div>
           </button>
+        </div>
+      </div>
+
+      {/* 卡片款式（信息密度） */}
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          卡片款式（按信息密度）
+        </label>
+        <div className="grid grid-cols-3 gap-2">
+          <button
+            onClick={() => handleStyleChange('simple')}
+            className={`p-2 text-center border rounded-lg text-sm ${
+              state.selectedStyle === 'simple' ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-gray-300 hover:border-gray-400'
+            }`}
+          >标题为主</button>
+          <button
+            onClick={() => handleStyleChange('standard')}
+            className={`p-2 text-center border rounded-lg text-sm ${
+              state.selectedStyle === 'standard' ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-gray-300 hover:border-gray-400'
+            }`}
+          >中等信息</button>
+          <button
+            onClick={() => handleStyleChange('rich')}
+            className={`p-2 text-center border rounded-lg text-sm ${
+              state.selectedStyle === 'rich' ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-gray-300 hover:border-gray-400'
+            }`}
+          >高信息量</button>
         </div>
       </div>
 

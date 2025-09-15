@@ -1,4 +1,5 @@
 import { DesignJSON } from '@/types'
+import { API_CONFIG, ERROR_MESSAGES } from '@/constants'
 
 /**
  * AI服务处理结果接口
@@ -23,26 +24,63 @@ export interface AIServiceConfig {
 }
 
 /**
+ * 生成选项接口 - 统一的生成参数定义
+ */
+export interface GenerationOptions {
+  /** 用户选择的款式：simple(信息少)/standard(中)/rich(多) */
+  styleChoice?: 'simple' | 'standard' | 'rich'
+  /** 主要颜色 */
+  mainColor?: string
+  /** 强调颜色 */
+  accentColor?: string
+  /** 目标受众 */
+  audience?: string
+  /** 内容意图 */
+  intent?: string
+}
+
+/**
+ * API消息接口
+ */
+export interface AIMessage {
+  role: 'system' | 'user' | 'assistant'
+  content: string | Array<{ type: string; text: string }>
+}
+
+/**
+ * API请求配置
+ */
+export interface APIRequestConfig {
+  model: string
+  messages: AIMessage[]
+  temperature: number
+  max_tokens: number
+}
+
+/**
  * AI服务抽象基类
  *
  * 提供统一的AI服务接口，所有AI服务都应继承此类
  * 包含通用的API调用、JSON清理、SVG提取等功能
  */
 export abstract class AIService {
-  protected config: AIServiceConfig
+  protected readonly config: AIServiceConfig
+  protected readonly serviceName: string
 
-  constructor(config: AIServiceConfig) {
+  constructor(config: AIServiceConfig, serviceName: string = 'AI服务') {
     this.config = config
+    this.serviceName = serviceName
   }
 
   /**
    * 处理输入文本，生成小红书卡片
    *
    * @param text 输入的文本内容
+   * @param options 生成选项
    * @returns Promise<AIServiceResult> 包含SVG内容和设计JSON的结果
    * @throws Error 当AI处理失败时抛出错误
    */
-  abstract process(text: string): Promise<AIServiceResult>
+  abstract process(text: string, options?: GenerationOptions): Promise<AIServiceResult>
 
   /**
    * 调用AI API
@@ -51,32 +89,52 @@ export abstract class AIService {
    * @returns Promise<string> API返回的内容
    * @throws Error 当API调用失败时抛出错误
    */
-  protected async callAPI(messages: Array<{ role: string; content: string | Array<{ type: string; text: string }> }>): Promise<string> {
-    const response = await fetch(this.config.apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.config.apiKey}`,
-      },
-      body: JSON.stringify({
+  protected async callAPI(messages: AIMessage[]): Promise<string> {
+    try {
+      const requestConfig: APIRequestConfig = {
         model: this.config.model,
         messages,
-        temperature: 0.7,
-        max_tokens: 4000,
-      }),
-    })
+        temperature: API_CONFIG.DEFAULT_TEMPERATURE,
+        max_tokens: API_CONFIG.DEFAULT_MAX_TOKENS,
+      }
 
-    if (!response.ok) {
-      throw new Error(`API调用失败: ${response.status}`)
+      const response = await fetch(this.config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.config.apiKey}`,
+        },
+        body: JSON.stringify(requestConfig),
+      })
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        this.logError(`API调用失败 [${response.status}]: ${errorText}`)
+        throw new Error(`${ERROR_MESSAGES.API_CALL_FAILED}: ${response.status}`)
+      }
+
+      const data = await response.json()
+      const content = data.choices?.[0]?.message?.content
+
+      if (!content) {
+        this.logError('API返回空内容', data)
+        throw new Error(ERROR_MESSAGES.API_EMPTY_RESPONSE)
+      }
+
+      return content
+    } catch (error) {
+      if (error instanceof Error) {
+        // 如果已经是我们的错误，直接抛出
+        if (error.message.includes(ERROR_MESSAGES.API_CALL_FAILED) ||
+            error.message === ERROR_MESSAGES.API_EMPTY_RESPONSE) {
+          throw error
+        }
+      }
+
+      // 网络或其他未知错误
+      this.logError('API调用异常', error)
+      throw new Error(`${this.serviceName} ${ERROR_MESSAGES.NETWORK_ERROR}`)
     }
-
-    const data = await response.json()
-    const content = data.choices?.[0]?.message?.content
-    if (!content) {
-      throw new Error('API返回空内容')
-    }
-
-    return content
   }
 
   /**
@@ -86,12 +144,26 @@ export abstract class AIService {
    * @returns 清理后的纯JSON字符串
    */
   protected cleanJsonResponse(jsonResponse: string): string {
-    let cleanResponse = jsonResponse.trim()
-    if (cleanResponse.startsWith('```json') && cleanResponse.endsWith('```')) {
-      cleanResponse = cleanResponse.slice(7, -3).trim()
-    } else if (cleanResponse.startsWith('```') && cleanResponse.endsWith('```')) {
-      cleanResponse = cleanResponse.slice(3, -3).trim()
+    if (!jsonResponse?.trim()) {
+      throw new Error(ERROR_MESSAGES.API_EMPTY_RESPONSE)
     }
+
+    let cleanResponse = jsonResponse.trim()
+
+    // 移除markdown代码块包装
+    const codeBlockPatterns = [
+      { start: '```json', end: '```' },
+      { start: '```', end: '```' },
+      { start: '`', end: '`' }
+    ]
+
+    for (const pattern of codeBlockPatterns) {
+      if (cleanResponse.startsWith(pattern.start) && cleanResponse.endsWith(pattern.end)) {
+        cleanResponse = cleanResponse.slice(pattern.start.length, -pattern.end.length).trim()
+        break
+      }
+    }
+
     return cleanResponse
   }
 
@@ -103,11 +175,26 @@ export abstract class AIService {
    * @throws Error 当未找到有效SVG时抛出错误
    */
   protected extractSvgContent(svgResponse: string): string {
+    if (!svgResponse?.trim()) {
+      this.logError('SVG响应为空')
+      throw new Error(ERROR_MESSAGES.INVALID_SVG)
+    }
+
     const svgMatch = svgResponse.match(/<svg[\s\S]*?<\/svg>/i)
     if (!svgMatch) {
-      throw new Error('未返回有效的SVG内容')
+      this.logError('未找到SVG标签', svgResponse.substring(0, 200))
+      throw new Error(ERROR_MESSAGES.INVALID_SVG)
     }
-    return this.cleanSvgContent(svgMatch[0])
+
+    const svgContent = this.cleanSvgContent(svgMatch[0])
+
+    // 验证SVG内容长度
+    if (svgContent.length < 100) {
+      this.logError('SVG内容过短', { length: svgContent.length, content: svgContent })
+      throw new Error(ERROR_MESSAGES.SVG_TOO_SMALL)
+    }
+
+    return svgContent
   }
 
   /**
@@ -123,5 +210,41 @@ export abstract class AIService {
       .replace(/xmlns:xlink="[^"]*"/g, '') // 移除可能导致问题的命名空间
       .replace(/\s+/g, ' ') // 规范化空白字符
       .trim()
+  }
+
+  /**
+   * 记录错误信息
+   *
+   * @param message 错误消息
+   * @param details 错误详情
+   */
+  protected logError(message: string, details?: any): void {
+    console.error(`[${this.serviceName}] ${message}`, details || '')
+  }
+
+  /**
+   * 记录信息日志
+   *
+   * @param message 信息消息
+   * @param details 详情
+   */
+  protected logInfo(message: string, details?: any): void {
+    console.log(`[${this.serviceName}] ${message}`, details || '')
+  }
+
+  /**
+   * 解析JSON响应
+   *
+   * @param jsonString JSON字符串
+   * @returns 解析后的对象
+   * @throws Error 当JSON解析失败时抛出错误
+   */
+  protected parseJsonResponse<T = any>(jsonString: string): T {
+    try {
+      return JSON.parse(jsonString)
+    } catch (error) {
+      this.logError('JSON解析失败', { jsonString: jsonString.substring(0, 200), error })
+      throw new Error(`${this.serviceName} ${ERROR_MESSAGES.INVALID_JSON}`)
+    }
   }
 }

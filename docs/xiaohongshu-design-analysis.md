@@ -10,16 +10,15 @@
 - 左侧真实照片 + 右侧文字信息条布局
 - 地理位置标识📍作为视觉锚点
 - 详细信息: 时间、价格、介绍文字
-- 配色: 温暖橙黄色调 (#FF6B35, #FFA726)
-- 背景: 纯白或浅灰 (#FAFAFA)
+- 配色: 温暖橙黄色调 - 对应 `TEMPLATE_COLORS.A` {bg: "#FAFAFA", text: "#1A1A1A", accent: "#FF6B35"}
 - 字体层次: 地点名28px、详情16px
 
 ### B型 - 情绪共鸣型 (image7.png 考研失败 & image5.png 累成狗)
 **适用内容**: 个人经历、情感话题、励志内容
 **核心特征**:
 - 超大黑体字占画面60-70%
-- 关键情绪词用彩色椭圆高亮 (蓝色#4ECDC4)
-- 纯白背景 (#FFFFFF) + 强对比黑字 (#1A1A1A)
+- 关键情绪词用彩色椭圆高亮
+- 配色: 对应 `TEMPLATE_COLORS.B` {bg: "#FFFFFF", text: "#1A1A1A", accent: "#4ECDC4"}
 - 装饰性几何线条和符号
 - 字体: 主标题120px粗体、副标题无或很小
 
@@ -101,9 +100,11 @@
 
 ## 技术实现标准
 
-### 画布规格
-- **标准尺寸**: 1080×1440 (3:4比例)
-- **字体系统**: "PingFang SC", "Source Han Sans CN", "Microsoft YaHei", "Arial"
+### 画布规格（与代码同步）
+- **标准尺寸**: 1080×1440 (3:4比例) - 定义于 `APP_CONSTANTS.CARD_SIZE`
+- **字体系统**: 配置于 `APP_CONSTANTS.EMOJI_FONTS` 数组
+  - 支持emoji的字体栈: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji"
+  - 中文字体: "PingFang SC", "Microsoft YaHei", "Arial"
 - **色彩空间**: sRGB，确保对比度≥WCAG AA标准
 
 ### 字体层次标准
@@ -116,18 +117,22 @@
 - **G型**: 标题72px、正文28px、高亮文字
 - **H型**: 标题100px、强视觉冲击
 
-### 布局密度控制
+### 布局密度控制（配置化标准）
 - **信息密度**: 文字20-35%，留白和装饰65-80%
+- **覆盖度标准**: `PROMPT_CONSTANTS.LAYOUT.CONTENT_COVERAGE_MIN`-`CONTENT_COVERAGE_MAX` (55-75%)
+- **字符限制**: 每行≤`PROMPT_CONSTANTS.LAYOUT.MAX_CHARS_PER_LINE` (14个汉字)
 - **视觉层次**: 最多3层，避免信息过载
 - **焦点管理**: 单一视觉重心，Z字形阅读路径
 
-## 质量检查清单
-- [ ] 内容类型是否正确匹配A-H型分类
+## 质量检查清单（代码同步版）
+- [ ] 内容类型是否正确匹配A-H型分类（配色来自`TEMPLATE_COLORS`常量）
 - [ ] 字体大小是否符合对应类型标准
-- [ ] 配色方案是否使用指定色值
+- [ ] 配色方案是否使用 `TEMPLATE_COLORS.A-H` 指定色值
 - [ ] 装饰元素是否符合类型特征
-- [ ] 信息密度是否在合理范围
+- [ ] 信息密度是否符合 `PROMPT_CONSTANTS.LAYOUT` 配置范围
+- [ ] 字符长度是否遵循每行≤14字限制
 - [ ] 整体风格是否具有小红书爆款特征
+- [ ] Emoji渲染是否正确（通过Playwright pipeline）
 
 ---
 *本分析基于8张真实小红书爆款封面，建立A-H型分类体系，用于AI生成系统的精确匹配和高质量渲染*
