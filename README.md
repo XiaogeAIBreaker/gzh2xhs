@@ -31,6 +31,14 @@
 - **响应助手**：`src/lib/http.ts` 提供统一 `jsonOk/jsonError` 响应封装
 - **基础测试**：引入 `Vitest` 并新增单元测试（配置解析、速率限制）
 
+## Python 迁移说明
+
+- 本仓库现已无一方 Python 代码，全部由 Node/TypeScript 实现。
+- 图像处理：使用 Playwright 渲染 + Sharp 优化（替代传统 Python Pillow/SVG 渲染路径），详见 `src/lib/image-converter.ts`。
+- HTTP 与校验：统一使用 `fetch` 与 `zod` 校验（`src/config/index.ts`）。
+- 环境配置：新增 `.env.example` 便于配置对齐；并已将 `/.venv` 加入 `.gitignore`。
+- 测试与 CI：新增 `tests/imageConverter.test.ts` 单测；CI 中安装 Playwright 依赖（`.github/workflows/ci.yml`）。
+
 ## 快速开始
 
 ### 环境要求
