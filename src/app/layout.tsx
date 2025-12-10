@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import CosmicBackground from '@/components/CosmicBackground'
+import ClientLayout from './ClientLayout'
 import Navbar from '@/components/Navbar'
 import Toast from '@/components/Toast'
 
@@ -12,17 +13,15 @@ export const metadata: Metadata = {
   description: 'AI驱动的跨平台内容创作助手，一键生成小红书爆款视觉卡片',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="zh-CN" className="dark">
-      <body className={`${inter.className} min-h-screen bg-neutral-950 text-neutral-100 relative overflow-hidden`}>
+      <body
+        className={`${inter.className} relative min-h-screen overflow-hidden bg-neutral-950 text-neutral-100`}
+      >
         <CosmicBackground />
         <Navbar />
-        {children}
+        <ClientLayout>{children}</ClientLayout>
         <Toast />
       </body>
     </html>
