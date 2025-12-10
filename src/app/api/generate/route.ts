@@ -106,7 +106,7 @@ async function generateCard(
   text: string,
   model: AIModel,
   style?: 'simple' | 'standard' | 'rich'
-): Promise<GeneratedCard | null> {
+  ): Promise<GeneratedCard | null> {
   try {
     const aiService = createAIService(model)
     const { svgContent, designJson } = await aiService.process(text, { styleChoice: style })
@@ -133,8 +133,6 @@ async function generateCard(
   } catch (error) {
     const serviceName = model === 'deepseek' ? 'DeepSeek' : 'NanoBanana'
     logger.error(`${serviceName}卡片生成失败`, error, 'Generate')
-
-    // 这里不抛出错误，而是返回null，让上层决定如何处理
-    throw new Error(`${serviceName} ${ERROR_MESSAGES.GENERATION_FAILED}: ${error instanceof Error ? error.message : ERROR_MESSAGES.UNKNOWN_ERROR}`)
+    return null
   }
 }

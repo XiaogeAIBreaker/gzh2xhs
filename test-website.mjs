@@ -1,5 +1,4 @@
-// 简单的网站功能测试
-import fetch from 'node-fetch';
+// 简单的网站功能测试（Node 18+ 使用全局 fetch）
 
 async function testWebsite() {
   const baseUrl = process.env.TEST_BASE_URL || 'http://127.0.0.1:3001';

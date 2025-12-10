@@ -1,6 +1,7 @@
 import { chromium } from 'playwright'
 import sharp from 'sharp'
 import { APP_CONSTANTS, ERROR_MESSAGES } from '@/constants'
+import { logger } from '@/lib/logger'
 
 /**
  * Sharp 处理方法接口
@@ -58,7 +59,7 @@ export async function convertSvgToPng(svgContent: string): Promise<Buffer> {
 
   let browser = null
   try {
-    console.log('[图片转换] 开始使用Playwright渲染SVG，支持emoji显示')
+    logger.info('开始使用Playwright渲染SVG，支持emoji显示', undefined, 'ImageConverter')
 
     // 启动浏览器
     browser = await chromium.launch({
@@ -95,11 +96,11 @@ export async function convertSvgToPng(svgContent: string): Promise<Buffer> {
       }
     })
 
-    console.log('[图片转换] Playwright渲染完成，emoji正确显示')
+    logger.info('Playwright渲染完成，emoji正确显示', undefined, 'ImageConverter')
     return pngBuffer
 
   } catch (error) {
-    console.error('[图片转换] Playwright SVG转PNG错误:', error)
+    logger.error('Playwright SVG转PNG错误', error, 'ImageConverter')
     throw new Error(`${ERROR_MESSAGES.IMAGE_CONVERSION_FAILED}: ${error instanceof Error ? error.message : ERROR_MESSAGES.UNKNOWN_ERROR}`)
   } finally {
     // 确保浏览器资源被正确释放
@@ -107,7 +108,7 @@ export async function convertSvgToPng(svgContent: string): Promise<Buffer> {
       try {
         await browser.close()
       } catch (closeError) {
-        console.warn('[图片转换] 浏览器关闭时出现警告:', closeError)
+        logger.warn('浏览器关闭时出现警告', closeError, 'ImageConverter')
       }
     }
   }
@@ -159,7 +160,7 @@ export async function convertBase64ToPng(base64Data: string): Promise<Buffer | u
     throw new Error(ERROR_MESSAGES.BASE64_INVALID)
   }
 
-  console.log('[图片转换] 开始处理Base64数据', { length: base64Data.length })
+  logger.info('开始处理Base64数据', { length: base64Data.length }, 'ImageConverter')
 
   try {
     // 清理和验证Base64数据
@@ -172,7 +173,7 @@ export async function convertBase64ToPng(base64Data: string): Promise<Buffer | u
     return await tryProcessMethods(processMethods)
 
   } catch (error) {
-    console.error('[图片转换] Base64转PNG最终错误:', error)
+    logger.error('Base64转PNG最终错误', error, 'ImageConverter')
     throw new Error(`${ERROR_MESSAGES.IMAGE_CONVERSION_FAILED}: ${error instanceof Error ? error.message : ERROR_MESSAGES.UNKNOWN_ERROR}`)
   }
 
@@ -193,7 +194,7 @@ function prepareBase64Buffer(base64Data: string): Buffer {
 
   // 转换为Buffer
   const imageBuffer = Buffer.from(cleanBase64, 'base64')
-  console.log('[图片转换] Base64转换完成', { bufferSize: imageBuffer.length })
+  logger.info('Base64转换完成', { bufferSize: imageBuffer.length }, 'ImageConverter')
 
   return imageBuffer
 }
@@ -204,7 +205,7 @@ function prepareBase64Buffer(base64Data: string): Buffer {
 function createSharpProcessMethods(imageBuffer: Buffer): Array<() => Promise<Buffer>> {
   return IMAGE_CONVERTER_CONFIG.SHARP_METHODS.map((method: SharpMethod, index) => {
     return async (): Promise<Buffer> => {
-      console.log(`[图片转换] 尝试方法${index + 1}: ${method.name}`)
+      logger.debug(`尝试方法${index + 1}: ${method.name}`, undefined, 'ImageConverter')
 
       if (method.useIntermediateJpeg) {
         // JPEG中转方法
@@ -249,10 +250,10 @@ async function tryProcessMethods(methods: Array<() => Promise<Buffer>>): Promise
   for (let i = 0; i < methods.length; i++) {
     try {
       const result = await methods[i]()
-      console.log(`[图片转换] 方法${i + 1}成功！输出PNG大小:`, result.length, 'bytes')
+      logger.info(`方法${i + 1}成功`, { outputBytes: result.length }, 'ImageConverter')
       return result
     } catch (methodError) {
-      console.error(`[图片转换] 方法${i + 1}失败:`, methodError)
+      logger.error(`方法${i + 1}失败`, methodError, 'ImageConverter')
       if (i === methods.length - 1) {
         throw methodError
       }
@@ -277,10 +278,10 @@ export function createTempImageUrl(buffer: Buffer, _filename: string): string {
 
   try {
     const base64 = buffer.toString('base64')
-    console.log('[图片转换] 创建临时URL', { bufferSize: buffer.length, base64Length: base64.length })
+    logger.debug('创建临时URL', { bufferSize: buffer.length, base64Length: base64.length }, 'ImageConverter')
     return `data:image/png;base64,${base64}`
   } catch (error) {
-    console.error('[图片转换] 创建临时URL失败:', error)
+    logger.error('创建临时URL失败', error, 'ImageConverter')
     throw new Error(ERROR_MESSAGES.IMAGE_CONVERSION_FAILED)
   }
 }
@@ -293,7 +294,7 @@ export function createTempImageUrl(buffer: Buffer, _filename: string): string {
  */
 export async function validateImageQuality(buffer: Buffer): Promise<boolean> {
   if (!buffer || buffer.length === 0) {
-    console.warn('[图片转换] 验证失败：空缓冲区')
+    logger.warn('验证失败：空缓冲区', undefined, 'ImageConverter')
     return false
   }
 
@@ -305,7 +306,7 @@ export async function validateImageQuality(buffer: Buffer): Promise<boolean> {
       metadata.format === 'png'
     )
 
-    console.log('[图片转换] 图片质量验证', {
+    logger.info('图片质量验证', {
       width: metadata.width,
       height: metadata.height,
       format: metadata.format,
@@ -314,7 +315,7 @@ export async function validateImageQuality(buffer: Buffer): Promise<boolean> {
 
     return isValid
   } catch (error) {
-    console.error('[图片转换] 图片质量验证失败:', error)
+    logger.error('图片质量验证失败', error, 'ImageConverter')
     return false
   }
 }
