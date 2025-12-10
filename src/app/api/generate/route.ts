@@ -5,12 +5,14 @@ import { generateXiaohongshuCopytext } from '@/services/copytext'
 import { convertSvgToPng, createTempImageUrl } from '@/lib/image-converter'
 import { AIModel, GeneratedCard } from '@/types'
 import { APP_CONSTANTS, ERROR_MESSAGES } from '@/constants'
-import type { GenerateRequest, GenerateResponse } from '@/types/api'
+import type { GenerateResponse } from '@/types/api'
 import { z } from 'zod'
 import { jsonError, jsonOk } from '@/lib/http'
 import { logger } from '@/lib/logger'
 import { appConfig } from '@/config'
 import { createRateLimiter } from '@/lib/rateLimiter'
+import { cacheGet, cacheSet, makeKey } from '@/shared/lib/cache'
+import { createHash } from 'crypto'
 
 /** 请求体/响应体类型见 src/types/api.ts */
 
@@ -18,7 +20,10 @@ import { createRateLimiter } from '@/lib/rateLimiter'
  * 验证请求参数
  */
 const GenerateSchema = z.object({
-  text: z.string().min(1, ERROR_MESSAGES.EMPTY_INPUT).max(APP_CONSTANTS.MAX_TEXT_LENGTH, ERROR_MESSAGES.TEXT_TOO_LONG),
+  text: z
+    .string()
+    .min(1, ERROR_MESSAGES.EMPTY_INPUT)
+    .max(APP_CONSTANTS.MAX_TEXT_LENGTH, ERROR_MESSAGES.TEXT_TOO_LONG),
   model: z.enum(['deepseek', 'nanobanana']),
   style: z.enum(['simple', 'standard', 'rich']).optional(),
   size: z.enum(['1:1', '4:5', '9:16']).optional(),
@@ -29,21 +34,18 @@ const limiter = createRateLimiter(appConfig.features.rateLimit)
 /**
  * 创建错误响应
  */
-function createErrorResponse(error: string, status: number = 400, details?: string): NextResponse<GenerateResponse> {
+function createErrorResponse(
+  error: string,
+  status: number = 400,
+  details?: string
+): NextResponse<GenerateResponse> {
   logger.error('[API] 错误', { error, details }, 'Generate')
   return jsonError(error, status, details) as NextResponse<GenerateResponse>
 }
 
-/**
- * 创建成功响应
- */
-function createSuccessResponse(cards: GeneratedCard[], copytext: string): NextResponse<GenerateResponse> {
-  return jsonOk({ cards, copytext, success: true }) as NextResponse<GenerateResponse>
-}
-
 export async function POST(req: NextRequest) {
   try {
-    const requestData: GenerateRequest = await req.json()
+    const requestData: unknown = await req.json()
 
     const ip = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown'
     const allowed = await limiter.allow(`generate:${ip}`)
@@ -60,6 +62,19 @@ export async function POST(req: NextRequest) {
 
     const { text, model, style, size } = parsed.data
 
+    const key =
+      'g:' +
+      createHash('sha256')
+        .update(makeKey([text, model, style, size]))
+        .digest('hex')
+    const cached = cacheGet<GenerateResponse>(key)
+    if (cached) {
+      return jsonOk(cached, 200, {
+        'Cache-Control': 'public, max-age=60, s-maxage=60, stale-while-revalidate=600',
+        ETag: key,
+      }) as NextResponse<GenerateResponse>
+    }
+
     logger.info('开始处理生成请求', { textLength: text.length, model, style }, 'Generate')
 
     const cards: GeneratedCard[] = []
@@ -75,10 +90,18 @@ export async function POST(req: NextRequest) {
       cards.push(card)
     }
 
-    logger.info('处理完成', { cardCount: cards.length, copytextLength: copytext.length }, 'Generate')
+    logger.info(
+      '处理完成',
+      { cardCount: cards.length, copytextLength: copytext.length },
+      'Generate'
+    )
 
-    return createSuccessResponse(cards, copytext)
-
+    const response = { cards, copytext, success: true } satisfies GenerateResponse
+    cacheSet(key, response, 60_000)
+    return jsonOk(response, 200, {
+      'Cache-Control': 'public, max-age=60, s-maxage=60, stale-while-revalidate=600',
+      ETag: key,
+    }) as NextResponse<GenerateResponse>
   } catch (error) {
     logger.error('未预期错误', error, 'Generate')
     return createErrorResponse(
@@ -109,7 +132,7 @@ async function generateCard(
   model: AIModel,
   style?: 'simple' | 'standard' | 'rich',
   size?: '1:1' | '4:5' | '9:16'
-  ): Promise<GeneratedCard | null> {
+): Promise<GeneratedCard | null> {
   try {
     const aiService = createAIService(model)
     const { svgContent, designJson } = await aiService.process(text, { styleChoice: style })
@@ -128,10 +151,14 @@ async function generateCard(
       imageUrl,
       template: (designJson.template_type || 'standard') as any,
       model,
-      size: size || '1:1'
+      size: size || '1:1',
     }
 
-    logger.info(`${model}卡片生成成功`, { template: card.template, svgLength: svgContent.length, imageUrlLength: imageUrl.length }, 'Generate')
+    logger.info(
+      `${model}卡片生成成功`,
+      { template: card.template, svgLength: svgContent.length, imageUrlLength: imageUrl.length },
+      'Generate'
+    )
 
     return card
   } catch (error) {

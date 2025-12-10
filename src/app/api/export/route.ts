@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 export const runtime = 'nodejs'
 import JSZip from 'jszip'
-import type { ExportRequest } from '@/types/api'
 import { convertBase64ToPng } from '@/lib/image-converter'
 import { ERROR_MESSAGES } from '@/constants'
 import { z } from 'zod'
@@ -25,7 +24,7 @@ export async function POST(req: NextRequest) {
       return jsonError('请求过于频繁，请稍后重试', 429)
     }
 
-    const body: ExportRequest = await req.json()
+    const body: unknown = await req.json()
     const parsed = ExportSchema.safeParse(body)
     if (!parsed.success) {
       return jsonError('没有要导出的卡片', 400)
@@ -63,7 +62,6 @@ export async function POST(req: NextRequest) {
         'Content-Disposition': `attachment; filename="xiaohongshu-cards-${Date.now()}.zip"`,
       },
     })
-
   } catch (error) {
     logger.error('导出失败', error, 'Export')
     return jsonError('导出失败，请重试', 500)
