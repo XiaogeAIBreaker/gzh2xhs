@@ -2,7 +2,7 @@
 import fetch from 'node-fetch';
 
 async function testWebsite() {
-  const baseUrl = 'http://localhost:3000';
+  const baseUrl = process.env.TEST_BASE_URL || 'http://127.0.0.1:3001';
 
   console.log('🚀 开始测试公众号转小红书网站...');
 
@@ -39,11 +39,12 @@ async function testWebsite() {
 
     // 3. 测试导出API endpoint
     console.log('📋 测试3: 检查导出API...');
+    const placeholderBase64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=='
     const exportResponse = await fetch(`${baseUrl}/api/export`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        cardIds: ['test-card-1']
+        images: [{ id: 'test-card-1', dataUrl: `data:image/png;base64,${placeholderBase64}` }]
       })
     });
 

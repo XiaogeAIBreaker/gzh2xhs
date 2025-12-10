@@ -5,7 +5,7 @@
 ## 功能特点
 
 - 🤖 **双AI模型支持**：支持DeepSeek和NanoBanana两种AI模型
-- 🎨 **多样化设计**：支持A-H共8种不同的小红书卡片风格
+- 🎨 **多样化设计**：支持三种信息密度款式（simple/standard/rich），内置多套配色方案
 - 📱 **移动端优化**：1080x1440标准小红书卡片尺寸
 - 😊 **完美Emoji支持**：使用Playwright引擎确保emoji正确显示
 - 📝 **文本输入**：直接粘贴文章内容即可生成卡片
@@ -100,7 +100,7 @@ npm run dev
 - **解决**：使用Playwright Chromium引擎进行浏览器级渲染
 - **效果**：emoji完美显示为彩色字符
 
-详细技术文档：[emoji修复方案](./docs/emoji-fix-solution.md)
+技术方案说明：详见 [生成卡片prompt设计](./docs/生成卡片prompt设计.md) 与 [小红书设计分析](./docs/xiaohongshu-design-analysis.md)
 
 ## 部署说明
 
@@ -169,7 +169,7 @@ npm run lint     # 代码检查
    - 重构后不再有自动fallback，需手动切换模型
    - 检查具体的错误信息进行针对性排查
 
-更多技术问题请参考：[emoji修复方案文档](./docs/emoji-fix-solution.md)
+更多技术细节参考：[生成卡片prompt设计](./docs/生成卡片prompt设计.md)
 
 ## 贡献指南
 

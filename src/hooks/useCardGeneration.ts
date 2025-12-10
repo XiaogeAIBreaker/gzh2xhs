@@ -1,21 +1,17 @@
 import { AIModel } from '@/types'
-import { useApp } from '@/context/AppContext'
+import { useApp, useAppActions } from '@/context/AppContext'
 
 export function useCardGeneration() {
-  const { state, updateState } = useApp()
+  const { state } = useApp()
+  const actions = useAppActions()
 
   const generateCard = async (text: string, model: AIModel) => {
     if (!text.trim()) {
-      updateState({ error: '请输入要转换的内容' })
+      actions.failGeneration('请输入要转换的内容')
       return
     }
 
-    updateState({
-      isGenerating: true,
-      error: null,
-      generatedCards: [],
-      generatedCopytext: ''
-    })
+    actions.startGeneration()
 
     try {
       const response = await fetch('/api/generate', {
@@ -29,16 +25,9 @@ export function useCardGeneration() {
       }
 
       const data = await response.json()
-      updateState({
-        generatedCards: data.cards,
-        generatedCopytext: data.copytext,
-        isGenerating: false,
-      })
+      actions.completeGeneration(data.cards, data.copytext)
     } catch (error) {
-      updateState({
-        error: error instanceof Error ? error.message : '生成失败',
-        isGenerating: false,
-      })
+      actions.failGeneration(error instanceof Error ? error.message : '生成失败')
     }
   }
 

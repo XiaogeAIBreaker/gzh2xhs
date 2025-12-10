@@ -4,26 +4,9 @@ import { generateXiaohongshuCopytext } from '@/services/copytext'
 import { convertSvgToPng, createTempImageUrl } from '@/lib/image-converter'
 import { AIModel, GeneratedCard } from '@/types'
 import { APP_CONSTANTS, ERROR_MESSAGES } from '@/constants'
+import type { GenerateRequest, GenerateResponse } from '@/types/api'
 
-/**
- * 请求体接口
- */
-interface GenerateRequest {
-  text: string
-  model: AIModel
-  style?: 'simple' | 'standard' | 'rich'
-}
-
-/**
- * 响应体接口
- */
-interface GenerateResponse {
-  cards: GeneratedCard[]
-  copytext: string
-  success: boolean
-  error?: string
-  details?: string
-}
+/** 请求体/响应体类型见 src/types/api.ts */
 
 /**
  * 验证请求参数

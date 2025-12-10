@@ -12,7 +12,7 @@ export function useExport() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          cardIds: cards.map(card => card.id),
+          images: cards.map(card => ({ id: card.id, dataUrl: card.imageUrl })),
         }),
       })
 
