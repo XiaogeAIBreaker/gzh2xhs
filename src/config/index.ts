@@ -1,0 +1,45 @@
+import { z } from 'zod'
+
+const EnvSchema = z.object({
+  NODE_ENV: z.string().default('development'),
+  DEEPSEEK_API_KEY: z.string().min(1, '缺少 DEEPSEEK_API_KEY'),
+  DEEPSEEK_API_URL: z.string().url().default('https://api.deepseek.com/chat/completions'),
+  APICORE_AI_KEY: z.string().optional().default(''),
+  NANOBANANA_API_URL: z.string().url().default('https://kg-api.cloud/v1/chat/completions'),
+})
+
+const parsed = EnvSchema.safeParse(process.env)
+if (!parsed.success) {
+  throw new Error(`环境变量无效: ${parsed.error.flatten().formErrors.join(', ')}`)
+}
+
+const env = parsed.data
+
+export const appConfig = {
+  env: env.NODE_ENV,
+  ai: {
+    defaults: {
+      temperature: 0.7,
+      maxTokens: 4000,
+    },
+    deepseek: {
+      apiKey: env.DEEPSEEK_API_KEY,
+      apiUrl: env.DEEPSEEK_API_URL,
+      model: 'deepseek-chat',
+      enabled: true,
+    },
+    nanobanana: {
+      apiKey: env.APICORE_AI_KEY,
+      apiUrl: env.NANOBANANA_API_URL,
+      model: 'gpt-5-chat-latest',
+      enabled: !!env.APICORE_AI_KEY,
+    },
+  },
+  features: {
+    rateLimit: {
+      windowMs: 60_000,
+      max: 60,
+    },
+  },
+}
+

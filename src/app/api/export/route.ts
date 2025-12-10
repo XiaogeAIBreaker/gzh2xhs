@@ -3,13 +3,32 @@ import JSZip from 'jszip'
 import type { ExportRequest } from '@/types/api'
 import { convertBase64ToPng } from '@/lib/image-converter'
 import { ERROR_MESSAGES } from '@/constants'
+import { z } from 'zod'
+import { jsonError } from '@/lib/http'
+import { logger } from '@/lib/logger'
+import { appConfig } from '@/config'
+import { createRateLimiter } from '@/lib/rateLimiter'
+
+const ExportSchema = z.object({
+  images: z.array(z.object({ dataUrl: z.string().min(1), id: z.string().optional() })).min(1),
+})
+
+const limiter = createRateLimiter(appConfig.features.rateLimit)
 
 export async function POST(req: NextRequest) {
   try {
-    const { images }: ExportRequest = await req.json()
-    if (!images || images.length === 0) {
-      return NextResponse.json({ error: '没有要导出的卡片' }, { status: 400 })
+    const ip = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown'
+    const allowed = await limiter.allow(`export:${ip}`)
+    if (!allowed) {
+      return jsonError('请求过于频繁，请稍后重试', 429)
     }
+
+    const body: ExportRequest = await req.json()
+    const parsed = ExportSchema.safeParse(body)
+    if (!parsed.success) {
+      return jsonError('没有要导出的卡片', 400)
+    }
+    const { images } = parsed.data
 
     // 创建ZIP文件
     const zip = new JSZip()
@@ -42,10 +61,7 @@ export async function POST(req: NextRequest) {
     })
 
   } catch (error) {
-    console.error('导出失败:', error)
-    return NextResponse.json(
-      { error: '导出失败，请重试' },
-      { status: 500 }
-    )
+    logger.error('导出失败', error, 'Export')
+    return jsonError('导出失败，请重试', 500)
   }
 }

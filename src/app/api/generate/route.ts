@@ -5,77 +5,60 @@ import { convertSvgToPng, createTempImageUrl } from '@/lib/image-converter'
 import { AIModel, GeneratedCard } from '@/types'
 import { APP_CONSTANTS, ERROR_MESSAGES } from '@/constants'
 import type { GenerateRequest, GenerateResponse } from '@/types/api'
+import { z } from 'zod'
+import { jsonError, jsonOk } from '@/lib/http'
+import { logger } from '@/lib/logger'
+import { appConfig } from '@/config'
+import { createRateLimiter } from '@/lib/rateLimiter'
 
 /** 请求体/响应体类型见 src/types/api.ts */
 
 /**
  * 验证请求参数
  */
-function validateRequest(data: any): { isValid: boolean; error?: string } {
-  const { text, model } = data
+const GenerateSchema = z.object({
+  text: z.string().min(1, ERROR_MESSAGES.EMPTY_INPUT).max(APP_CONSTANTS.MAX_TEXT_LENGTH, ERROR_MESSAGES.TEXT_TOO_LONG),
+  model: z.enum(['deepseek', 'nanobanana']),
+  style: z.enum(['simple', 'standard', 'rich']).optional(),
+})
 
-  // 检查必要字段
-  if (!text || typeof text !== 'string') {
-    return { isValid: false, error: ERROR_MESSAGES.EMPTY_INPUT }
-  }
-
-  if (!text.trim()) {
-    return { isValid: false, error: ERROR_MESSAGES.EMPTY_INPUT }
-  }
-
-  if (text.length > APP_CONSTANTS.MAX_TEXT_LENGTH) {
-    return { isValid: false, error: ERROR_MESSAGES.TEXT_TOO_LONG }
-  }
-
-  if (!model || !['deepseek', 'nanobanana'].includes(model)) {
-    return { isValid: false, error: '不支持的AI模型' }
-  }
-
-  return { isValid: true }
-}
+const limiter = createRateLimiter(appConfig.features.rateLimit)
 
 /**
  * 创建错误响应
  */
 function createErrorResponse(error: string, status: number = 400, details?: string): NextResponse<GenerateResponse> {
-  console.error(`[API错误] ${error}`, details ? { details } : '')
-  return NextResponse.json({
-    cards: [],
-    copytext: '',
-    success: false,
-    error,
-    details
-  }, { status })
+  logger.error('[API] 错误', { error, details }, 'Generate')
+  return jsonError(error, status, details) as NextResponse<GenerateResponse>
 }
 
 /**
  * 创建成功响应
  */
 function createSuccessResponse(cards: GeneratedCard[], copytext: string): NextResponse<GenerateResponse> {
-  return NextResponse.json({
-    cards,
-    copytext,
-    success: true
-  })
+  return jsonOk({ cards, copytext, success: true }) as NextResponse<GenerateResponse>
 }
 
 export async function POST(req: NextRequest) {
   try {
     const requestData: GenerateRequest = await req.json()
 
-    // 验证请求参数
-    const validation = validateRequest(requestData)
-    if (!validation.isValid) {
-      return createErrorResponse(validation.error!)
+    const ip = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown'
+    const allowed = await limiter.allow(`generate:${ip}`)
+    if (!allowed) {
+      return createErrorResponse('请求过于频繁，请稍后重试', 429)
     }
 
-    const { text, model, style } = requestData
+    // 验证请求参数
+    const parsed = GenerateSchema.safeParse(requestData)
+    if (!parsed.success) {
+      const msg = parsed.error.issues[0]?.message || '参数错误'
+      return createErrorResponse(msg)
+    }
 
-    console.log(`[API] 开始处理生成请求`, {
-      textLength: text.length,
-      model,
-      style
-    })
+    const { text, model, style } = parsed.data
+
+    logger.info('开始处理生成请求', { textLength: text.length, model, style }, 'Generate')
 
     const cards: GeneratedCard[] = []
     let copytext = ''
@@ -90,15 +73,12 @@ export async function POST(req: NextRequest) {
       cards.push(card)
     }
 
-    console.log(`[API] 处理完成`, {
-      cardCount: cards.length,
-      copytextLength: copytext.length
-    })
+    logger.info('处理完成', { cardCount: cards.length, copytextLength: copytext.length }, 'Generate')
 
     return createSuccessResponse(cards, copytext)
 
   } catch (error) {
-    console.error('[API] 未预期错误:', error)
+    logger.error('未预期错误', error, 'Generate')
     return createErrorResponse(
       ERROR_MESSAGES.SERVER_ERROR,
       500,
@@ -114,7 +94,7 @@ async function generateCopytext(text: string): Promise<string> {
   try {
     return await generateXiaohongshuCopytext(text)
   } catch (error) {
-    console.error('[API] 文案生成失败:', error)
+    logger.error('文案生成失败', error, 'Generate')
     return ERROR_MESSAGES.COPYTEXT_GENERATION_FAILED
   }
 }
@@ -147,16 +127,12 @@ async function generateCard(
       model
     }
 
-    console.log(`[API] ${model}卡片生成成功`, {
-      template: card.template,
-      svgLength: svgContent.length,
-      imageUrlLength: imageUrl.length
-    })
+    logger.info(`${model}卡片生成成功`, { template: card.template, svgLength: svgContent.length, imageUrlLength: imageUrl.length }, 'Generate')
 
     return card
   } catch (error) {
     const serviceName = model === 'deepseek' ? 'DeepSeek' : 'NanoBanana'
-    console.error(`[API] ${serviceName}卡片生成失败:`, error)
+    logger.error(`${serviceName}卡片生成失败`, error, 'Generate')
 
     // 这里不抛出错误，而是返回null，让上层决定如何处理
     throw new Error(`${serviceName} ${ERROR_MESSAGES.GENERATION_FAILED}: ${error instanceof Error ? error.message : ERROR_MESSAGES.UNKNOWN_ERROR}`)

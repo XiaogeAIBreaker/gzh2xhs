@@ -1,21 +1,22 @@
 import { XIAOHONGSHU_COPYTEXT_PROMPT } from '@/lib/prompts'
-import { API_CONFIG } from '@/constants'
+import { appConfig } from '@/config'
+import { logger } from '@/lib/logger'
 
 export async function generateXiaohongshuCopytext(text: string): Promise<string> {
   const prompt = XIAOHONGSHU_COPYTEXT_PROMPT.replace('{{CONTENT}}', text)
 
   try {
-    const response = await fetch(API_CONFIG.DEEPSEEK.API_URL, {
+    const response = await fetch(appConfig.ai.deepseek.apiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${API_CONFIG.DEEPSEEK.API_KEY}`,
+        'Authorization': `Bearer ${appConfig.ai.deepseek.apiKey}`,
       },
       body: JSON.stringify({
-        model: API_CONFIG.DEEPSEEK.MODEL,
+        model: appConfig.ai.deepseek.model,
         messages: [{ role: 'user', content: prompt }],
-        temperature: API_CONFIG.DEFAULT_TEMPERATURE,
-        max_tokens: API_CONFIG.DEFAULT_MAX_TOKENS,
+        temperature: appConfig.ai.defaults.temperature,
+        max_tokens: appConfig.ai.defaults.maxTokens,
       }),
     })
 
@@ -27,7 +28,7 @@ export async function generateXiaohongshuCopytext(text: string): Promise<string>
     return data.choices[0]?.message?.content || '文案生成失败'
 
   } catch (error) {
-    console.error('文案生成失败:', error)
+    logger.error('文案生成失败', error, 'Copytext')
     throw new Error('文案生成失败，请重试')
   }
 }

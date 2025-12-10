@@ -22,6 +22,15 @@
 - **架构模式**：模块化服务层 + 统一错误处理
 - **部署平台**：支持Vercel等平台
 
+## 企业级改造要点（本次重构新增）
+
+- **统一配置与校验**：`src/config/` 使用 `zod` 对环境变量进行强校验并提供类型化 `appConfig`
+- **标准化请求验证**：API 路由采用 `zod` 校验请求体，错误统一 JSON 输出
+- **速率限制**：在 `/api/generate` 与 `/api/export` 引入简单速率限制，防滥用与突发负载
+- **结构化日志**：`src/lib/logger.ts` 输出结构化日志，便于后续接入日志平台
+- **响应助手**：`src/lib/http.ts` 提供统一 `jsonOk/jsonError` 响应封装
+- **基础测试**：引入 `Vitest` 并新增单元测试（配置解析、速率限制）
+
 ## 快速开始
 
 ### 环境要求
@@ -147,6 +156,7 @@ npm run dev      # 启动开发服务器
 npm run build    # 构建生产版本
 npm run start    # 启动生产服务器
 npm run lint     # 代码检查
+npm run test     # 运行单元测试（Vitest）
 ```
 
 ## 故障排查

@@ -38,23 +38,21 @@ export const APP_CONSTANTS = {
 } as const
 
 // API配置
-export const API_CONFIG = {
-  // 请求参数
-  DEFAULT_TEMPERATURE: 0.7,
-  DEFAULT_MAX_TOKENS: 4000,
+import { appConfig } from '@/config'
 
-  // AI服务配置
+export const API_CONFIG = {
+  DEFAULT_TEMPERATURE: appConfig.ai.defaults.temperature,
+  DEFAULT_MAX_TOKENS: appConfig.ai.defaults.maxTokens,
   DEEPSEEK: {
-    API_KEY: process.env.DEEPSEEK_API_KEY!,
-    API_URL: process.env.DEEPSEEK_API_URL || 'https://api.deepseek.com/chat/completions',
-    MODEL: 'deepseek-chat',
+    API_KEY: appConfig.ai.deepseek.apiKey,
+    API_URL: appConfig.ai.deepseek.apiUrl,
+    MODEL: appConfig.ai.deepseek.model,
   },
   NANOBANANA: {
-    API_KEY: process.env.APICORE_AI_KEY!,
-    API_URL: process.env.NANOBANANA_API_URL || 'https://kg-api.cloud/v1/chat/completions',
-    MODEL: 'gpt-5-chat-latest',
+    API_KEY: appConfig.ai.nanobanana.apiKey,
+    API_URL: appConfig.ai.nanobanana.apiUrl,
+    MODEL: appConfig.ai.nanobanana.model,
   },
-
 } as const
 
 

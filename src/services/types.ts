@@ -1,5 +1,7 @@
 import { DesignJSON } from '@/types'
-import { API_CONFIG, ERROR_MESSAGES } from '@/constants'
+import { ERROR_MESSAGES } from '@/constants'
+import { appConfig } from '@/config'
+import { logger } from '@/lib/logger'
 
 /**
  * AI服务处理结果接口
@@ -94,8 +96,8 @@ export abstract class AIService {
       const requestConfig: APIRequestConfig = {
         model: this.config.model,
         messages,
-        temperature: API_CONFIG.DEFAULT_TEMPERATURE,
-        max_tokens: API_CONFIG.DEFAULT_MAX_TOKENS,
+        temperature: appConfig.ai.defaults.temperature,
+        max_tokens: appConfig.ai.defaults.maxTokens,
       }
 
       const response = await fetch(this.config.apiUrl, {
@@ -109,7 +111,7 @@ export abstract class AIService {
 
       if (!response.ok) {
         const errorText = await response.text()
-        this.logError(`API调用失败 [${response.status}]: ${errorText}`)
+        this.logError(`API调用失败 [${response.status}]`, { errorText })
         throw new Error(`${ERROR_MESSAGES.API_CALL_FAILED}: ${response.status}`)
       }
 
@@ -219,7 +221,7 @@ export abstract class AIService {
    * @param details 错误详情
    */
   protected logError(message: string, details?: any): void {
-    console.error(`[${this.serviceName}] ${message}`, details || '')
+    logger.error(message, details, this.serviceName)
   }
 
   /**
@@ -229,7 +231,7 @@ export abstract class AIService {
    * @param details 详情
    */
   protected logInfo(message: string, details?: any): void {
-    console.log(`[${this.serviceName}] ${message}`, details || '')
+    logger.info(message, details, this.serviceName)
   }
 
   /**
