@@ -48,7 +48,7 @@ export class NanoBananaService extends AIService {
 
       this.logInfo('处理完成', {
         designTemplate: designJson.template_type,
-        svgLength: svgContent.length
+        svgLength: svgContent.length,
       })
 
       return { svgContent, designJson }
@@ -64,11 +64,12 @@ export class NanoBananaService extends AIService {
   private async executeStageA(text: string, options?: GenerationOptions): Promise<DesignJSON> {
     this.logInfo('开始阶段A - 设计分析')
 
-    const userPrompt = createNanoBananaStageAUserPrompt(text, { styleChoice: options?.styleChoice })
+    const opt = options?.styleChoice ? { styleChoice: options.styleChoice } : {}
+    const userPrompt = createNanoBananaStageAUserPrompt(text, opt as any)
 
     const messages: AIMessage[] = [
       { role: 'system', content: NANOBANANA_STAGE_A_SYSTEM },
-      { role: 'user', content: [{ type: 'text', text: userPrompt }] }
+      { role: 'user', content: [{ type: 'text', text: userPrompt }] },
     ]
 
     const jsonResponse = await this.callAPI(messages)
@@ -89,14 +90,18 @@ export class NanoBananaService extends AIService {
   /**
    * 执行阶段B：生成SVG
    */
-  private async executeStageB(designJson: DesignJSON, options?: GenerationOptions): Promise<string> {
+  private async executeStageB(
+    designJson: DesignJSON,
+    options?: GenerationOptions
+  ): Promise<string> {
     this.logInfo('开始阶段B - SVG渲染')
 
-    const userPrompt = createNanoBananaStageBUserPrompt(JSON.stringify(designJson), options?.styleChoice)
+    const style = options?.styleChoice ?? 'standard'
+    const userPrompt = createNanoBananaStageBUserPrompt(JSON.stringify(designJson), style)
 
     const messages: AIMessage[] = [
       { role: 'system', content: NANOBANANA_STAGE_B_SYSTEM },
-      { role: 'user', content: [{ type: 'text', text: userPrompt }] }
+      { role: 'user', content: [{ type: 'text', text: userPrompt }] },
     ]
 
     const svgResponse = await this.callAPI(messages)

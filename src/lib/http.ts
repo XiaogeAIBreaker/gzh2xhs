@@ -5,7 +5,9 @@ export function jsonOk<T extends Record<string, any>>(
   status = 200,
   headers?: Record<string, string>
 ) {
-  return NextResponse.json(data, { status, headers })
+  const init: ResponseInit = { status }
+  if (headers) init.headers = new Headers(headers)
+  return NextResponse.json(data, init)
 }
 
 export function jsonError(
@@ -14,5 +16,7 @@ export function jsonError(
   details?: any,
   headers?: Record<string, string>
 ) {
-  return NextResponse.json({ success: false, error: message, details }, { status, headers })
+  const init: ResponseInit = { status }
+  if (headers) init.headers = new Headers(headers)
+  return NextResponse.json({ success: false, error: message, details }, init)
 }

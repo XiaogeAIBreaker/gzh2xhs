@@ -46,7 +46,7 @@ export class DeepSeekService extends AIService {
 
       this.logInfo('处理完成', {
         designTemplate: designJson.template_type,
-        svgLength: svgContent.length
+        svgLength: svgContent.length,
       })
 
       return { svgContent, designJson }
@@ -62,9 +62,10 @@ export class DeepSeekService extends AIService {
   private async executeStageA(text: string, options?: GenerationOptions): Promise<DesignJSON> {
     this.logInfo('开始阶段A - 设计分析')
 
+    const opt = options?.styleChoice ? { styleChoice: options.styleChoice } : {}
     const messages: AIMessage[] = [
       { role: 'system', content: DEEPSEEK_STAGE_A_SYSTEM },
-      { role: 'user', content: createStageAUserPrompt(text, { styleChoice: options?.styleChoice }) }
+      { role: 'user', content: createStageAUserPrompt(text, opt as any) },
     ]
 
     const jsonResponse = await this.callAPI(messages)
@@ -86,12 +87,16 @@ export class DeepSeekService extends AIService {
   /**
    * 执行阶段B：生成SVG
    */
-  private async executeStageB(designJson: DesignJSON, options?: GenerationOptions): Promise<string> {
+  private async executeStageB(
+    designJson: DesignJSON,
+    options?: GenerationOptions
+  ): Promise<string> {
     this.logInfo('开始阶段B - SVG渲染')
 
+    const style = options?.styleChoice ?? 'standard'
     const messages: AIMessage[] = [
       { role: 'system', content: DEEPSEEK_STAGE_B_SYSTEM },
-      { role: 'user', content: createStageBUserPrompt(JSON.stringify(designJson), options?.styleChoice) }
+      { role: 'user', content: createStageBUserPrompt(JSON.stringify(designJson), style) },
     ]
 
     const svgResponse = await this.callAPI(messages)

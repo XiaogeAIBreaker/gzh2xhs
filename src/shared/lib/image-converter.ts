@@ -68,7 +68,7 @@ export async function convertSvgToPng(svgContent: string): Promise<Buffer> {
     const htmlContent = createHtmlWrapper(svgContent)
     await page.setContent(htmlContent)
     await page.waitForTimeout(IMAGE_CONVERTER_CONFIG.RENDER_TIMEOUT)
-    const pngBuffer = await withLimit(() =>
+    const pngBuffer = (await withLimit(() =>
       page.screenshot({
         type: 'png',
         fullPage: false,
@@ -79,7 +79,7 @@ export async function convertSvgToPng(svgContent: string): Promise<Buffer> {
           height: APP_CONSTANTS.CARD_SIZE.HEIGHT,
         },
       })
-    )
+    )) as Buffer
     logger.info('Playwright渲染完成，emoji正确显示', undefined, 'ImageConverter')
     return pngBuffer
   } catch (error) {
@@ -192,17 +192,19 @@ function getResizeOptions() {
 }
 
 async function tryProcessMethods(methods: Array<() => Promise<Buffer>>): Promise<Buffer> {
-  for (let i = 0; i < methods.length; i++) {
+  let idx = 0
+  for (const fn of methods) {
     try {
-      const result = await methods[i]()
-      logger.info(`方法${i + 1}成功`, { outputBytes: result.length }, 'ImageConverter')
+      const result = await fn()
+      logger.info(`方法${idx + 1}成功`, { outputBytes: result.length }, 'ImageConverter')
       return result
     } catch (methodError) {
-      logger.error(`方法${i + 1}失败`, methodError, 'ImageConverter')
-      if (i === methods.length - 1) {
+      logger.error(`方法${idx + 1}失败`, methodError, 'ImageConverter')
+      if (idx === methods.length - 1) {
         throw methodError
       }
     }
+    idx += 1
   }
   throw new Error(ERROR_MESSAGES.IMAGE_CONVERSION_FAILED)
 }
