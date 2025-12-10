@@ -11,6 +11,7 @@ interface CardPreviewProps {
 export function CardPreview({ card }: CardPreviewProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const { downloadSingleCard } = useExport()
+  const [tilt, setTilt] = useState<string>('')
 
   const handleDownload = async () => {
     await downloadSingleCard(card)
@@ -18,9 +19,22 @@ export function CardPreview({ card }: CardPreviewProps) {
 
   return (
     <>
-      <div className="glass-card rounded-lg overflow-hidden group transition-shadow shine-overlay shadow-neon">
+      <div className="glass-card rounded-lg overflow-hidden group transition-shadow shine-overlay shadow-neon tilt-3d">
         {/* 卡片图片 */}
-        <div className="aspect-[3/4] bg-white/5 cursor-pointer" onClick={() => setIsExpanded(true)}>
+        <div
+          className="aspect-[3/4] bg-white/5 cursor-pointer tilt-inner"
+          style={{ transform: tilt }}
+          onMouseMove={(e) => {
+            const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect()
+            const x = e.clientX - rect.left
+            const y = e.clientY - rect.top
+            const rx = ((y / rect.height) - 0.5) * -8
+            const ry = ((x / rect.width) - 0.5) * 8
+            setTilt(`rotateX(${rx}deg) rotateY(${ry}deg) translateZ(8px)`)
+          }}
+          onMouseLeave={() => setTilt('')}
+          onClick={() => setIsExpanded(true)}
+        >
           <img
             src={card.imageUrl}
             alt={`小红书卡片 ${card.template}`}
@@ -49,9 +63,9 @@ export function CardPreview({ card }: CardPreviewProps) {
       </div>
 
       {/* 放大预览模态框 */}
-      {isExpanded && (
-        <div className="fixed inset-0 z-50 p-4 flex items-center justify-center" onClick={() => setIsExpanded(false)}>
-          <div className="absolute inset-0 bg-black/70 backdrop-blur" />
+        {isExpanded && (
+          <div className="fixed inset-0 z-50 p-4 flex items-center justify-center" onClick={() => setIsExpanded(false)}>
+            <div className="absolute inset-0 bg-black/70 backdrop-blur" />
           <div className="relative max-w-md max-h-full glass-card rounded-lg shadow-neon">
             <img
               src={card.imageUrl}

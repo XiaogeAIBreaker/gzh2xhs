@@ -21,6 +21,7 @@ const GenerateSchema = z.object({
   text: z.string().min(1, ERROR_MESSAGES.EMPTY_INPUT).max(APP_CONSTANTS.MAX_TEXT_LENGTH, ERROR_MESSAGES.TEXT_TOO_LONG),
   model: z.enum(['deepseek', 'nanobanana']),
   style: z.enum(['simple', 'standard', 'rich']).optional(),
+  size: z.enum(['1:1', '4:5', '9:16']).optional(),
 })
 
 const limiter = createRateLimiter(appConfig.features.rateLimit)
@@ -57,7 +58,7 @@ export async function POST(req: NextRequest) {
       return createErrorResponse(msg)
     }
 
-    const { text, model, style } = parsed.data
+    const { text, model, style, size } = parsed.data
 
     logger.info('开始处理生成请求', { textLength: text.length, model, style }, 'Generate')
 
@@ -68,7 +69,7 @@ export async function POST(req: NextRequest) {
     copytext = await generateCopytext(text)
 
     // 生成卡片
-    const card = await generateCard(text, model, style)
+    const card = await generateCard(text, model, style, size)
 
     if (card) {
       cards.push(card)
@@ -106,7 +107,8 @@ async function generateCopytext(text: string): Promise<string> {
 async function generateCard(
   text: string,
   model: AIModel,
-  style?: 'simple' | 'standard' | 'rich'
+  style?: 'simple' | 'standard' | 'rich',
+  size?: '1:1' | '4:5' | '9:16'
   ): Promise<GeneratedCard | null> {
   try {
     const aiService = createAIService(model)
@@ -125,7 +127,8 @@ async function generateCard(
       id: `${model}-${Date.now()}`,
       imageUrl,
       template: (designJson.template_type || 'standard') as any,
-      model
+      model,
+      size: size || '1:1'
     }
 
     logger.info(`${model}卡片生成成功`, { template: card.template, svgLength: svgContent.length, imageUrlLength: imageUrl.length }, 'Generate')

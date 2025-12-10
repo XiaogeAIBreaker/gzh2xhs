@@ -12,6 +12,7 @@ import { createRateLimiter } from '@/lib/rateLimiter'
 
 const ExportSchema = z.object({
   images: z.array(z.object({ dataUrl: z.string().min(1), id: z.string().optional() })).min(1),
+  namePrefix: z.string().optional(),
 })
 
 const limiter = createRateLimiter(appConfig.features.rateLimit)
@@ -29,7 +30,7 @@ export async function POST(req: NextRequest) {
     if (!parsed.success) {
       return jsonError('没有要导出的卡片', 400)
     }
-    const { images } = parsed.data
+    const { images, namePrefix } = parsed.data
 
     // 创建ZIP文件
     const zip = new JSZip()
@@ -39,13 +40,15 @@ export async function POST(req: NextRequest) {
       try {
         const pngBuffer = await convertBase64ToPng(item.dataUrl)
         if (!pngBuffer) throw new Error(ERROR_MESSAGES.IMAGE_CONVERSION_FAILED)
-        zip.file(`小红书卡片_${i + 1}.png`, pngBuffer)
+        const fileName = `${namePrefix || '小红书卡片'}_${i + 1}.png`
+        zip.file(fileName, pngBuffer)
       } catch (e) {
         const placeholder = Buffer.from(
           'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==',
           'base64'
         )
-        zip.file(`小红书卡片_${i + 1}.png`, placeholder)
+        const fileName = `${namePrefix || '小红书卡片'}_${i + 1}.png`
+        zip.file(fileName, placeholder)
       }
     }
 

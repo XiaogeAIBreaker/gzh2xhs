@@ -2,9 +2,23 @@
 
 import { useApp } from '@/context/AppContext'
 import { CardPreview } from './CardPreview'
+import { motion } from 'framer-motion'
+import { showToast } from './Toast'
 
 export function Canvas() {
-  const { state } = useApp()
+  const { state, updateState } = useApp()
+  // 持久化上次生成结果
+  if (typeof window !== 'undefined') {
+    try {
+      if (state.generatedCards.length > 0 || state.generatedCopytext) {
+        const payload = {
+          cards: state.generatedCards,
+          copy: state.generatedCopytext,
+        }
+        window.localStorage.setItem('app:last', JSON.stringify(payload))
+      }
+    } catch {}
+  }
   if (state.isGenerating) {
     return (
       <div className="h-full flex items-center justify-center">
@@ -28,7 +42,7 @@ export function Canvas() {
   if (state.generatedCards.length === 0 && !state.isGenerating) {
     return (
       <div className="h-full flex items-center justify-center">
-        <div className="text-center max-w-md animate-float">
+        <motion.div className="text-center max-w-md" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
           <div className="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center glass-card">
             <svg className="w-12 h-12 text-neon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -36,7 +50,23 @@ export function Canvas() {
           </div>
           <h2 className="text-xl font-semibold text-space-fg mb-2">开始创作小红书卡片</h2>
           <p className="opacity-70">在左侧输入公众号内容，选择模型，点击生成即可开始</p>
-        </div>
+          <div className="mt-4">
+            <button
+              onClick={() => {
+                try {
+                  const raw = window.localStorage.getItem('app:last')
+                  if (!raw) return
+                  const data = JSON.parse(raw)
+                  updateState({ generatedCards: data.cards || [], generatedCopytext: data.copy || '' })
+                  showToast('已恢复上次结果', 'info')
+                } catch {}
+              }}
+              className="btn-glow px-4 py-2 rounded-md text-sm bg-white/10 hover:bg-white/15"
+            >
+              恢复上次结果
+            </button>
+          </div>
+        </motion.div>
       </div>
     )
   }
@@ -74,6 +104,7 @@ export function Canvas() {
               <button
                 onClick={() => {
                   navigator.clipboard.writeText(state.generatedCopytext)
+                  showToast('文案已复制', 'success')
                 }}
                 className="btn-glow w-full px-4 py-2 rounded-md text-sm text-space-fg bg-white/10 hover:bg-white/15"
               >

@@ -8,6 +8,9 @@ import { APP_CONSTANTS } from '@/constants'
 import { GlowButton } from '@/components/GlowButton'
 import { SegmentedControl } from '@/components/SegmentedControl'
 import { ProgressRing } from '@/components/ProgressRing'
+import { Sparkles, Layers, Type } from 'lucide-react'
+import TemplateGallery from '@/components/TemplateGallery'
+import { useEffect } from 'react'
 
 export function Sidebar() {
   const { state, updateState } = useApp()
@@ -36,11 +39,26 @@ export function Sidebar() {
     await exportAllCards(state.generatedCards)
   }
 
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const isCmd = e.metaKey || e.ctrlKey
+      if (isCmd && e.key === 'Enter') {
+        if (!state.isGenerating && state.inputText.trim()) {
+          e.preventDefault()
+          handleGenerate()
+        }
+      }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [state.isGenerating, state.inputText])
+
   return (
     <div className="h-full flex flex-col p-6 text-space-fg">
       {/* 标题 */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-2 tracking-tight">
+        <h1 className="text-2xl font-bold mb-2 tracking-tight flex items-center gap-2">
+          <Sparkles size={18} className="text-neon" />
           公众号转小红书
         </h1>
         <p className="text-sm opacity-70">
@@ -68,7 +86,7 @@ export function Sidebar() {
 
       {/* AI模型选择 */}
       <div className="mb-6">
-        <label className="block text-sm font-medium mb-2">AI模型选择</label>
+        <label className="block text-sm font-medium mb-2 flex items-center gap-2"><Layers size={16} />AI模型选择</label>
         <SegmentedControl
           options={[
             { label: 'DeepSeek', value: 'deepseek' },
@@ -82,7 +100,7 @@ export function Sidebar() {
 
       {/* 卡片款式（信息密度） */}
       <div className="mb-6">
-        <label className="block text-sm font-medium mb-2">卡片款式（按信息密度）</label>
+        <label className="block text-sm font-medium mb-2 flex items-center gap-2"><Type size={16} />卡片款式（按信息密度）</label>
         <SegmentedControl
           options={[
             { label: '标题为主', value: 'simple' },
@@ -92,6 +110,12 @@ export function Sidebar() {
           value={state.selectedStyle}
           onChange={handleStyleChange}
         />
+      </div>
+
+      {/* 模板库预览 */}
+      <div className="mb-6">
+        <label className="block text-sm font-medium mb-2">模板库</label>
+        <TemplateGallery value={state.selectedStyle} onChange={handleStyleChange} />
       </div>
 
       {/* 生成按钮 */}

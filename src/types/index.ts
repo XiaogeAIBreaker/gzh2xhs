@@ -27,6 +27,7 @@ export interface GeneratedCard {
   imageUrl: string
   template: CardTemplate
   model: AIModel
+  size?: '1:1' | '4:5' | '9:16'
 }
 
 // 应用状态
