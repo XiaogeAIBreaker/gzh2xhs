@@ -7,16 +7,15 @@ import { Canvas } from '@/components/Canvas'
 export default function Home() {
   return (
     <AppProvider>
-      <main className="min-h-screen bg-gray-50">
-        <div className="flex h-screen">
-          {/* 左侧操作栏 - 30% */}
-          <div className="w-[30%] bg-white border-r border-gray-200 shadow-sm">
-            <Sidebar />
-          </div>
-
-          {/* 右侧画布 - 70% */}
-          <div className="w-[70%] bg-gray-50">
-            <Canvas />
+      <main className="min-h-screen">
+        <div className="container mx-auto px-6 py-8">
+          <div className="flex gap-6 h-[calc(100vh-4rem)]">
+            <div className="w-[30%] glass-card rounded-xl shadow-neon overflow-hidden">
+              <Sidebar />
+            </div>
+            <div className="w-[70%] glass-card rounded-xl shadow-neon overflow-hidden glow">
+              <Canvas />
+            </div>
           </div>
         </div>
       </main>
