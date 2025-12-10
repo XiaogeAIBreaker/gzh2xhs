@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+export const runtime = 'nodejs'
 import JSZip from 'jszip'
 import type { ExportRequest } from '@/types/api'
 import { convertBase64ToPng } from '@/lib/image-converter'

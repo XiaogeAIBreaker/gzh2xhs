@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+export const runtime = 'nodejs'
 import { createAIService } from '@/services'
 import { generateXiaohongshuCopytext } from '@/services/copytext'
 import { convertSvgToPng, createTempImageUrl } from '@/lib/image-converter'

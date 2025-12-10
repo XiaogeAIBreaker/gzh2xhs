@@ -6,6 +6,7 @@ const EnvSchema = z.object({
   DEEPSEEK_API_URL: z.string().url().default('https://api.deepseek.com/chat/completions'),
   APICORE_AI_KEY: z.string().optional().default(''),
   NANOBANANA_API_URL: z.string().url().default('https://kg-api.cloud/v1/chat/completions'),
+  REDIS_URL: z.string().optional().default(''),
 })
 
 const parsed = EnvSchema.safeParse(process.env)
@@ -17,6 +18,9 @@ const env = parsed.data
 
 export const appConfig = {
   env: env.NODE_ENV,
+  runtime: {
+    redisUrl: env.REDIS_URL,
+  },
   ai: {
     defaults: {
       temperature: 0.7,
@@ -42,4 +46,3 @@ export const appConfig = {
     },
   },
 }
-
