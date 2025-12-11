@@ -57,10 +57,11 @@ export async function convertSvgToPng(svgContent: string): Promise<Buffer> {
   }
 
   let browser: any = null
+  let page: any = null
   try {
     logger.info('开始使用Playwright渲染SVG，支持emoji显示', undefined, 'ImageConverter')
     browser = await getBrowser()
-    const page = await browser.newPage()
+    page = await browser.newPage()
     await page.setViewportSize({
       width: APP_CONSTANTS.CARD_SIZE.WIDTH,
       height: APP_CONSTANTS.CARD_SIZE.HEIGHT,
@@ -99,7 +100,9 @@ export async function convertSvgToPng(svgContent: string): Promise<Buffer> {
       )
     }
   } finally {
-    // 使用共享浏览器实例，不在此处关闭
+    try {
+      await page?.close()
+    } catch {}
   }
 }
 

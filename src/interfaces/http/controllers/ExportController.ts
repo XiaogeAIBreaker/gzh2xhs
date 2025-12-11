@@ -1,19 +1,14 @@
 import { NextRequest } from 'next/server'
-import { z } from 'zod'
 import { jsonError } from '@/lib/http'
 import { logger } from '@/lib/logger'
 import { ExportImagesUseCase } from '@/application/usecases/ExportImagesUseCase'
-
-const ExportSchema = z.object({
-  images: z.array(z.object({ dataUrl: z.string().min(1), id: z.string().optional() })).min(1),
-  namePrefix: z.string().optional(),
-})
+import { ExportRequestSchema } from '@/types/schemas'
 
 export class ExportController {
   async post(req: NextRequest): Promise<Response> {
     try {
       const body: unknown = await req.json()
-      const parsed = ExportSchema.safeParse(body)
+      const parsed = ExportRequestSchema.safeParse(body)
       if (!parsed.success) {
         return jsonError('没有要导出的卡片', 400)
       }

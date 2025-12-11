@@ -30,6 +30,13 @@
 - 性能与缓存：Playwright 浏览器实例复用与并发限制；生成接口添加内存 TTL 缓存与 `Cache-Control/ETag`
 - 测试与CI：Vitest 覆盖率配置，新增缓存单测；CI 增加 Node 18/20 矩阵与覆盖率产物上传
 
+### 本次优化补充
+
+- 请求校验集中化：新增 `src/types/schemas.ts`，统一 `Generate/Export` 路由的 Zod 校验
+- IP 获取统一：在 `src/lib/http.ts` 增加 `getClientIp`，清理控制器内重复解析逻辑
+- Playwright 资源管理：`convertSvgToPng` 渲染后主动关闭页面，避免内存泄漏
+- 全量回归：所有 Vitest 用例保持通过，确保行为不变
+
 ## 企业级改造要点（本次重构新增）
 
 - **统一配置与校验**：`src/config/` 使用 `zod` 对环境变量进行强校验并提供类型化 `appConfig`

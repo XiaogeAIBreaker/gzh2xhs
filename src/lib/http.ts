@@ -20,3 +20,10 @@ export function jsonError(
   if (headers) init.headers = new Headers(headers)
   return NextResponse.json({ success: false, error: message, details }, init)
 }
+
+export function getClientIp(req: Request & { headers: Headers }): string | undefined {
+  const xfwd = req.headers.get('x-forwarded-for')
+  const xreal = req.headers.get('x-real-ip')
+  const ip = (xfwd || xreal || '').split(',')[0].trim()
+  return ip || undefined
+}
