@@ -7,21 +7,35 @@ import { GenerateCardUseCase } from '@/application/usecases/GenerateCardUseCase'
 import { createRequestContainer } from '@/container'
 import { ERROR_MESSAGES } from '@/constants'
 import { GenerateRequestSchema } from '@/types/schemas'
+import { createRateLimiter } from '@/shared/lib/rateLimiter'
+import { cacheGet, cacheSet, makeKey } from '@/shared/lib/cache'
 
 export class GenerateController {
     async post(req: NextRequest): Promise<NextResponse> {
         const start = Date.now()
         const variant = this.getVariant(req)
+        const traceId = this.getTraceId(req)
+        const ip = getClientIp(req)
+        const idemKey = req.headers.get('x-idempotency-key') || undefined
+        const limiter = createRateLimiter({ windowMs: 60_000, max: 60 })
+        const allowed = await limiter.allow(makeKey(['gen', ip]))
+        if (!allowed)
+            return jsonError('RATE_LIMITED', '访问过于频繁', 429, undefined, undefined, traceId)
+
+        if (idemKey) {
+            const cached = cacheGet<any>(makeKey(['gen', idemKey]))
+            if (cached) return jsonOk(cached, 200)
+        }
 
         try {
             const body: unknown = await req.json()
             const parsed = GenerateRequestSchema.safeParse(body)
             if (!parsed.success) return this.handleValidationFail(req, parsed.error)
-            const ip = getClientIp(req)
             const c = createRequestContainer({ ip })
             const uc = new GenerateCardUseCase(c)
             const data = await uc.execute({ ...parsed.data, ip, variant: variant as any })
 
+            if (idemKey) cacheSet(makeKey(['gen', idemKey]), data, 10 * 60_000)
             return this.handleOk(req, data, variant, start)
         } catch (error) {
             return this.handleError(req, error, variant, start)

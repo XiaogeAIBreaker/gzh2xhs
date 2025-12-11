@@ -29,20 +29,20 @@ export { NanoBananaService } from './nanobanana'
  * ```
  */
 export function createAIService(model: AIModel) {
-  switch (model) {
-    case 'deepseek':
-      return new DeepSeekService({
-        apiKey: appConfig.ai.deepseek.apiKey,
-        apiUrl: appConfig.ai.deepseek.apiUrl,
-        model: appConfig.ai.deepseek.model,
-      })
-    case 'nanobanana':
-      return new NanoBananaService({
-        apiKey: appConfig.ai.nanobanana.apiKey,
-        apiUrl: appConfig.ai.nanobanana.apiUrl,
-        model: appConfig.ai.nanobanana.model,
-      })
-    default:
-      throw new Error(`不支持的AI模型: ${model}`)
-  }
+    switch (model) {
+        case 'deepseek':
+            return new DeepSeekService({
+                apiKey: appConfig.ai.deepseek.apiKey,
+                apiUrl: appConfig.ai.deepseek.apiUrl,
+                model: appConfig.ai.deepseek.model,
+            })
+        case 'nanobanana':
+            return new NanoBananaService({
+                apiKey: appConfig.ai.nanobanana.apiKey,
+                apiUrl: appConfig.ai.nanobanana.apiUrl,
+                model: appConfig.ai.nanobanana.model,
+            })
+        default:
+            throw new Error(`不支持的AI模型: ${model}`)
+    }
 }

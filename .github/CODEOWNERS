@@ -1,0 +1,10 @@
+# 能力圈评审人（占位符，请按实际 GitHub 团队/用户名替换）
+src/domain/finance/**     @finance-expert
+src/interfaces/http/**    @platform-expert
+src/shared/lib/**         @platform-expert
+src/lib/**                @platform-expert
+src/app/api/**            @platform-expert
+src/application/**        @architecture-owner
+tests/**                  @qa-owner
+docs/**                   @docs-owner
+

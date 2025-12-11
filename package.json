@@ -1,59 +1,60 @@
 {
-  "name": "gzh2xhs",
-  "version": "0.2.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "test": "vitest run",
-    "test:coverage": "vitest run --coverage",
-    "typecheck": "tsc --noEmit",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "prepare": "husky install",
-    "dep:json": "depcruise --config dependency-cruiser.config.cjs --output-type json src > docs/deps.json"
-  },
-  "dependencies": {
-    "autoprefixer": "^10.4.21",
-    "framer-motion": "^12.23.25",
-    "ioredis": "^5.4.1",
-    "jszip": "^3.10.1",
-    "lucide-react": "^0.556.0",
-    "next": "14.2.18",
-    "playwright": "^1.55.0",
-    "react": "^18",
-    "react-dom": "^18",
-    "sharp": "^0.32.6",
-    "zod": "^3.23.8"
-  },
-  "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "@vitest/coverage-v8": "^2.1.9",
-    "dependency-cruiser": "^16.10.4",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.18",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-unused-imports": "^3.2.0",
-    "husky": "^9.1.0",
-    "lint-staged": "^15.2.2",
-    "postcss": "^8",
-    "prettier": "^3.3.3",
-    "prettier-plugin-tailwindcss": "^0.5.14",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5",
-    "vitest": "^2.0.5"
-  },
-  "lint-staged": {
-    "**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "**/*.{json,md,css}": [
-      "prettier --write"
-    ]
-  }
+    "name": "gzh2xhs",
+    "version": "0.2.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "test": "vitest run",
+        "test:coverage": "vitest run --coverage",
+        "typecheck": "tsc --noEmit",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "prepare": "husky install",
+        "dep:json": "depcruise --config dependency-cruiser.config.cjs --output-type json src > docs/deps.json",
+        "dep:check": "depcruise --config dependency-cruiser.config.cjs src"
+    },
+    "dependencies": {
+        "autoprefixer": "^10.4.21",
+        "framer-motion": "^12.23.25",
+        "ioredis": "^5.4.1",
+        "jszip": "^3.10.1",
+        "lucide-react": "^0.556.0",
+        "next": "14.2.18",
+        "playwright": "^1.55.0",
+        "react": "^18",
+        "react-dom": "^18",
+        "sharp": "^0.32.6",
+        "zod": "^3.23.8"
+    },
+    "devDependencies": {
+        "@types/node": "^20",
+        "@types/react": "^18",
+        "@types/react-dom": "^18",
+        "@vitest/coverage-v8": "^2.1.9",
+        "dependency-cruiser": "^16.10.4",
+        "eslint": "^8",
+        "eslint-config-next": "14.2.18",
+        "eslint-plugin-import": "^2.31.0",
+        "eslint-plugin-unused-imports": "^3.2.0",
+        "husky": "^9.1.0",
+        "lint-staged": "^15.2.2",
+        "postcss": "^8",
+        "prettier": "^3.3.3",
+        "prettier-plugin-tailwindcss": "^0.5.14",
+        "tailwindcss": "^3.4.1",
+        "typescript": "^5",
+        "vitest": "^2.0.5"
+    },
+    "lint-staged": {
+        "**/*.{js,jsx,ts,tsx}": [
+            "eslint --fix",
+            "prettier --write"
+        ],
+        "**/*.{json,md,css}": [
+            "prettier --write"
+        ]
+    }
 }

@@ -203,20 +203,20 @@ npm run test     # 运行单元测试（Vitest）
 ### 常见问题
 
 1. **Emoji显示异常**
-   - 确认已安装Playwright Chromium: `npx playwright install chromium`
+    - 确认已安装Playwright Chromium: `npx playwright install chromium`
 
 2. **AI API调用失败**
-   - 检查 `DEEPSEEK_API_KEY` 和 `APICORE_AI_KEY` 环境变量配置
-   - 确认API密钥有效且有足够配额
-   - 检查API服务地址是否正确
+    - 检查 `DEEPSEEK_API_KEY` 和 `APICORE_AI_KEY` 环境变量配置
+    - 确认API密钥有效且有足够配额
+    - 检查API服务地址是否正确
 
 3. **内存不足**
-   - Playwright需要更多内存，考虑升级服务器配置
-   - 建议至少2GB内存用于Chromium浏览器实例
+    - Playwright需要更多内存，考虑升级服务器配置
+    - 建议至少2GB内存用于Chromium浏览器实例
 
 4. **模型无响应**
-   - 重构后不再有自动fallback，需手动切换模型
-   - 检查具体的错误信息进行针对性排查
+    - 重构后不再有自动fallback，需手动切换模型
+    - 检查具体的错误信息进行针对性排查
 
 更多技术细节参考：[生成卡片prompt设计](./docs/生成卡片prompt设计.md)
 

@@ -5,15 +5,15 @@ import type { GenerationOptions } from '@/services/types'
  * 提示词配置
  */
 const PROMPT_CONFIG = {
-  /** 款式说明 */
-  STYLE_DESCRIPTIONS: {
-    simple: '仅 1–2 行强冲击标题；可选 1–2 个关键词高亮；无需长段正文',
-    standard: '3–5 条要点清单；标题中等偏大，可有 CTA；结构简洁',
-    rich: '6–9 条要点或 2–3 段摘要；可分区/卡片化展示，层级清晰'
-  },
+    /** 款式说明 */
+    STYLE_DESCRIPTIONS: {
+        simple: '仅 1–2 行强冲击标题；可选 1–2 个关键词高亮；无需长段正文',
+        standard: '3–5 条要点清单；标题中等偏大，可有 CTA；结构简洁',
+        rich: '6–9 条要点或 2–3 段摘要；可分区/卡片化展示，层级清晰',
+    },
 
-  /** JSON Schema 模板 */
-  JSON_SCHEMA: `{
+    /** JSON Schema 模板 */
+    JSON_SCHEMA: `{
   "template_type": "simple" | "standard" | "rich",
   "palette": { "bg": string, "text": string, "accent": string, "accent2"?: string },
   "title_lines": string[],
@@ -40,13 +40,13 @@ const PROMPT_CONFIG = {
   "content_density"?: number
 }`,
 
-  /** SVG 渲染规则 */
-  SVG_RULES: {
-    CANVAS: `width="${PROMPT_CONSTANTS.CANVAS.WIDTH}" height="${PROMPT_CONSTANTS.CANVAS.HEIGHT}" viewBox="${PROMPT_CONSTANTS.CANVAS.VIEWBOX}"`,
-    FONT_FAMILY: PROMPT_CONSTANTS.FONT_FAMILY,
-    MAX_CHARS_PER_LINE: PROMPT_CONSTANTS.LAYOUT.MAX_CHARS_PER_LINE,
-    CONTENT_COVERAGE: `${PROMPT_CONSTANTS.LAYOUT.CONTENT_COVERAGE_MIN}–${PROMPT_CONSTANTS.LAYOUT.CONTENT_COVERAGE_MAX}%`,
-  }
+    /** SVG 渲染规则 */
+    SVG_RULES: {
+        CANVAS: `width="${PROMPT_CONSTANTS.CANVAS.WIDTH}" height="${PROMPT_CONSTANTS.CANVAS.HEIGHT}" viewBox="${PROMPT_CONSTANTS.CANVAS.VIEWBOX}"`,
+        FONT_FAMILY: PROMPT_CONSTANTS.FONT_FAMILY,
+        MAX_CHARS_PER_LINE: PROMPT_CONSTANTS.LAYOUT.MAX_CHARS_PER_LINE,
+        CONTENT_COVERAGE: `${PROMPT_CONSTANTS.LAYOUT.CONTENT_COVERAGE_MIN}–${PROMPT_CONSTANTS.LAYOUT.CONTENT_COVERAGE_MAX}%`,
+    },
 } as const
 
 // =============================================================================
@@ -107,19 +107,16 @@ paper_texture：轻微纸纹；glow：主体光晕；scallop_header：波浪页�
  * @param options 生成选项
  * @returns 格式化的用户提示词
  */
-export function createStageAUserPrompt(
-  text: string,
-  options: GenerationOptions = {}
-): string {
-  const {
-    styleChoice = 'standard',
-    mainColor = '',
-    accentColor = '',
-    audience = '泛用户',
-    intent = ''
-  } = options
+export function createStageAUserPrompt(text: string, options: GenerationOptions = {}): string {
+    const {
+        styleChoice = 'standard',
+        mainColor = '',
+        accentColor = '',
+        audience = '泛用户',
+        intent = '',
+    } = options
 
-  return `原文：<<<${text}>>>
+    return `原文：<<<${text}>>>
 STYLE_MODE：${styleChoice}
 可选主色：${mainColor}
 可选强调色：${accentColor}
@@ -134,10 +131,10 @@ STYLE_MODE：${styleChoice}
  * @returns 格式化的用户提示词
  */
 export function createStageBUserPrompt(
-  designJson: string,
-  styleChoice: 'simple' | 'standard' | 'rich' = 'standard'
+    designJson: string,
+    styleChoice: 'simple' | 'standard' | 'rich' = 'standard',
 ): string {
-  return `样式：${styleChoice}\n设计JSON：<<<${designJson}>>>`
+    return `样式：${styleChoice}\n设计JSON：<<<${designJson}>>>`
 }
 
 // =============================================================================
@@ -160,17 +157,17 @@ export const NANOBANANA_STAGE_B_SYSTEM = STAGE_B_SYSTEM_PROMPT
  * NanoBanana专用提示词创建函数（为保持向后兼容性）
  */
 export function createNanoBananaStageAUserPrompt(
-  text: string,
-  options?: GenerationOptions
+    text: string,
+    options?: GenerationOptions,
 ): string {
-  return createStageAUserPrompt(text, options)
+    return createStageAUserPrompt(text, options)
 }
 
 export function createNanoBananaStageBUserPrompt(
-  designJson: string,
-  styleChoice?: 'simple' | 'standard' | 'rich'
+    designJson: string,
+    styleChoice?: 'simple' | 'standard' | 'rich',
 ): string {
-  return createStageBUserPrompt(designJson, styleChoice)
+    return createStageBUserPrompt(designJson, styleChoice)
 }
 
 // =============================================================================
@@ -187,17 +184,17 @@ export const NANOBANANA_LEGACY_PROMPT = `你是"小红书卡片SVG生成器"。�
  * 小红书文案生成提示词配置
  */
 const COPYTEXT_CONFIG = {
-  MIN_LENGTH: 150,
-  MAX_LENGTH: 300,
-  REQUIREMENTS: [
-    '开头要有吸引人的钩子，引起用户好奇心',
-    '使用小红书流行的表达方式和emoji',
-    '内容要简洁有力，突出核心价值',
-    '结尾要有互动性，引导用户点赞、收藏、评论',
-    '整体长度控制在150-300字',
-    '适当使用话题标签 #话题#',
-    '体现小红书用户喜欢的真实、有用、有趣的特点'
-  ]
+    MIN_LENGTH: 150,
+    MAX_LENGTH: 300,
+    REQUIREMENTS: [
+        '开头要有吸引人的钩子，引起用户好奇心',
+        '使用小红书流行的表达方式和emoji',
+        '内容要简洁有力，突出核心价值',
+        '结尾要有互动性，引导用户点赞、收藏、评论',
+        '整体长度控制在150-300字',
+        '适当使用话题标签 #话题#',
+        '体现小红书用户喜欢的真实、有用、有趣的特点',
+    ],
 } as const
 
 /**

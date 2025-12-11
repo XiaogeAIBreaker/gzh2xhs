@@ -5,11 +5,13 @@
 ## 系统架构概述
 
 ### 处理流程
+
 ```
 文本输入 → AI模型选择 → 第一阶段分析 → 第二阶段渲染 → 图片转换 → 卡片输出
 ```
 
 ### 核心特性
+
 - **两阶段处理**：分析设计 → SVG渲染，确保质量稳定
 - **三款式分类**：simple/standard/rich 对应信息密度低/中/高
 - **双AI支持**：DeepSeek和NanoBanana使用统一提示词模板
@@ -123,25 +125,29 @@ APP_CONSTANTS.CARD_SIZE = { WIDTH: 1080, HEIGHT: 1440 }
 
 // 字体配置
 APP_CONSTANTS.EMOJI_FONTS = [
-  "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
-  "PingFang SC", "Microsoft YaHei", "Arial"
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Noto Color Emoji',
+    'PingFang SC',
+    'Microsoft YaHei',
+    'Arial',
 ]
 
 // 布局参数
 PROMPT_CONSTANTS.LAYOUT = {
-  MAX_CHARS_PER_LINE: 14,
-  CONTENT_COVERAGE_MIN: 55,
-  CONTENT_COVERAGE_MAX: 75,
-  TITLE_AREA_RATIO_SIMPLE: 0.65,
-  TITLE_AREA_RATIO_SIMPLE_MAX: 0.75
+    MAX_CHARS_PER_LINE: 14,
+    CONTENT_COVERAGE_MIN: 55,
+    CONTENT_COVERAGE_MAX: 75,
+    TITLE_AREA_RATIO_SIMPLE: 0.65,
+    TITLE_AREA_RATIO_SIMPLE_MAX: 0.75,
 }
 
 // 预定义配色方案
 TEMPLATE_COLORS = {
-  A: { bg: "#FAFAFA", text: "#1A1A1A", accent: "#FF6B35" },
-  B: { bg: "#FFFFFF", text: "#1A1A1A", accent: "#4ECDC4" },
-  C: { bg: "#F8F9FA", text: "#2D3748", accent: "#4169E1" },
-  // ... A-H 共8套配色
+    A: { bg: '#FAFAFA', text: '#1A1A1A', accent: '#FF6B35' },
+    B: { bg: '#FFFFFF', text: '#1A1A1A', accent: '#4ECDC4' },
+    C: { bg: '#F8F9FA', text: '#2D3748', accent: '#4169E1' },
+    // ... A-H 共8套配色
 }
 ```
 
@@ -150,21 +156,21 @@ TEMPLATE_COLORS = {
 ```typescript
 // 核心设计JSON结构（简化版）
 export interface DesignJSON {
-  template_type: 'simple' | 'standard' | 'rich'
-  palette: { bg: string; text: string; accent: string }
-  title_lines: string[]
-  content?: string
-  highlights?: string[]
-  layout?: 'center' | 'left' | 'right'
+    template_type: 'simple' | 'standard' | 'rich'
+    palette: { bg: string; text: string; accent: string }
+    title_lines: string[]
+    content?: string
+    highlights?: string[]
+    layout?: 'center' | 'left' | 'right'
 }
 
 // 生成选项
 export interface GenerationOptions {
-  styleChoice?: 'simple' | 'standard' | 'rich'
-  mainColor?: string
-  accentColor?: string
-  audience?: string
-  intent?: string
+    styleChoice?: 'simple' | 'standard' | 'rich'
+    mainColor?: string
+    accentColor?: string
+    audience?: string
+    intent?: string
 }
 ```
 
@@ -173,20 +179,20 @@ export interface GenerationOptions {
 ```typescript
 // DeepSeek服务 (两阶段处理)
 export class DeepSeekService extends AIService {
-  async process(text: string, options?: GenerationOptions): Promise<AIServiceResult> {
-    // 第一阶段：分析与设计JSON生成
-    const designJson = await this.executeStageA(text, options)
+    async process(text: string, options?: GenerationOptions): Promise<AIServiceResult> {
+        // 第一阶段：分析与设计JSON生成
+        const designJson = await this.executeStageA(text, options)
 
-    // 第二阶段：SVG渲染
-    const svgContent = await this.executeStageB(designJson, options)
+        // 第二阶段：SVG渲染
+        const svgContent = await this.executeStageB(designJson, options)
 
-    return { svgContent, designJson }
-  }
+        return { svgContent, designJson }
+    }
 }
 
 // NanoBanana服务 (复用相同提示词模板)
 export class NanoBananaService extends AIService {
-  // 使用相同的process()逻辑和提示词模板
+    // 使用相同的process()逻辑和提示词模板
 }
 ```
 
@@ -208,16 +214,16 @@ export class NanoBananaService extends AIService {
 
 ```json
 {
-  "success": true,
-  "cards": [
-    {
-      "id": "uuid",
-      "imageUrl": "data:image/png;base64,xxx",
-      "template": "standard",
-      "model": "deepseek"
-    }
-  ],
-  "copytext": "生成的小红书文案"
+    "success": true,
+    "cards": [
+        {
+            "id": "uuid",
+            "imageUrl": "data:image/png;base64,xxx",
+            "template": "standard",
+            "model": "deepseek"
+        }
+    ],
+    "copytext": "生成的小红书文案"
 }
 ```
 
@@ -225,11 +231,11 @@ export class NanoBananaService extends AIService {
 
 1. **输入验证**：检查文本长度 (≤2000字符)、模型类型
 2. **AI服务调用**：
-   - Stage A: 文本分析 → 设计JSON
-   - Stage B: JSON → SVG代码
+    - Stage A: 文本分析 → 设计JSON
+    - Stage B: JSON → SVG代码
 3. **图像转换**：
-   - SVG → PNG: 使用 Playwright (支持emoji)
-   - Base64 → PNG: 使用 Sharp (多策略处理)
+    - SVG → PNG: 使用 Playwright (支持emoji)
+    - Base64 → PNG: 使用 Sharp (多策略处理)
 4. **错误处理**：统一使用 ERROR_MESSAGES 常量
 
 ---
@@ -241,13 +247,13 @@ export class NanoBananaService extends AIService {
 ```typescript
 // 使用Playwright解决emoji渲染问题
 export async function convertSvgToPng(svgContent: string): Promise<Buffer> {
-  const browser = await chromium.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
-  })
+    const browser = await chromium.launch({
+        headless: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    })
 
-  // 创建HTML包装，包含emoji字体
-  const htmlContent = `
+    // 创建HTML包装，包含emoji字体
+    const htmlContent = `
     <html>
       <head>
         <style>
@@ -259,13 +265,13 @@ export async function convertSvgToPng(svgContent: string): Promise<Buffer> {
     </html>
   `
 
-  // 浏览器截图 → PNG
-  const pngBuffer = await page.screenshot({
-    type: 'png',
-    clip: { x: 0, y: 0, width: 1080, height: 1440 }
-  })
+    // 浏览器截图 → PNG
+    const pngBuffer = await page.screenshot({
+        type: 'png',
+        clip: { x: 0, y: 0, width: 1080, height: 1440 },
+    })
 
-  return pngBuffer
+    return pngBuffer
 }
 ```
 
@@ -287,12 +293,12 @@ export async function convertSvgToPng(svgContent: string): Promise<Buffer> {
 ```typescript
 // 统一错误信息 (ERROR_MESSAGES 常量)
 const ERROR_MESSAGES = {
-  EMPTY_INPUT: '请输入要转换的内容',
-  TEXT_TOO_LONG: '内容长度不能超过2000字',
-  API_CALL_FAILED: 'AI API调用失败',
-  INVALID_JSON: '返回的JSON格式无效',
-  INVALID_SVG: '未返回有效的SVG内容',
-  IMAGE_CONVERSION_FAILED: '图片转换失败'
+    EMPTY_INPUT: '请输入要转换的内容',
+    TEXT_TOO_LONG: '内容长度不能超过2000字',
+    API_CALL_FAILED: 'AI API调用失败',
+    INVALID_JSON: '返回的JSON格式无效',
+    INVALID_SVG: '未返回有效的SVG内容',
+    IMAGE_CONVERSION_FAILED: '图片转换失败',
 }
 ```
 
@@ -319,20 +325,20 @@ curl -X POST http://localhost:3000/api/generate \
 ### 常见问题排查
 
 1. **Emoji显示异常**
-   - 确认安装 Playwright: `npx playwright install chromium`
-   - 检查字体配置是否包含emoji字体
+    - 确认安装 Playwright: `npx playwright install chromium`
+    - 检查字体配置是否包含emoji字体
 
 2. **AI API调用失败**
-   - 验证 `.env.local` 中的API密钥配置
-   - 检查API服务可用性和配额
+    - 验证 `.env.local` 中的API密钥配置
+    - 检查API服务可用性和配额
 
 3. **SVG渲染错误**
-   - 验证JSON格式是否符合DesignJSON接口
-   - 检查画布尺寸和字体配置
+    - 验证JSON格式是否符合DesignJSON接口
+    - 检查画布尺寸和字体配置
 
 4. **图片转换失败**
-   - 确认服务器内存充足 (建议≥2GB)
-   - 检查Playwright浏览器进程是否正常关闭
+    - 确认服务器内存充足 (建议≥2GB)
+    - 检查Playwright浏览器进程是否正常关闭
 
 ---
 
@@ -340,6 +346,7 @@ curl -X POST http://localhost:3000/api/generate \
 
 **文档版本**: 2024-09-15 (重构后)
 **代码依赖**:
+
 - `src/lib/prompts.ts` - 提示词模板定义
 - `src/constants/index.ts` - 配置常量管理
 - `src/types/index.ts` - TypeScript类型定义
@@ -349,4 +356,4 @@ curl -X POST http://localhost:3000/api/generate \
 
 ---
 
-*本文档与项目代码实现保持100%同步，可直接用于生产环境部署和AI模型调优。*
+_本文档与项目代码实现保持100%同步，可直接用于生产环境部署和AI模型调优。_

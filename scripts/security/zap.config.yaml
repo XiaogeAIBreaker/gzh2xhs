@@ -1,10 +1,10 @@
 target: http://localhost:3000
 contexts:
-  - name: gzh2xhs
-    includePaths:
-      - http://localhost:3000/.*
-    authentication:
-      method: none
+    - name: gzh2xhs
+      includePaths:
+          - http://localhost:3000/.*
+      authentication:
+          method: none
 scans:
-  passive: true
-  active: false
+    passive: true
+    active: false

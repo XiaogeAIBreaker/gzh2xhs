@@ -14,13 +14,13 @@
 ## 目录与模块重构（渐进）
 
 - 保留 App Router 结构，按“功能切片 + 共享层”组织：
-  - `src/app/*`：页面与 API 路由（仅路由与页面壳）
-  - `src/features/card-generator/*`：卡片生成的组件、hooks、服务协调、types
-  - `src/features/export/*`：导出与打包逻辑（UI 与服务封装）
-  - `src/shared/components/*`：通用 UI（Button、Modal、Canvas 等）
-  - `src/shared/lib/*`：纯函数工具（image、http、logger、rate-limiter、redis）
-  - `src/shared/config/*`、`src/shared/constants/*`、`src/shared/types/*`
-  - `src/process/*`：跨层流程编排（如 A→B 两阶段 AI 流程）
+    - `src/app/*`：页面与 API 路由（仅路由与页面壳）
+    - `src/features/card-generator/*`：卡片生成的组件、hooks、服务协调、types
+    - `src/features/export/*`：导出与打包逻辑（UI 与服务封装）
+    - `src/shared/components/*`：通用 UI（Button、Modal、Canvas 等）
+    - `src/shared/lib/*`：纯函数工具（image、http、logger、rate-limiter、redis）
+    - `src/shared/config/*`、`src/shared/constants/*`、`src/shared/types/*`
+    - `src/process/*`：跨层流程编排（如 A→B 两阶段 AI 流程）
 - 迁移策略：文件逐步移动，保留原导出路径，通过 `@/` 别名兼容一段时间；分 PR 迁移每个功能域
 
 ## 命名与约定
@@ -47,9 +47,9 @@
 ## 性能优化
 
 - 关键路径：
-  - 图像渲染：复用单例浏览器实例（Playwright），并发队列限流；`sharp` 管线化
-  - 缓存：基于“输入参数哈希”的结果缓存（Redis/LRU）；API 设置 `Cache-Control` 与 `ETag`/`SWr`
-  - 资源加载：重组件与编辑器工具栏 `dynamic import`；Tailwind 样式裁剪；去除未使用依赖
+    - 图像渲染：复用单例浏览器实例（Playwright），并发队列限流；`sharp` 管线化
+    - 缓存：基于“输入参数哈希”的结果缓存（Redis/LRU）；API 设置 `Cache-Control` 与 `ETag`/`SWr`
+    - 资源加载：重组件与编辑器工具栏 `dynamic import`；Tailwind 样式裁剪；去除未使用依赖
 - 监控与度量：Next Web Vitals、API 延迟/错误率、限流命中率、命中/回源比
 
 ## 开发体验
