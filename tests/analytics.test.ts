@@ -28,7 +28,7 @@ describe('analytics', () => {
         trackClient('page_view', { session_id: 's1' })
         await new Promise((r) => setTimeout(r, 0))
         expect(spy).toHaveBeenCalled()
-        const arg = spy.mock.calls[0][0]
+        const arg = spy.mock.calls[0]?.[0] ?? ''
         expect(String(arg)).toContain('/api/track')
         spy.mockRestore()
     })

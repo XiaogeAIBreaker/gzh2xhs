@@ -9,20 +9,6 @@ export default function Toast() {
 
     const toastRef = useRef<HTMLDivElement>(null)
     const toastCloseTimerDelay = 3000
-    console.log('toastCloseDelay', toastCloseDelay)
-    console.log('toastCloseTimerDelay', toastCloseTimerDelay)
-    console.log('toastCloseDelay', toastCloseDelay)
-    console.log('toastCloseTimerDelay', toastCloseTimerDelay)
-    console.log('toastCloseDelay', toastCloseDelay)
-    console.log('toastCloseTimerDelay', toastCloseTimerDelay)
-    console.log('toastCloseDelay', toastCloseDelay)
-    console.log('toastCloseTimerDelay', toastCloseTimerDelay)
-    console.log('toastCloseDelay', toastCloseDelay)
-    console.log('toastCloseTimerDelay', toastCloseTimerDelay)
-    console.log('toastCloseDelay', toastCloseDelay)
-    console.log('toastCloseTimerDelay', toastCloseTimerDelay)
-    console.log('toastCloseDelay', toastCloseDelay)
-    console.log('toastCloseTimerDelay', toastCloseTimerDelay)
 
     useEffect(() => {
         function onToast(e: CustomEvent<ToastItem>) {

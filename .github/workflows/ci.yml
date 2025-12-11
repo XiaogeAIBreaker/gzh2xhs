@@ -51,6 +51,15 @@ jobs:
           name: coverage-${{ matrix.node-version }}
           path: coverage
 
+      - name: Run finance benchmarks
+        run: node scripts/bench.ts > bench.json
+
+      - name: Upload benchmark result
+        uses: actions/upload-artifact@v4
+        with:
+          name: bench-${{ matrix.node-version }}
+          path: bench.json
+
       - name: SonarQube Scan
         if: ${{ secrets.SONAR_TOKEN != '' }}
         uses: sonarsource/sonarqube-scan-action@v2.0.0

@@ -40,14 +40,14 @@ export class GenerateController {
         const msg = error.issues?.[0]?.message || '参数错误'
         logger.error('[API] 错误', { error: msg }, 'Generate', this.getTraceId(req))
         counter('api_generate_fail', 1, { reason: 'validation' })
-        const fields = (error.issues || []).reduce<Record<string, string[]>>(
-            (acc: any, issue: any) => {
+        const fields = (error.issues || []).reduce(
+            (acc: Record<string, string[]>, issue: any) => {
                 const path = issue.path?.join('.') || 'request'
                 if (!acc[path]) acc[path] = []
                 acc[path].push(issue.message)
                 return acc
             },
-            {},
+            {} as Record<string, string[]>,
         )
         return jsonError('VALIDATION_ERROR', msg, 400, fields, undefined, this.getTraceId(req))
     }

@@ -282,6 +282,112 @@ export function generateOpenApiDocument(baseUrl: string | undefined) {
                     },
                 },
             },
+            '/api/finance/pricing': {
+                post: {
+                    summary: '金融定价接口',
+                    description: '债券/期权/股票指标定价，使用 action 指示具体计算',
+                    parameters: [
+                        {
+                            name: 'action',
+                            in: 'query',
+                            required: true,
+                            schema: { type: 'string', enum: ['bond', 'option', 'equity'] },
+                        },
+                    ],
+                    requestBody: {
+                        required: true,
+                        content: { 'application/json': { schema: { type: 'object' } } },
+                    },
+                    responses: {
+                        '200': { description: '定价结果', content: { 'application/json': {} } },
+                        '400': {
+                            description: '参数错误',
+                            content: {
+                                'application/json': {
+                                    schema: { $ref: '#/components/schemas/ApiErrorResponse' },
+                                },
+                            },
+                        },
+                        '403': {
+                            description: '访问被拒绝',
+                            content: {
+                                'application/json': {
+                                    schema: { $ref: '#/components/schemas/ApiErrorResponse' },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+            '/api/finance/risk': {
+                post: {
+                    summary: '金融风险接口',
+                    description: 'VaR/敞口/久期/Greeks 计算，使用 action 指示具体计算',
+                    parameters: [
+                        {
+                            name: 'action',
+                            in: 'query',
+                            required: true,
+                            schema: {
+                                type: 'string',
+                                enum: ['var', 'exposure', 'duration', 'greeks'],
+                            },
+                        },
+                    ],
+                    requestBody: {
+                        required: true,
+                        content: { 'application/json': { schema: { type: 'object' } } },
+                    },
+                    responses: {
+                        '200': { description: '风险结果', content: { 'application/json': {} } },
+                        '400': {
+                            description: '参数错误',
+                            content: {
+                                'application/json': {
+                                    schema: { $ref: '#/components/schemas/ApiErrorResponse' },
+                                },
+                            },
+                        },
+                        '403': {
+                            description: '访问被拒绝',
+                            content: {
+                                'application/json': {
+                                    schema: { $ref: '#/components/schemas/ApiErrorResponse' },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+            '/api/finance/report': {
+                post: {
+                    summary: '金融报表接口',
+                    description: '生成定价 CSV 报表',
+                    requestBody: {
+                        required: true,
+                        content: { 'application/json': { schema: { type: 'object' } } },
+                    },
+                    responses: {
+                        '200': { description: '报表生成成功', content: { 'application/json': {} } },
+                        '400': {
+                            description: '参数错误',
+                            content: {
+                                'application/json': {
+                                    schema: { $ref: '#/components/schemas/ApiErrorResponse' },
+                                },
+                            },
+                        },
+                        '403': {
+                            description: '访问被拒绝',
+                            content: {
+                                'application/json': {
+                                    schema: { $ref: '#/components/schemas/ApiErrorResponse' },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
         },
     }
 }
