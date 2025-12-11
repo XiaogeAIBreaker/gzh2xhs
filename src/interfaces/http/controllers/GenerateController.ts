@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { jsonError, jsonOk, getClientIp } from '@/lib/http'
+import { jsonError, jsonOk, getClientIp, jsonErrorFromAppError } from '@/lib/http'
 import { logger } from '@/lib/logger'
 import { counter, observe } from '@/shared/lib/metrics'
 import { trackServer } from '@/shared/lib/analytics'
@@ -12,6 +12,7 @@ export class GenerateController {
     async post(req: NextRequest): Promise<NextResponse> {
         const start = Date.now()
         const variant = this.getVariant(req)
+
         try {
             const body: unknown = await req.json()
             const parsed = GenerateRequestSchema.safeParse(body)
@@ -20,6 +21,7 @@ export class GenerateController {
             const c = createRequestContainer({ ip })
             const uc = new GenerateCardUseCase(c)
             const data = await uc.execute({ ...parsed.data, ip, variant: variant as any })
+
             return this.handleOk(req, data, variant, start)
         } catch (error) {
             return this.handleError(req, error, variant, start)
@@ -45,10 +47,12 @@ export class GenerateController {
                 const path = issue.path?.join('.') || 'request'
                 if (!acc[path]) acc[path] = []
                 acc[path].push(issue.message)
+
                 return acc
             },
             {} as Record<string, string[]>,
         )
+
         return jsonError('VALIDATION_ERROR', msg, 400, fields, undefined, this.getTraceId(req))
     }
 
@@ -57,6 +61,7 @@ export class GenerateController {
         observe('api_generate_latency_ms', ms, { success: true, variant })
         counter('api_generate_ok', 1)
         trackServer(req as any, 'generate_success', { variant })
+
         return jsonOk(data, 200, {
             'Cache-Control': 'public, max-age=60, s-maxage=60, stale-while-revalidate=600',
         })
@@ -68,30 +73,30 @@ export class GenerateController {
         variant: string,
         start: number,
     ): NextResponse {
-        logger.error('未预期错误', error, 'Generate', this.getTraceId(req))
+        const traceId = this.getTraceId(req)
+        logger.error('未预期错误', error, 'Generate', traceId)
         const ms = Date.now() - start
         observe('api_generate_latency_ms', ms, { success: false, variant })
-        const isRateLimited = error instanceof Error && error.message === 'RATE_LIMITED'
+        const isRateLimited = error instanceof Error && (error as any).code === 'RATE_LIMITED'
         const reason = isRateLimited ? 'rate_limited' : 'error'
         counter('api_generate_fail', 1, { reason })
         trackServer(req as any, 'generate_fail', { variant, reason })
-        if (isRateLimited) {
-            return jsonError(
-                'RATE_LIMITED',
-                '触发限流',
-                429,
-                undefined,
-                undefined,
-                this.getTraceId(req),
-            )
+        if (
+            error &&
+            typeof error === 'object' &&
+            (error as any).code &&
+            (error as any).httpStatus
+        ) {
+            return jsonErrorFromAppError(error as any, traceId)
         }
+
         return jsonError(
             'SERVER_ERROR',
             ERROR_MESSAGES.SERVER_ERROR,
             500,
             undefined,
             undefined,
-            this.getTraceId(req),
+            traceId,
         )
     }
 }

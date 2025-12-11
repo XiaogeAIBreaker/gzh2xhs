@@ -1,25 +1,31 @@
 import { describe, it, expect, vi } from 'vitest'
-import { createRateLimiter } from '../src/lib/rateLimiter'
+import { createRateLimiter } from '@/shared/lib/rateLimiter'
 
-describe('rateLimiter', () => {
-  it('allows within window up to max', async () => {
-    const limiter = createRateLimiter({ windowMs: 1000, max: 3 })
-    const key = 'k'
-    expect(await limiter.allow(key)).toBe(true)
-    expect(await limiter.allow(key)).toBe(true)
-    expect(await limiter.allow(key)).toBe(true)
-    expect(await limiter.allow(key)).toBe(false)
-  })
+describe('RateLimiter 回退与滑动窗口', () => {
+    it('Redis 失联时回退到内存限流', async () => {
+        vi.mock('@/shared/lib/redis', () => ({
+            getRedis: () => null,
+            ensureRedisConnected: async () => false,
+        }))
+        const rl = createRateLimiter({ windowMs: 50, max: 3 })
+        const key = 'k'
+        expect(await rl.allow(key)).toBe(true)
+        expect(await rl.allow(key)).toBe(true)
+        expect(await rl.allow(key)).toBe(true)
+        expect(await rl.allow(key)).toBe(false)
+    })
 
-  it('resets after window', async () => {
-    vi.useFakeTimers()
-    const limiter = createRateLimiter({ windowMs: 1000, max: 1 })
-    const key = 'k'
-    expect(await limiter.allow(key)).toBe(true)
-    expect(await limiter.allow(key)).toBe(false)
-    vi.advanceTimersByTime(1000)
-    expect(await limiter.allow(key)).toBe(true)
-    vi.useRealTimers()
-  })
+    it('窗口到期后重置计数', async () => {
+        vi.mock('@/shared/lib/redis', () => ({
+            getRedis: () => null,
+            ensureRedisConnected: async () => false,
+        }))
+        const rl = createRateLimiter({ windowMs: 30, max: 2 })
+        const key = 'k2'
+        expect(await rl.allow(key)).toBe(true)
+        expect(await rl.allow(key)).toBe(true)
+        expect(await rl.allow(key)).toBe(false)
+        await new Promise((r) => setTimeout(r, 40))
+        expect(await rl.allow(key)).toBe(true)
+    })
 })
-

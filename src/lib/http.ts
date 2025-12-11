@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import type { AppError } from '@/domain/errors'
 
 export type ApiErrorResponse = {
     code: string
@@ -14,6 +15,7 @@ export function jsonOk<T extends Record<string, any>>(
 ) {
     const init: ResponseInit = { status }
     if (headers) init.headers = new Headers(headers)
+
     return NextResponse.json(data, init)
 }
 
@@ -30,7 +32,31 @@ export function jsonError(
     const payload: ApiErrorResponse = { code, message }
     if (fields && Object.keys(fields).length > 0) payload.fields = fields
     if (traceId) payload.traceId = traceId
+
     return NextResponse.json(payload, init)
+}
+
+export function jsonErrorFromAppError(
+    err: AppError,
+    traceId?: string,
+    headers?: Record<string, string>,
+) {
+    const fields = normalizeFields(err.details)
+
+    return jsonError(err.code, err.message, err.httpStatus, fields, headers, traceId)
+}
+
+function normalizeFields(details: any): Record<string, string[]> | undefined {
+    if (!details) return undefined
+    if (typeof details !== 'object') return undefined
+    const out: Record<string, string[]> = {}
+
+    for (const [k, v] of Object.entries(details)) {
+        if (Array.isArray(v)) out[k] = v.map(String)
+        else out[k] = [String(v)]
+    }
+
+    return Object.keys(out).length ? out : undefined
 }
 
 export function getClientIp(req: Request & { headers: Headers }): string | undefined {
@@ -38,5 +64,6 @@ export function getClientIp(req: Request & { headers: Headers }): string | undef
     const xreal = req.headers.get('x-real-ip')
     const src = (xfwd ?? xreal ?? '') || ''
     const ip = String(src).split(',')[0]?.trim?.() || ''
+
     return ip || undefined
 }
