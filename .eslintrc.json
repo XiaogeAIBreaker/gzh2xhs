@@ -4,6 +4,7 @@
   "rules": {
     "unused-imports/no-unused-imports": "error",
     "no-empty-function": ["error", { "allow": ["arrowFunctions"] }],
-    "@typescript-eslint/no-floating-promises": "off"
+    "@typescript-eslint/no-floating-promises": "off",
+    "complexity": ["error", { "max": 10 }]
   }
 }

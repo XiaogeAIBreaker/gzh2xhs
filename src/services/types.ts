@@ -93,42 +93,18 @@ export abstract class AIService {
    */
   protected async callAPI(messages: AIMessage[]): Promise<string> {
     try {
-      const requestConfig: APIRequestConfig = {
-        model: this.config.model,
-        messages,
-        temperature: appConfig.ai.defaults.temperature,
-        max_tokens: appConfig.ai.defaults.maxTokens,
-      }
-
-      const response = await fetch(this.config.apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.config.apiKey}`,
-        },
-        body: JSON.stringify(requestConfig),
-      })
-
-      if (!response.ok) {
-        const errorText = await response.text()
-        this.logError(`API调用失败 [${response.status}]`, { errorText })
-        throw new Error(`${ERROR_MESSAGES.API_CALL_FAILED}: ${response.status}`)
-      }
-
-      const data = await response.json()
-      const content = data.choices?.[0]?.message?.content
-
-      if (!content) {
-        this.logError('API返回空内容', data)
-        throw new Error(ERROR_MESSAGES.API_EMPTY_RESPONSE)
-      }
-
-      return content
+      const timeoutMs = (appConfig as any).ai?.defaults?.requestTimeoutMs ?? 15000
+      const maxRetries = 2
+      const req = this.buildRequest(messages)
+      const out = await this.requestWithRetry(req, timeoutMs, maxRetries)
+      return out
     } catch (error) {
       if (error instanceof Error) {
         // 如果已经是我们的错误，直接抛出
-        if (error.message.includes(ERROR_MESSAGES.API_CALL_FAILED) ||
-            error.message === ERROR_MESSAGES.API_EMPTY_RESPONSE) {
+        if (
+          error.message.includes(ERROR_MESSAGES.API_CALL_FAILED) ||
+          error.message === ERROR_MESSAGES.API_EMPTY_RESPONSE
+        ) {
           throw error
         }
       }
@@ -137,6 +113,66 @@ export abstract class AIService {
       this.logError('API调用异常', error)
       throw new Error(`${this.serviceName} ${ERROR_MESSAGES.NETWORK_ERROR}`)
     }
+  }
+
+  private buildRequest(messages: AIMessage[]): APIRequestConfig {
+    return {
+      model: this.config.model,
+      messages,
+      temperature: appConfig.ai.defaults.temperature,
+      max_tokens: appConfig.ai.defaults.maxTokens,
+    }
+  }
+
+  private async doRequest(config: APIRequestConfig, timeoutMs: number): Promise<string> {
+    const ac = new AbortController()
+    const timer = setTimeout(() => ac.abort(), timeoutMs)
+    try {
+      const response = await fetch(this.config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.config.apiKey}`,
+        },
+        body: JSON.stringify(config),
+        signal: ac.signal,
+      })
+      clearTimeout(timer)
+      if (!response.ok) {
+        const errorText = await response.text()
+        this.logError(`API调用失败 [${response.status}]`, { errorText })
+        throw new Error(`${ERROR_MESSAGES.API_CALL_FAILED}: ${response.status}`)
+      }
+      const data = await response.json()
+      const content = data.choices?.[0]?.message?.content
+      if (!content) {
+        this.logError('API返回空内容', data)
+        throw new Error(ERROR_MESSAGES.API_EMPTY_RESPONSE)
+      }
+      return content
+    } catch (e) {
+      clearTimeout(timer)
+      throw e
+    }
+  }
+
+  private async requestWithRetry(config: APIRequestConfig, timeoutMs: number, maxRetries: number) {
+    let attempt = 0
+    let lastErr: any = null
+    while (attempt <= maxRetries) {
+      try {
+        return await this.doRequest(config, timeoutMs)
+      } catch (e) {
+        lastErr = e
+      }
+      attempt += 1
+      if (attempt <= maxRetries) await this.delay(Math.min(1000 * attempt, 3000))
+    }
+    throw lastErr || new Error(ERROR_MESSAGES.NETWORK_ERROR)
+  }
+
+  private async delay(ms: number) {
+    return new Promise((r) => setTimeout(r, ms))
   }
 
   /**
@@ -156,7 +192,7 @@ export abstract class AIService {
     const codeBlockPatterns = [
       { start: '```json', end: '```' },
       { start: '```', end: '```' },
-      { start: '`', end: '`' }
+      { start: '`', end: '`' },
     ]
 
     for (const pattern of codeBlockPatterns) {

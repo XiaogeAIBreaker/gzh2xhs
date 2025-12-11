@@ -50,3 +50,16 @@ jobs:
         with:
           name: coverage-${{ matrix.node-version }}
           path: coverage
+
+      - name: SonarQube Scan
+        if: ${{ secrets.SONAR_TOKEN != '' }}
+        uses: sonarsource/sonarqube-scan-action@v2.0.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >-
+            -Dsonar.projectKey=gzh2xhs
+            -Dsonar.projectName=gzh2xhs
+            -Dsonar.sources=src
+            -Dsonar.tests=tests
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info

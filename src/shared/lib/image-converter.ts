@@ -37,7 +37,7 @@ const IMAGE_CONVERTER_CONFIG = {
 }
 
 let activeTasks = 0
-const maxConcurrent = 2
+const maxConcurrent = parseInt(process.env.IMG_MAX_CONCURRENCY || '2', 10)
 
 async function withLimit<T>(fn: () => Promise<T>): Promise<T> {
   while (activeTasks >= maxConcurrent) {
@@ -51,38 +51,53 @@ async function withLimit<T>(fn: () => Promise<T>): Promise<T> {
   }
 }
 
+function containsEmoji(svgContent: string): boolean {
+  // 粗略检测常见 emoji 范围（包含多语言表情符）
+  return /[\u{1F000}-\u{1FFFF}]/u.test(svgContent)
+}
+
 export async function convertSvgToPng(svgContent: string): Promise<Buffer> {
   if (!svgContent?.trim()) {
     throw new Error(ERROR_MESSAGES.INVALID_SVG)
   }
 
+  const needEmojiSupport = containsEmoji(svgContent)
   let browser: any = null
   let page: any = null
   try {
-    logger.info('开始使用Playwright渲染SVG，支持emoji显示', undefined, 'ImageConverter')
-    browser = await getBrowser()
-    page = await browser.newPage()
-    await page.setViewportSize({
-      width: APP_CONSTANTS.CARD_SIZE.WIDTH,
-      height: APP_CONSTANTS.CARD_SIZE.HEIGHT,
-    })
-    const htmlContent = createHtmlWrapper(svgContent)
-    await page.setContent(htmlContent)
-    await page.waitForTimeout(IMAGE_CONVERTER_CONFIG.RENDER_TIMEOUT)
-    const pngBuffer = (await withLimit(() =>
-      page.screenshot({
-        type: 'png',
-        fullPage: false,
-        clip: {
-          x: 0,
-          y: 0,
-          width: APP_CONSTANTS.CARD_SIZE.WIDTH,
-          height: APP_CONSTANTS.CARD_SIZE.HEIGHT,
-        },
+    if (needEmojiSupport) {
+      logger.info('使用 Playwright 渲染以支持 emoji', undefined, 'ImageConverter')
+      browser = await getBrowser()
+      page = await browser.newPage()
+      await page.setViewportSize({
+        width: APP_CONSTANTS.CARD_SIZE.WIDTH,
+        height: APP_CONSTANTS.CARD_SIZE.HEIGHT,
       })
-    )) as Buffer
-    logger.info('Playwright渲染完成，emoji正确显示', undefined, 'ImageConverter')
-    return pngBuffer
+      const htmlContent = createHtmlWrapper(svgContent)
+      await page.setContent(htmlContent, { waitUntil: 'domcontentloaded' })
+      const pngBuffer = (await withLimit(() =>
+        page.screenshot({
+          type: 'png',
+          fullPage: false,
+          clip: {
+            x: 0,
+            y: 0,
+            width: APP_CONSTANTS.CARD_SIZE.WIDTH,
+            height: APP_CONSTANTS.CARD_SIZE.HEIGHT,
+          },
+        })
+      )) as Buffer
+      logger.info('Playwright 渲染完成', undefined, 'ImageConverter')
+      return pngBuffer
+    }
+    // 无 emoji 时直接使用 sharp，更快更省内存
+    const buffer = Buffer.from(svgContent)
+    const png = await sharp(buffer)
+      .png({ quality: 100 })
+      .resize(APP_CONSTANTS.CARD_SIZE.WIDTH, APP_CONSTANTS.CARD_SIZE.HEIGHT, getResizeOptions())
+      .toBuffer()
+    logger.info('Sharp 直接渲染完成', undefined, 'ImageConverter')
+    return png
   } catch (error) {
     logger.warn('Playwright渲染失败，尝试Sharp回退', error, 'ImageConverter')
     try {
