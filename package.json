@@ -27,6 +27,8 @@
         "react": "^18",
         "react-dom": "^18",
         "sharp": "^0.32.6",
+        "swagger-ui": "5.30.3",
+        "swagger-ui-react": "5.30.3",
         "zod": "^3.23.8"
     },
     "devDependencies": {
