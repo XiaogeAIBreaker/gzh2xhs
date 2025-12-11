@@ -3,6 +3,7 @@ import { jsonError } from '@/lib/http'
 import { logger } from '@/lib/logger'
 import { ExportImagesUseCase } from '@/application/usecases/ExportImagesUseCase'
 import { ExportRequestSchema } from '@/types/schemas'
+import { trackServer } from '@/shared/lib/analytics'
 
 export class ExportController {
   async post(req: NextRequest): Promise<Response> {
@@ -14,6 +15,7 @@ export class ExportController {
       }
       const uc = new ExportImagesUseCase()
       const zipBuffer = await uc.execute(parsed.data as any)
+      trackServer(req as any, 'export_zip')
       return new Response(zipBuffer as unknown as ArrayBuffer, {
         status: 200,
         headers: {
@@ -23,6 +25,7 @@ export class ExportController {
       })
     } catch (error) {
       logger.error('导出失败', error, 'Export')
+      trackServer(req as any, 'export_fail', { reason: 'export_error' })
       return jsonError('导出失败，请重试', 500)
     }
   }

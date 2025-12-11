@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { jsonError, jsonOk, getClientIp } from '@/lib/http'
 import { logger } from '@/lib/logger'
 import { counter, observe } from '@/shared/lib/metrics'
+import { trackServer } from '@/shared/lib/analytics'
 import { GenerateCardUseCase } from '@/application/usecases/GenerateCardUseCase'
 import { createRequestContainer } from '@/container'
 import { ERROR_MESSAGES } from '@/constants'
@@ -28,6 +29,7 @@ export class GenerateController {
       const ms = Date.now() - start
       observe('api_generate_latency_ms', ms, { success: true, variant })
       counter('api_generate_ok', 1)
+      trackServer(req as any, 'generate_success', { variant })
       return jsonOk(data, 200, {
         'Cache-Control': 'public, max-age=60, s-maxage=60, stale-while-revalidate=600',
       })
@@ -38,6 +40,7 @@ export class GenerateController {
       const reason =
         error instanceof Error && error.message === 'RATE_LIMITED' ? 'rate_limited' : 'error'
       counter('api_generate_fail', 1, { reason })
+      trackServer(req as any, 'generate_fail', { variant, reason })
       return jsonError(
         ERROR_MESSAGES.SERVER_ERROR,
         500,
