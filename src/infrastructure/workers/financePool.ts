@@ -8,6 +8,7 @@ export class FinanceWorkerPool {
     async runBatch<T>(tasks: Task<T>[]) {
         const out: T[] = []
         for (const t of tasks) out.push(await t())
+
         return out
     }
 }

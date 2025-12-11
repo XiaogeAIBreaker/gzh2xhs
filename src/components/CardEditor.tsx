@@ -4,35 +4,35 @@ import { useState } from 'react'
 import { GeneratedCard } from '@/types'
 
 export default function CardEditor({ card }: { card: GeneratedCard }) {
-  const [title, setTitle] = useState('')
-  const [size, setSize] = useState<'1:1' | '4:5' | '9:16'>(card.size || '1:1')
+    const [title, setTitle] = useState('')
+    const [size, setSize] = useState<'1:1' | '4:5' | '9:16'>(card.size || '1:1')
 
-  return (
-    <div className="glass-card rounded-lg p-4">
-      <div className="mb-3 text-sm font-semibold">轻量编辑器（预览与导出）</div>
-      <div className="grid grid-cols-2 gap-3">
-        <label className="text-xs">
-          文案标题
-          <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="mt-1 w-full rounded border border-white/10 bg-white/5 px-2 py-1"
-          />
-        </label>
-        <label className="text-xs">
-          导出尺寸
-          <select
-            value={size}
-            onChange={(e) => setSize(e.target.value as '1:1' | '4:5' | '9:16')}
-            className="mt-1 w-full rounded border border-white/10 bg-white/5 px-2 py-1"
-          >
-            <option value="1:1">1:1</option>
-            <option value="4:5">4:5</option>
-            <option value="9:16">9:16</option>
-          </select>
-        </label>
-      </div>
-      <div className="mt-3 text-xs opacity-70">后续将与生成与导出参数联动</div>
-    </div>
-  )
+    return (
+        <div className="glass-card rounded-lg p-4">
+            <div className="mb-4 text-sm font-semibold">轻量编辑器（预览与导出）</div>
+            <div className="grid grid-cols-2 gap-4">
+                <label className="text-xs">
+                    文案标题
+                    <input
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        className="mt-1 w-full rounded border border-white/10 bg-white/5 px-2 py-1"
+                    />
+                </label>
+                <label className="text-xs">
+                    导出尺寸
+                    <select
+                        value={size}
+                        onChange={(e) => setSize(e.target.value as '1:1' | '4:5' | '9:16')}
+                        className="mt-1 w-full rounded border border-white/10 bg-white/5 px-2 py-1"
+                    >
+                        <option value="1:1">1:1</option>
+                        <option value="4:5">4:5</option>
+                        <option value="9:16">9:16</option>
+                    </select>
+                </label>
+            </div>
+            <div className="mt-4 text-xs opacity-70">后续将与生成与导出参数联动</div>
+        </div>
+    )
 }

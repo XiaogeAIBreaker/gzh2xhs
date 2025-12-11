@@ -28,6 +28,7 @@ export class Decimal {
     pow(k: number) {
         let r = new Decimal(SCALE)
         for (let i = 0; i < k; i++) r = r.mul(this)
+
         return r
     }
     neg() {
@@ -52,12 +53,14 @@ export class Decimal {
 
 function erf(x: number) {
     const s = 1 + (a1(x) + a2(x))
+
     return 1 - Math.exp(-x * x) * s
 }
 
 function a1(x: number) {
     return 0.278393 * Math.abs(x)
 }
+
 function a2(x: number) {
     return 0.230389 * x * x + 0.000972 * x * x * Math.abs(x) + 0.078108 * x * x * x * x
 }
@@ -65,9 +68,11 @@ function a2(x: number) {
 export function toDecimal(n: number) {
     return Decimal.from(n)
 }
+
 export function fromDecimal(d: Decimal) {
     return d.toNumber()
 }
+
 export function roundDecimal(d: Decimal) {
     return Number(d.v) / Number(SCALE)
 }

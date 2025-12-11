@@ -1,0 +1,382 @@
+[
+    {
+        "file": "src/docs/openapi.ts",
+        "lines": 394
+    },
+    {
+        "file": "src/context/AppContext.tsx",
+        "lines": 296
+    },
+    {
+        "file": "src/services/types.ts",
+        "lines": 289
+    },
+    {
+        "file": "src/shared/lib/image-converter.ts",
+        "lines": 271
+    },
+    {
+        "file": "src/lib/prompts.ts",
+        "lines": 211
+    },
+    {
+        "file": "src/components/Sidebar.tsx",
+        "lines": 162
+    },
+    {
+        "file": "src/services/nanobanana.ts",
+        "lines": 134
+    },
+    {
+        "file": "src/app/experience/page.tsx",
+        "lines": 133
+    },
+    {
+        "file": "src/components/Canvas.tsx",
+        "lines": 120
+    },
+    {
+        "file": "src/constants/index.ts",
+        "lines": 115
+    },
+    {
+        "file": "src/application/usecases/GenerateCardUseCase.ts",
+        "lines": 114
+    },
+    {
+        "file": "src/services/deepseek.ts",
+        "lines": 109
+    },
+    {
+        "file": "src/interfaces/http/controllers/GenerateController.ts",
+        "lines": 98
+    },
+    {
+        "file": "src/middleware.ts",
+        "lines": 95
+    },
+    {
+        "file": "src/components/CardPreview.tsx",
+        "lines": 92
+    },
+    {
+        "file": "src/shared/lib/cache.ts",
+        "lines": 89
+    },
+    {
+        "file": "src/components/ParticlesBackground.tsx",
+        "lines": 81
+    },
+    {
+        "file": "src/interfaces/http/controllers/finance/RiskController.ts",
+        "lines": 78
+    },
+    {
+        "file": "src/components/Toast.tsx",
+        "lines": 70
+    },
+    {
+        "file": "src/application/finance/RiskUseCase.ts",
+        "lines": 68
+    },
+    {
+        "file": "src/domain/finance/pricing/index.ts",
+        "lines": 65
+    },
+    {
+        "file": "src/hooks/useExport.ts",
+        "lines": 63
+    },
+    {
+        "file": "src/shared/lib/metrics.ts",
+        "lines": 63
+    },
+    {
+        "file": "src/interfaces/http/controllers/finance/PricingController.ts",
+        "lines": 62
+    },
+    {
+        "file": "src/lib/logger.ts",
+        "lines": 62
+    },
+    {
+        "file": "src/shared/lib/analytics.ts",
+        "lines": 61
+    },
+    {
+        "file": "src/components/ParallaxHero.tsx",
+        "lines": 51
+    },
+    {
+        "file": "src/app/page.tsx",
+        "lines": 49
+    },
+    {
+        "file": "src/config/index.ts",
+        "lines": 49
+    },
+    {
+        "file": "src/services/index.ts",
+        "lines": 49
+    },
+    {
+        "file": "src/shared/lib/rateLimiter.ts",
+        "lines": 49
+    },
+    {
+        "file": "src/components/CommandPalette.tsx",
+        "lines": 48
+    },
+    {
+        "file": "src/components/HoverTiltCard.tsx",
+        "lines": 47
+    },
+    {
+        "file": "src/types/index.ts",
+        "lines": 44
+    },
+    {
+        "file": "src/lib/http.ts",
+        "lines": 43
+    },
+    {
+        "file": "src/app/finance/page.tsx",
+        "lines": 42
+    },
+    {
+        "file": "src/interfaces/http/controllers/ExportController.ts",
+        "lines": 42
+    },
+    {
+        "file": "src/hooks/useCardGeneration.ts",
+        "lines": 40
+    },
+    {
+        "file": "src/application/finance/PricingUseCase.ts",
+        "lines": 39
+    },
+    {
+        "file": "src/components/CardEditor.tsx",
+        "lines": 39
+    },
+    {
+        "file": "src/domain/finance/instruments/index.ts",
+        "lines": 39
+    },
+    {
+        "file": "src/components/TemplateGallery.tsx",
+        "lines": 37
+    },
+    {
+        "file": "src/components/Navbar.tsx",
+        "lines": 36
+    },
+    {
+        "file": "src/components/NeonHeading.tsx",
+        "lines": 35
+    },
+    {
+        "file": "src/domain/errors.ts",
+        "lines": 35
+    },
+    {
+        "file": "src/domain/finance/risk/index.ts",
+        "lines": 35
+    },
+    {
+        "file": "src/domain/finance/timeseries/index.ts",
+        "lines": 35
+    },
+    {
+        "file": "src/services/copytext.ts",
+        "lines": 35
+    },
+    {
+        "file": "src/components/ProgressRing.tsx",
+        "lines": 34
+    },
+    {
+        "file": "src/shared/lib/decimal.ts",
+        "lines": 34
+    },
+    {
+        "file": "src/application/usecases/ExportImagesUseCase.ts",
+        "lines": 33
+    },
+    {
+        "file": "src/domain/finance/validation/index.ts",
+        "lines": 33
+    },
+    {
+        "file": "src/hooks/useSessionId.ts",
+        "lines": 32
+    },
+    {
+        "file": "src/shared/lib/audit.ts",
+        "lines": 32
+    },
+    {
+        "file": "src/types/api.ts",
+        "lines": 32
+    },
+    {
+        "file": "src/interfaces/http/middleware/rbac.ts",
+        "lines": 31
+    },
+    {
+        "file": "src/app/layout.tsx",
+        "lines": 30
+    },
+    {
+        "file": "src/components/SegmentedControl.tsx",
+        "lines": 29
+    },
+    {
+        "file": "src/types/json-schema.ts",
+        "lines": 28
+    },
+    {
+        "file": "src/components/ThemeToggle.tsx",
+        "lines": 27
+    },
+    {
+        "file": "src/shared/lib/playwright.ts",
+        "lines": 26
+    },
+    {
+        "file": "src/components/GlowButton.tsx",
+        "lines": 25
+    },
+    {
+        "file": "src/container/index.ts",
+        "lines": 24
+    },
+    {
+        "file": "src/shared/lib/redis.ts",
+        "lines": 24
+    },
+    {
+        "file": "src/types/schemas.ts",
+        "lines": 24
+    },
+    {
+        "file": "src/app/admin/page.tsx",
+        "lines": 23
+    },
+    {
+        "file": "src/app/error.tsx",
+        "lines": 23
+    },
+    {
+        "file": "src/app/ClientLayout.tsx",
+        "lines": 22
+    },
+    {
+        "file": "src/app/api/finance/risk/route.ts",
+        "lines": 22
+    },
+    {
+        "file": "src/interfaces/http/controllers/finance/ReportingController.ts",
+        "lines": 21
+    },
+    {
+        "file": "src/app/api/finance/pricing/route.ts",
+        "lines": 20
+    },
+    {
+        "file": "src/app/api/track/route.ts",
+        "lines": 19
+    },
+    {
+        "file": "src/hooks/useHotkeys.ts",
+        "lines": 19
+    },
+    {
+        "file": "src/domain/finance/errors.ts",
+        "lines": 17
+    },
+    {
+        "file": "src/app/api-docs/page.tsx",
+        "lines": 14
+    },
+    {
+        "file": "src/infrastructure/repositories/CacheRepository.ts",
+        "lines": 14
+    },
+    {
+        "file": "src/infrastructure/workers/financePool.ts",
+        "lines": 14
+    },
+    {
+        "file": "src/components/FrostedPanel.tsx",
+        "lines": 13
+    },
+    {
+        "file": "src/domain/finance/reporting/index.ts",
+        "lines": 13
+    },
+    {
+        "file": "src/interfaces/http/middleware/auth.ts",
+        "lines": 13
+    },
+    {
+        "file": "src/app/api/export/route.ts",
+        "lines": 12
+    },
+    {
+        "file": "src/app/api/finance/report/route.ts",
+        "lines": 12
+    },
+    {
+        "file": "src/app/api/generate/route.ts",
+        "lines": 12
+    },
+    {
+        "file": "src/app/api/kpi/route.ts",
+        "lines": 11
+    },
+    {
+        "file": "src/app/api/openapi/route.ts",
+        "lines": 11
+    },
+    {
+        "file": "src/components/CosmicBackground.tsx",
+        "lines": 11
+    },
+    {
+        "file": "src/infrastructure/providers/AIProvider.ts",
+        "lines": 10
+    },
+    {
+        "file": "src/infrastructure/repositories/RateLimiterRepository.ts",
+        "lines": 10
+    },
+    {
+        "file": "src/shared/lib/ab.ts",
+        "lines": 10
+    },
+    {
+        "file": "src/application/finance/ReportingUseCase.ts",
+        "lines": 9
+    },
+    {
+        "file": "src/features/card-generator/index.ts",
+        "lines": 2
+    },
+    {
+        "file": "src/lib/image-converter.ts",
+        "lines": 2
+    },
+    {
+        "file": "src/lib/rateLimiter.ts",
+        "lines": 2
+    },
+    {
+        "file": "src/lib/redis.ts",
+        "lines": 2
+    },
+    {
+        "file": "src/types/ambient.d.ts",
+        "lines": 2
+    }
+]

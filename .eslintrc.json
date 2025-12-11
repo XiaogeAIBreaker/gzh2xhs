@@ -1,10 +1,21 @@
 {
-  "extends": ["next/core-web-vitals"],
-  "plugins": ["unused-imports"],
-  "rules": {
-    "unused-imports/no-unused-imports": "error",
-    "no-empty-function": ["error", { "allow": ["arrowFunctions"] }],
-    "@typescript-eslint/no-floating-promises": "off",
-    "complexity": ["error", { "max": 10 }]
-  }
+    "extends": ["next/core-web-vitals"],
+    "plugins": ["unused-imports"],
+    "rules": {
+        "unused-imports/no-unused-imports": "error",
+        "no-empty-function": ["error", { "allow": ["arrowFunctions"] }],
+        "@typescript-eslint/no-floating-promises": "off",
+        "complexity": ["error", { "max": 10 }],
+        "padding-line-between-statements": [
+            "error",
+            { "blankLine": "always", "prev": "block-like", "next": "*" },
+            { "blankLine": "always", "prev": "*", "next": "return" },
+            {
+                "blankLine": "always",
+                "prev": ["const", "let", "var"],
+                "next": ["block", "block-like"]
+            }
+        ],
+        "max-lines-per-function": ["warn", { "max": 120 }]
+    }
 }

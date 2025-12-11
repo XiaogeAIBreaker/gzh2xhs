@@ -1,0 +1,23 @@
+{
+    "$schema": "vscode://schemas/color-theme",
+    "name": "Artistic Crimson Aurora",
+    "type": "dark",
+    "colors": {
+        "editor.background": "#0b0f19",
+        "editor.foreground": "#e5e7eb"
+    },
+    "tokenColors": [
+        {
+            "scope": "comment",
+            "settings": { "foreground": "#78909C", "fontStyle": "italic" }
+        },
+        {
+            "scope": "string",
+            "settings": { "foreground": "#EF5350" }
+        },
+        {
+            "scope": ["keyword", "storage.type", "storage.modifier"],
+            "settings": { "foreground": "#7E57C2" }
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+<scheme name="Artistic Crimson Aurora" version="142" parent_scheme="Default">
+  <option name="LINE_SPACING" value="1.2" />
+  <colors>
+    <option name="EDITOR_BACKGROUND" value="0B0F19" />
+    <option name="EDITOR_FOREGROUND" value="E5E7EB" />
+  </colors>
+  <attributes>
+    <option name="DEFAULT_TEXT">
+      <value>
+        <option name="FOREGROUND" value="E5E7EB" />
+        <option name="BACKGROUND" value="0B0F19" />
+      </value>
+    </option>
+    <option name="LINE_COMMENT">
+      <value>
+        <option name="FOREGROUND" value="78909C" />
+        <option name="FONT_TYPE" value="2" />
+      </value>
+    </option>
+    <option name="STRING">
+      <value>
+        <option name="FOREGROUND" value="EF5350" />
+      </value>
+    </option>
+    <option name="KEYWORD">
+      <value>
+        <option name="FOREGROUND" value="7E57C2" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+  </attributes>
+</scheme>
