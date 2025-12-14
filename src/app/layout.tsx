@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import CosmicBackground from '@/components/CosmicBackground'
 import ClientLayout from './ClientLayout'
+import StoreProvider from '@/store/Provider'
 import Navbar from '@/components/Navbar'
 import Toast from '@/components/Toast'
 
@@ -21,7 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             >
                 <CosmicBackground />
                 <Navbar />
-                <ClientLayout>{children}</ClientLayout>
+                <StoreProvider>
+                    <ClientLayout>{children}</ClientLayout>
+                </StoreProvider>
                 <Toast />
             </body>
         </html>

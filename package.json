@@ -2,6 +2,10 @@
     "name": "gzh2xhs",
     "version": "0.2.0",
     "private": true,
+    "workspaces": [
+        "apps/*",
+        "packages/*"
+    ],
     "scripts": {
         "dev": "next dev",
         "build": "next build",
@@ -14,7 +18,10 @@
         "format:check": "prettier --check .",
         "prepare": "husky install",
         "dep:json": "depcruise --config dependency-cruiser.config.cjs --output-type json src > docs/deps.json",
-        "dep:check": "depcruise --config dependency-cruiser.config.cjs src"
+        "dep:check": "depcruise --config dependency-cruiser.config.cjs src",
+        "dev:api": "npm run start:dev --workspace apps/api",
+        "build:api": "npm run build --workspace apps/api",
+        "start:api": "npm run start:prod --workspace apps/api"
     },
     "dependencies": {
         "autoprefixer": "^10.4.21",
