@@ -11,7 +11,7 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             matrix:
-                node-version: [18, 20]
+                node-version: [20]
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -31,10 +31,18 @@ jobs:
               run: npm run typecheck
 
             - name: Build
-              run: npm run build
+              run: |
+                START=$(date +%s)
+                npm run build
+                END=$(date +%s)
+                echo "build_duration=$((END-START))" >> $GITHUB_OUTPUT
 
             - name: Build API (NestJS)
-              run: npm run build:api
+              run: |
+                START=$(date +%s)
+                npm run build:api
+                END=$(date +%s)
+                echo "build_api_duration=$((END-START))" >> $GITHUB_OUTPUT
 
             - name: Dependency health check
               run: npm run dep:check

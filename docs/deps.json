@@ -559,6 +559,13 @@
             ]
         },
         {
+            "source": "src/config/featureFlags.ts",
+            "dependencies": [],
+            "dependents": ["src/utils/apiBase.ts"],
+            "orphan": false,
+            "valid": true
+        },
+        {
             "source": "src/config/index.ts",
             "dependencies": [],
             "dependents": [],
@@ -599,6 +606,146 @@
         },
         {
             "source": "src/context/AppContext.tsx",
+            "dependencies": [
+                {
+                    "module": "./AppProvider",
+                    "moduleSystem": "es6",
+                    "dynamic": false,
+                    "exoticallyRequired": false,
+                    "dependencyTypes": ["local", "export"],
+                    "resolved": "src/context/AppProvider.tsx",
+                    "coreModule": false,
+                    "followable": true,
+                    "couldNotResolve": false,
+                    "matchesDoNotFollow": false,
+                    "circular": false,
+                    "valid": true
+                },
+                {
+                    "module": "./selectors",
+                    "moduleSystem": "es6",
+                    "dynamic": false,
+                    "exoticallyRequired": false,
+                    "dependencyTypes": ["local", "export"],
+                    "resolved": "src/context/selectors.ts",
+                    "coreModule": false,
+                    "followable": true,
+                    "couldNotResolve": false,
+                    "matchesDoNotFollow": false,
+                    "circular": true,
+                    "cycle": [
+                        {
+                            "name": "src/context/selectors.ts",
+                            "dependencyTypes": ["local", "export"]
+                        },
+                        {
+                            "name": "src/context/AppContext.tsx",
+                            "dependencyTypes": ["local", "import"]
+                        }
+                    ],
+                    "valid": false,
+                    "rules": [
+                        {
+                            "severity": "error",
+                            "name": "no-cycles"
+                        }
+                    ]
+                }
+            ],
+            "dependents": ["src/context/selectors.ts"],
+            "orphan": false,
+            "valid": true
+        },
+        {
+            "source": "src/context/AppProvider.tsx",
+            "dependencies": [
+                {
+                    "module": "./actions",
+                    "moduleSystem": "es6",
+                    "dynamic": false,
+                    "exoticallyRequired": false,
+                    "dependencyTypes": ["local", "import"],
+                    "resolved": "src/context/actions.ts",
+                    "coreModule": false,
+                    "followable": true,
+                    "couldNotResolve": false,
+                    "matchesDoNotFollow": false,
+                    "circular": false,
+                    "valid": true
+                },
+                {
+                    "module": "./reducer",
+                    "moduleSystem": "es6",
+                    "dynamic": false,
+                    "exoticallyRequired": false,
+                    "dependencyTypes": ["local", "import"],
+                    "resolved": "src/context/reducer.ts",
+                    "coreModule": false,
+                    "followable": true,
+                    "couldNotResolve": false,
+                    "matchesDoNotFollow": false,
+                    "circular": false,
+                    "valid": true
+                }
+            ],
+            "dependents": ["src/context/AppContext.tsx"],
+            "orphan": false,
+            "valid": true
+        },
+        {
+            "source": "src/context/actions.ts",
+            "dependencies": [],
+            "dependents": ["src/context/AppProvider.tsx"],
+            "orphan": false,
+            "valid": true
+        },
+        {
+            "source": "src/context/reducer.ts",
+            "dependencies": [],
+            "dependents": ["src/context/AppProvider.tsx"],
+            "orphan": false,
+            "valid": true
+        },
+        {
+            "source": "src/context/selectors.ts",
+            "dependencies": [
+                {
+                    "module": "./AppContext",
+                    "moduleSystem": "es6",
+                    "dynamic": false,
+                    "exoticallyRequired": false,
+                    "dependencyTypes": ["local", "import"],
+                    "resolved": "src/context/AppContext.tsx",
+                    "coreModule": false,
+                    "followable": true,
+                    "couldNotResolve": false,
+                    "matchesDoNotFollow": false,
+                    "circular": true,
+                    "cycle": [
+                        {
+                            "name": "src/context/AppContext.tsx",
+                            "dependencyTypes": ["local", "import"]
+                        },
+                        {
+                            "name": "src/context/selectors.ts",
+                            "dependencyTypes": ["local", "export"]
+                        }
+                    ],
+                    "valid": false,
+                    "rules": [
+                        {
+                            "severity": "error",
+                            "name": "no-cycles"
+                        }
+                    ]
+                }
+            ],
+            "dependents": ["src/context/AppContext.tsx"],
+            "orphan": false,
+            "valid": true
+        },
+        {
+            "source": "src/context/types.ts",
             "dependencies": [],
             "dependents": [],
             "orphan": true,
@@ -611,17 +758,76 @@
             ]
         },
         {
-            "source": "src/docs/openapi.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
+            "source": "src/docs/builder.ts",
+            "dependencies": [
                 {
-                    "severity": "warn",
-                    "name": "no-orphans"
+                    "module": "./routes",
+                    "moduleSystem": "es6",
+                    "dynamic": false,
+                    "exoticallyRequired": false,
+                    "dependencyTypes": ["local", "import"],
+                    "resolved": "src/docs/routes/index.ts",
+                    "coreModule": false,
+                    "followable": true,
+                    "couldNotResolve": false,
+                    "matchesDoNotFollow": false,
+                    "circular": false,
+                    "valid": true
+                },
+                {
+                    "module": "./schemas/common",
+                    "moduleSystem": "es6",
+                    "dynamic": false,
+                    "exoticallyRequired": false,
+                    "dependencyTypes": ["local", "import"],
+                    "resolved": "src/docs/schemas/common.ts",
+                    "coreModule": false,
+                    "followable": true,
+                    "couldNotResolve": false,
+                    "matchesDoNotFollow": false,
+                    "circular": false,
+                    "valid": true
                 }
-            ]
+            ],
+            "dependents": ["src/docs/openapi.ts"],
+            "orphan": false,
+            "valid": true
+        },
+        {
+            "source": "src/docs/routes/index.ts",
+            "dependencies": [],
+            "dependents": ["src/docs/builder.ts"],
+            "orphan": false,
+            "valid": true
+        },
+        {
+            "source": "src/docs/schemas/common.ts",
+            "dependencies": [],
+            "dependents": ["src/docs/builder.ts"],
+            "orphan": false,
+            "valid": true
+        },
+        {
+            "source": "src/docs/openapi.ts",
+            "dependencies": [
+                {
+                    "module": "./builder",
+                    "moduleSystem": "es6",
+                    "dynamic": false,
+                    "exoticallyRequired": false,
+                    "dependencyTypes": ["local", "import"],
+                    "resolved": "src/docs/builder.ts",
+                    "coreModule": false,
+                    "followable": true,
+                    "couldNotResolve": false,
+                    "matchesDoNotFollow": false,
+                    "circular": false,
+                    "valid": true
+                }
+            ],
+            "dependents": [],
+            "orphan": false,
+            "valid": true
         },
         {
             "source": "src/domain/errors.ts",
@@ -742,45 +948,57 @@
         },
         {
             "source": "src/hooks/useCardGeneration.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
+            "dependencies": [
                 {
-                    "severity": "warn",
-                    "name": "no-orphans"
+                    "module": "./useSessionId",
+                    "moduleSystem": "es6",
+                    "dynamic": false,
+                    "exoticallyRequired": false,
+                    "dependencyTypes": ["local", "import"],
+                    "resolved": "src/hooks/useSessionId.ts",
+                    "coreModule": false,
+                    "followable": true,
+                    "couldNotResolve": false,
+                    "matchesDoNotFollow": false,
+                    "circular": false,
+                    "valid": true
                 }
-            ]
-        },
-        {
-            "source": "src/hooks/useExport.ts",
-            "dependencies": [],
+            ],
             "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/hooks/useHotkeys.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
+            "orphan": false,
+            "valid": true
         },
         {
             "source": "src/hooks/useSessionId.ts",
+            "dependencies": [],
+            "dependents": ["src/hooks/useCardGeneration.ts", "src/hooks/useExport.ts"],
+            "orphan": false,
+            "valid": true
+        },
+        {
+            "source": "src/hooks/useExport.ts",
+            "dependencies": [
+                {
+                    "module": "./useSessionId",
+                    "moduleSystem": "es6",
+                    "dynamic": false,
+                    "exoticallyRequired": false,
+                    "dependencyTypes": ["local", "import"],
+                    "resolved": "src/hooks/useSessionId.ts",
+                    "coreModule": false,
+                    "followable": true,
+                    "couldNotResolve": false,
+                    "matchesDoNotFollow": false,
+                    "circular": false,
+                    "valid": true
+                }
+            ],
+            "dependents": [],
+            "orphan": false,
+            "valid": true
+        },
+        {
+            "source": "src/hooks/useHotkeys.ts",
             "dependencies": [],
             "dependents": [],
             "orphan": true,
@@ -939,7 +1157,46 @@
             "valid": true
         },
         {
+            "source": "src/interfaces/http/middleware/withValidation.ts",
+            "dependencies": [],
+            "dependents": [],
+            "orphan": true,
+            "valid": false,
+            "rules": [
+                {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            ]
+        },
+        {
+            "source": "src/lib/errors.ts",
+            "dependencies": [],
+            "dependents": [],
+            "orphan": true,
+            "valid": false,
+            "rules": [
+                {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            ]
+        },
+        {
             "source": "src/lib/http.ts",
+            "dependencies": [],
+            "dependents": [],
+            "orphan": true,
+            "valid": false,
+            "rules": [
+                {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            ]
+        },
+        {
+            "source": "src/lib/httpClient.ts",
             "dependencies": [],
             "dependents": [],
             "orphan": true,
@@ -1187,7 +1444,33 @@
             ]
         },
         {
+            "source": "src/shared/lib/browser.ts",
+            "dependencies": [],
+            "dependents": [],
+            "orphan": true,
+            "valid": false,
+            "rules": [
+                {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            ]
+        },
+        {
             "source": "src/shared/lib/cache.ts",
+            "dependencies": [],
+            "dependents": [],
+            "orphan": true,
+            "valid": false,
+            "rules": [
+                {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            ]
+        },
+        {
+            "source": "src/shared/lib/concurrency.ts",
             "dependencies": [],
             "dependents": [],
             "orphan": true,
@@ -1213,7 +1496,33 @@
             ]
         },
         {
+            "source": "src/shared/lib/downloader.ts",
+            "dependencies": [],
+            "dependents": [],
+            "orphan": true,
+            "valid": false,
+            "rules": [
+                {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            ]
+        },
+        {
             "source": "src/shared/lib/image-converter.ts",
+            "dependencies": [],
+            "dependents": [],
+            "orphan": true,
+            "valid": false,
+            "rules": [
+                {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            ]
+        },
+        {
+            "source": "src/shared/lib/image/algo.ts",
             "dependencies": [],
             "dependents": [],
             "orphan": true,
@@ -1276,6 +1585,128 @@
                     "name": "no-orphans"
                 }
             ]
+        },
+        {
+            "source": "src/shared/workers/imageConverter.worker.ts",
+            "dependencies": [],
+            "dependents": [],
+            "orphan": true,
+            "valid": false,
+            "rules": [
+                {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            ]
+        },
+        {
+            "source": "src/store/Provider.tsx",
+            "dependencies": [
+                {
+                    "module": "./store",
+                    "moduleSystem": "es6",
+                    "dynamic": false,
+                    "exoticallyRequired": false,
+                    "dependencyTypes": ["local", "import"],
+                    "resolved": "src/store/store.ts",
+                    "coreModule": false,
+                    "followable": true,
+                    "couldNotResolve": false,
+                    "matchesDoNotFollow": false,
+                    "circular": false,
+                    "valid": true
+                }
+            ],
+            "dependents": [],
+            "orphan": false,
+            "valid": true
+        },
+        {
+            "source": "src/store/store.ts",
+            "dependencies": [
+                {
+                    "module": "./api",
+                    "moduleSystem": "es6",
+                    "dynamic": false,
+                    "exoticallyRequired": false,
+                    "dependencyTypes": ["local", "import"],
+                    "resolved": "src/store/api.ts",
+                    "coreModule": false,
+                    "followable": true,
+                    "couldNotResolve": false,
+                    "matchesDoNotFollow": false,
+                    "circular": false,
+                    "valid": true
+                },
+                {
+                    "module": "./appSlice",
+                    "moduleSystem": "es6",
+                    "dynamic": false,
+                    "exoticallyRequired": false,
+                    "dependencyTypes": ["local", "import"],
+                    "resolved": "src/store/appSlice.ts",
+                    "coreModule": false,
+                    "followable": true,
+                    "couldNotResolve": false,
+                    "matchesDoNotFollow": false,
+                    "circular": false,
+                    "valid": true
+                }
+            ],
+            "dependents": ["src/store/Provider.tsx"],
+            "orphan": false,
+            "valid": true
+        },
+        {
+            "source": "src/store/api.ts",
+            "dependencies": [
+                {
+                    "module": "../utils/apiBase",
+                    "moduleSystem": "es6",
+                    "dynamic": false,
+                    "exoticallyRequired": false,
+                    "dependencyTypes": ["local", "import"],
+                    "resolved": "src/utils/apiBase.ts",
+                    "coreModule": false,
+                    "followable": true,
+                    "couldNotResolve": false,
+                    "matchesDoNotFollow": false,
+                    "circular": false,
+                    "valid": true
+                }
+            ],
+            "dependents": ["src/store/store.ts"],
+            "orphan": false,
+            "valid": true
+        },
+        {
+            "source": "src/utils/apiBase.ts",
+            "dependencies": [
+                {
+                    "module": "../config/featureFlags",
+                    "moduleSystem": "es6",
+                    "dynamic": false,
+                    "exoticallyRequired": false,
+                    "dependencyTypes": ["local", "import"],
+                    "resolved": "src/config/featureFlags.ts",
+                    "coreModule": false,
+                    "followable": true,
+                    "couldNotResolve": false,
+                    "matchesDoNotFollow": false,
+                    "circular": false,
+                    "valid": true
+                }
+            ],
+            "dependents": ["src/store/api.ts"],
+            "orphan": false,
+            "valid": true
+        },
+        {
+            "source": "src/store/appSlice.ts",
+            "dependencies": [],
+            "dependents": ["src/store/store.ts"],
+            "orphan": false,
+            "valid": true
         },
         {
             "source": "src/types/ambient.d.ts",
@@ -1345,6 +1776,25 @@
     ],
     "summary": {
         "violations": [
+            {
+                "type": "cycle",
+                "from": "src/context/AppContext.tsx",
+                "to": "src/context/selectors.ts",
+                "rule": {
+                    "severity": "error",
+                    "name": "no-cycles"
+                },
+                "cycle": [
+                    {
+                        "name": "src/context/selectors.ts",
+                        "dependencyTypes": ["local", "export"]
+                    },
+                    {
+                        "name": "src/context/AppContext.tsx",
+                        "dependencyTypes": ["local", "import"]
+                    }
+                ]
+            },
             {
                 "type": "module",
                 "from": "src/app/admin/page.tsx",
@@ -1653,17 +2103,8 @@
             },
             {
                 "type": "module",
-                "from": "src/context/AppContext.tsx",
-                "to": "src/context/AppContext.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/docs/openapi.ts",
-                "to": "src/docs/openapi.ts",
+                "from": "src/context/types.ts",
+                "to": "src/context/types.ts",
                 "rule": {
                     "severity": "warn",
                     "name": "no-orphans"
@@ -1752,35 +2193,8 @@
             },
             {
                 "type": "module",
-                "from": "src/hooks/useCardGeneration.ts",
-                "to": "src/hooks/useCardGeneration.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/hooks/useExport.ts",
-                "to": "src/hooks/useExport.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
                 "from": "src/hooks/useHotkeys.ts",
                 "to": "src/hooks/useHotkeys.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/hooks/useSessionId.ts",
-                "to": "src/hooks/useSessionId.ts",
                 "rule": {
                     "severity": "warn",
                     "name": "no-orphans"
@@ -1869,8 +2283,35 @@
             },
             {
                 "type": "module",
+                "from": "src/interfaces/http/middleware/withValidation.ts",
+                "to": "src/interfaces/http/middleware/withValidation.ts",
+                "rule": {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            },
+            {
+                "type": "module",
+                "from": "src/lib/errors.ts",
+                "to": "src/lib/errors.ts",
+                "rule": {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            },
+            {
+                "type": "module",
                 "from": "src/lib/http.ts",
                 "to": "src/lib/http.ts",
+                "rule": {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            },
+            {
+                "type": "module",
+                "from": "src/lib/httpClient.ts",
+                "to": "src/lib/httpClient.ts",
                 "rule": {
                     "severity": "warn",
                     "name": "no-orphans"
@@ -1968,8 +2409,26 @@
             },
             {
                 "type": "module",
+                "from": "src/shared/lib/browser.ts",
+                "to": "src/shared/lib/browser.ts",
+                "rule": {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            },
+            {
+                "type": "module",
                 "from": "src/shared/lib/cache.ts",
                 "to": "src/shared/lib/cache.ts",
+                "rule": {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            },
+            {
+                "type": "module",
+                "from": "src/shared/lib/concurrency.ts",
+                "to": "src/shared/lib/concurrency.ts",
                 "rule": {
                     "severity": "warn",
                     "name": "no-orphans"
@@ -1986,8 +2445,26 @@
             },
             {
                 "type": "module",
+                "from": "src/shared/lib/downloader.ts",
+                "to": "src/shared/lib/downloader.ts",
+                "rule": {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            },
+            {
+                "type": "module",
                 "from": "src/shared/lib/image-converter.ts",
                 "to": "src/shared/lib/image-converter.ts",
+                "rule": {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            },
+            {
+                "type": "module",
+                "from": "src/shared/lib/image/algo.ts",
+                "to": "src/shared/lib/image/algo.ts",
                 "rule": {
                     "severity": "warn",
                     "name": "no-orphans"
@@ -2024,6 +2501,15 @@
                 "type": "module",
                 "from": "src/shared/lib/redis.ts",
                 "to": "src/shared/lib/redis.ts",
+                "rule": {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            },
+            {
+                "type": "module",
+                "from": "src/shared/workers/imageConverter.worker.ts",
+                "to": "src/shared/workers/imageConverter.worker.ts",
                 "rule": {
                     "severity": "warn",
                     "name": "no-orphans"
@@ -2075,12 +2561,12 @@
                 }
             }
         ],
-        "error": 0,
-        "warn": 81,
+        "error": 1,
+        "warn": 85,
         "info": 0,
         "ignore": 0,
-        "totalCruised": 96,
-        "totalDependenciesCruised": 12,
+        "totalCruised": 118,
+        "totalDependenciesCruised": 27,
         "optionsUsed": {
             "baseDir": "/Users/bytedance/Desktop/gzh2xhs",
             "combinedDependencies": false,
@@ -2124,6 +2610,28 @@
                         "orphan": true
                     },
                     "to": {},
+                    "scope": "module"
+                },
+                {
+                    "name": "layering-domain-lowest",
+                    "severity": "error",
+                    "from": {
+                        "path": "^src/(domain|shared)\\b"
+                    },
+                    "to": {
+                        "path": "^src/(application|interfaces|app|components)\\b"
+                    },
+                    "scope": "module"
+                },
+                {
+                    "name": "ui-no-direct-backend",
+                    "severity": "warn",
+                    "from": {
+                        "path": "^src/components\\b"
+                    },
+                    "to": {
+                        "path": "^src/(interfaces|shared/lib/redis)\\b"
+                    },
                     "scope": "module"
                 }
             ]

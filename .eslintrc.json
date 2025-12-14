@@ -1,6 +1,6 @@
 {
     "extends": ["next/core-web-vitals"],
-    "plugins": ["unused-imports", "@typescript-eslint"],
+    "plugins": ["unused-imports", "@typescript-eslint", "security", "sonarjs"],
     "parser": "@typescript-eslint/parser",
     "parserOptions": { "project": "./tsconfig.json", "tsconfigRootDir": "." },
     "rules": {
@@ -18,6 +18,10 @@
         "complexity": ["warn", { "max": 20 }],
         "max-depth": ["warn", 4],
         "padding-line-between-statements": "off",
-        "max-lines-per-function": ["warn", { "max": 200 }]
+        "max-lines-per-function": ["warn", { "max": 200 }],
+        "security/detect-object-injection": "warn",
+        "sonarjs/cognitive-complexity": ["warn", 20],
+        "sonarjs/no-duplicate-string": "warn",
+        "sonarjs/no-inverted-boolean-check": "warn"
     }
 }

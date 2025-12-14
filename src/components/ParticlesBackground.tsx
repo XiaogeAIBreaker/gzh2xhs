@@ -12,9 +12,14 @@ export default function ParticlesBackground({ enabled = true }: Props) {
 
     useEffect(() => {
         const c = canvasRef.current as HTMLCanvasElement
-        if (!enabled) return
+        let cleanup = () => {}
+        if (!enabled) {
+            return cleanup
+        }
         const context = c.getContext('2d') as CanvasRenderingContext2D | null
-        if (!context) return
+        if (!context) {
+            return cleanup
+        }
         const ctx: CanvasRenderingContext2D = context
 
         const prefersReduced =
@@ -71,10 +76,11 @@ export default function ParticlesBackground({ enabled = true }: Props) {
         init()
         step()
         window.addEventListener('resize', onResize)
-        return () => {
+        cleanup = () => {
             if (rafRef.current) cancelAnimationFrame(rafRef.current)
             window.removeEventListener('resize', onResize)
         }
+        return cleanup
     }, [enabled])
 
     return <canvas ref={canvasRef} className="h-full w-full" />

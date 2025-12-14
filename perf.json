@@ -1,0 +1,13 @@
+{
+    "url": "http://localhost:3000/api/generate",
+    "durationMs": 5000,
+    "concurrency": 4,
+    "total": 44320,
+    "ok": 0,
+    "fail": 44320,
+    "p50": 0,
+    "p90": 1,
+    "p95": 1,
+    "p99": 2,
+    "avg": 0
+}

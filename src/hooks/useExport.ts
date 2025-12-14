@@ -1,7 +1,7 @@
 import { GeneratedCard } from '@/types'
 import { useApp } from '@/context/AppContext'
 import { useSessionId } from './useSessionId'
-import { downloadBlob, downloadUrl } from '@/shared/lib/downloader'
+import { downloadBlob } from '@/shared/lib/downloader'
 
 export function useExport() {
     const { updateState } = useApp()
@@ -32,9 +32,7 @@ export function useExport() {
         } catch (error) {
             updateState({
                 error:
-                    error instanceof Error
-                        ? mapExportError(error.message)
-                        : 'EXPORT_UNKNOWN_ERROR',
+                    error instanceof Error ? mapExportError(error.message) : 'EXPORT_UNKNOWN_ERROR',
             })
         }
     }
@@ -49,7 +47,8 @@ export function useExport() {
             await downloadBlob(`小红书卡片_${card.template}_${card.id}.png`, blob)
         } catch (error) {
             updateState({
-                error: error instanceof Error ? mapExportError(error.message) : 'EXPORT_UNKNOWN_ERROR',
+                error:
+                    error instanceof Error ? mapExportError(error.message) : 'EXPORT_UNKNOWN_ERROR',
             })
         }
     }

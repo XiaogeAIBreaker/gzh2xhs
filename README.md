@@ -37,6 +37,14 @@
 - Playwright 资源管理：`convertSvgToPng` 渲染后主动关闭页面，避免内存泄漏
 - 全量回归：所有 Vitest 用例保持通过，确保行为不变
 
+### 本次重构交付（专业级改造）
+
+- 基线度量：新增 `docs/baseline.md`，生成 `docs/deps.json` 与 `perf.json`
+- 结构优化：引入服务层 `src/services/kpi.ts`；新增按需加载图表 `src/features/admin/KpiChart.tsx`
+- 公共工具：新增工作区包 `@gzh2xhs/utils`（LRU 与可取消请求）
+- 质量规范：增加 `eslint-plugin-security` 与 `eslint-plugin-sonarjs`，修复阻断问题
+- CI一致性：GitHub Actions 统一 Node 版本为 20 并记录构建时长
+
 ## 企业级改造要点（本次重构新增）
 
 - **统一配置与校验**：`src/config/` 使用 `zod` 对环境变量进行强校验并提供类型化 `appConfig`

@@ -8,8 +8,7 @@ import { useEffect } from 'react'
  */
 export function useHotkeys(map: Record<string, () => void>) {
     useEffect(() => {
-        if (typeof window === 'undefined') return
-
+        let attached = false
         const handler = (e: KeyboardEvent) => {
             const key = formatKey(e)
             if (map[key]) {
@@ -17,9 +16,15 @@ export function useHotkeys(map: Record<string, () => void>) {
                 map[key]()
             }
         }
-
-        window.addEventListener('keydown', handler)
-        return () => window.removeEventListener('keydown', handler)
+        if (typeof window !== 'undefined') {
+            window.addEventListener('keydown', handler)
+            attached = true
+        }
+        return () => {
+            if (attached && typeof window !== 'undefined') {
+                window.removeEventListener('keydown', handler)
+            }
+        }
     }, [map])
 }
 
