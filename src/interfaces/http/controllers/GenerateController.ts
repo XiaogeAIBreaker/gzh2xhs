@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { jsonError, jsonOk, getClientIp, jsonErrorFromAppError } from '@/lib/http'
+import { jsonError, jsonOk, getClientIp, jsonErrorFromAppError, jsonOkWithETag } from '@/lib/http'
 import { logger } from '@/lib/logger'
 import { counter, observe } from '@/shared/lib/metrics'
 import { trackServer } from '@/shared/lib/analytics'
 import { GenerateCardUseCase } from '@/application/usecases/GenerateCardUseCase'
+import { globalLimiter } from '@/shared/lib/concurrency'
+import { appConfig } from '@/config'
 import { createRequestContainer } from '@/container'
 import { ERROR_MESSAGES } from '@/constants'
 import { GenerateRequestSchema } from '@/types/schemas'
@@ -33,9 +35,12 @@ export class GenerateController {
             if (!parsed.success) return this.handleValidationFail(req, parsed.error)
             const c = createRequestContainer({ ip })
             const uc = new GenerateCardUseCase(c)
-            const data = await uc.execute({ ...parsed.data, ip, variant: variant as any })
+            const data = await globalLimiter.run(() =>
+                uc.execute({ ...parsed.data, ip, variant: variant as any }),
+            )
 
-            if (idemKey) cacheSet(makeKey(['gen', idemKey]), data, 10 * 60_000)
+            if (idemKey)
+                cacheSet(makeKey(['gen', idemKey]), data, appConfig.features.caching.readTtlMs)
             return this.handleOk(req, data, variant, start)
         } catch (error) {
             return this.handleError(req, error, variant, start)
@@ -76,7 +81,7 @@ export class GenerateController {
         counter('api_generate_ok', 1)
         trackServer(req as any, 'generate_success', { variant })
 
-        return jsonOk(data, 200, {
+        return jsonOkWithETag(req, data, 200, {
             'Cache-Control': 'public, max-age=60, s-maxage=60, stale-while-revalidate=600',
         })
     }

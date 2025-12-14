@@ -1,8 +1,10 @@
 import { GeneratedCard } from '@/types'
 import { useApp } from '@/context/AppContext'
+import { useSessionId } from './useSessionId'
 
 export function useExport() {
     const { updateState } = useApp()
+    const sid = useSessionId()
 
     const exportAllCards = async (cards: GeneratedCard[]) => {
         if (cards.length === 0) return
@@ -10,7 +12,10 @@ export function useExport() {
         try {
             const response = await fetch('/api/export', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(sid ? { 'x-idempotency-key': `${sid}:export:${cards.length}` } : {}),
+                },
                 body: JSON.stringify({
                     images: cards.map((card) => ({ id: card.id, dataUrl: card.imageUrl })),
                 }),

@@ -1,4 +1,6 @@
 import { NextRequest } from 'next/server'
+import { createHash } from 'crypto'
+import { appConfig } from '@/config'
 import { jsonError } from '@/lib/http'
 import { logger } from '@/lib/logger'
 import { ExportImagesUseCase } from '@/application/usecases/ExportImagesUseCase'
@@ -44,13 +46,29 @@ export class ExportController {
             const uc = new ExportImagesUseCase()
             const zipBuffer = await uc.execute(parsed.data as any)
             trackServer(req as any, 'export_zip')
-            if (idemKey) cacheSet(makeKey(['export', idemKey]), zipBuffer as any, 10 * 60_000)
+            if (idemKey)
+                cacheSet(
+                    makeKey(['export', idemKey]),
+                    zipBuffer as any,
+                    appConfig.features.caching.readTtlMs,
+                )
+            const etag = `W/"${createHash('sha256')
+                .update(Buffer.from(zipBuffer as any))
+                .digest('hex')
+                .slice(0, 16)}"`
+            const inm = req.headers.get('if-none-match')
+            const commonHeaders: Record<string, string> = {
+                'Content-Type': 'application/zip',
+                'Content-Disposition': `attachment; filename="xiaohongshu-cards-${Date.now()}\.zip"`,
+                ETag: etag,
+                'Cache-Control': 'private, max-age=0, must-revalidate',
+            }
+            if (inm && inm === etag) {
+                return new Response(null, { status: 304, headers: commonHeaders })
+            }
             return new Response(zipBuffer as unknown as ArrayBuffer, {
                 status: 200,
-                headers: {
-                    'Content-Type': 'application/zip',
-                    'Content-Disposition': `attachment; filename="xiaohongshu-cards-${Date.now()}.zip"`,
-                },
+                headers: commonHeaders,
             })
         } catch (error) {
             logger.error('导出失败', error, 'Export', req.headers.get('x-request-id') || undefined)

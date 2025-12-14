@@ -70,3 +70,5 @@ export function whisperToast(message: string, type?: EmberToast['type']) {
     const event = new CustomEvent('app:toast', { detail: { message, type } })
     window.dispatchEvent(event)
 }
+
+export const showToast = whisperToast

@@ -44,5 +44,13 @@ export const appConfig = {
             windowMs: 60_000,
             max: 60,
         },
+        caching: {
+            enableETag: true,
+            defaultTtlMs: 60_000,
+            readTtlMs: 600_000,
+        },
+        concurrency: {
+            serverLimit: 8,
+        },
     },
 }

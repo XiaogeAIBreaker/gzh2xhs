@@ -1,9 +1,12 @@
 import { AIModel } from '@/types'
 import { useApp, useAppActions } from '@/context/AppContext'
+import { requestJson } from '@/lib/httpClient'
+import { useSessionId } from './useSessionId'
 
 export function useCardGeneration() {
     const { state } = useApp()
     const actions = useAppActions()
+    const sid = useSessionId()
 
     const generateCard = async (text: string, model: AIModel) => {
         if (!text.trim()) {
@@ -14,17 +17,15 @@ export function useCardGeneration() {
         actions.startGeneration()
 
         try {
-            const response = await fetch('/api/generate', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text, model, style: state.selectedStyle }),
-            })
-
-            if (!response.ok) {
-                throw new Error('生成失败')
-            }
-
-            const data = await response.json()
+            const data = await requestJson<{ cards: any[]; copytext: string }>(
+                '/api/generate',
+                {
+                    method: 'POST',
+                    body: { text, model, style: state.selectedStyle },
+                    idempotencyKey: sid ? `${sid}:gen:${text.slice(0, 32)}:${String(model)}` : undefined,
+                    timeoutMs: 60_000,
+                },
+            )
             actions.completeGeneration(data.cards, data.copytext)
         } catch (error) {
             actions.failGeneration(error instanceof Error ? error.message : '生成失败')

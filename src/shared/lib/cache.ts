@@ -86,3 +86,11 @@ export function cacheSet<T>(key: string, value: T, ttlMs: number): void {
 export function makeKey(parts: Array<string | number | undefined>): string {
     return parts.filter((x) => x !== undefined).join('|')
 }
+
+export function invalidateByPrefix(prefix: string) {
+    // naive prefix invalidation for in-memory cache
+    const keys = Array.from((defaultCache as any).store?.keys?.() || []) as string[]
+    for (const k of keys) {
+        if (k.startsWith(prefix)) (defaultCache as any).delete(k)
+    }
+}

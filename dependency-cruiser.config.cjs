@@ -18,5 +18,17 @@ module.exports = {
             from: { orphan: true },
             to: {},
         },
+        {
+            name: 'layering-domain-lowest',
+            severity: 'error',
+            from: { path: '^src/(domain|shared)\\b' },
+            to: { path: '^src/(application|interfaces|app|components)\\b' },
+        },
+        {
+            name: 'ui-no-direct-backend',
+            severity: 'warn',
+            from: { path: '^src/components\\b' },
+            to: { path: '^src/(interfaces|shared/lib/redis)\\b' },
+        },
     ],
 }

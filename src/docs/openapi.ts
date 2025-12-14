@@ -49,6 +49,13 @@ export function generateOpenApiDocument(baseUrl: string | undefined) {
                     responses: {
                         '200': {
                             description: '生成成功',
+                            headers: {
+                                ETag: { description: '响应实体标识', schema: { type: 'string' } },
+                                'Cache-Control': {
+                                    description: '缓存控制',
+                                    schema: { type: 'string' },
+                                },
+                            },
                             content: {
                                 'application/json': {
                                     schema: {
@@ -163,6 +170,17 @@ export function generateOpenApiDocument(baseUrl: string | undefined) {
                     responses: {
                         '200': {
                             description: 'zip 文件返回',
+                            headers: {
+                                ETag: { description: '响应实体标识', schema: { type: 'string' } },
+                                'Cache-Control': {
+                                    description: '缓存控制',
+                                    schema: { type: 'string' },
+                                },
+                                'Content-Disposition': {
+                                    description: '下载文件名',
+                                    schema: { type: 'string' },
+                                },
+                            },
                             content: { 'application/zip': {} },
                         },
                         '400': {

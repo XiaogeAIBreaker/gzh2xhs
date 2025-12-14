@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { createHash } from 'crypto'
 import type { AppError } from '@/domain/errors'
 
 export type ApiErrorResponse = {
@@ -66,4 +67,27 @@ export function getClientIp(req: Request & { headers: Headers }): string | undef
     const ip = String(src).split(',')[0]?.trim?.() || ''
 
     return ip || undefined
+}
+
+export function jsonOkWithETag<T extends Record<string, any>>(
+    req: Request,
+    data: T,
+    status = 200,
+    headers?: Record<string, string>,
+) {
+    const payload = JSON.stringify(data)
+    const hash = createHash('sha256').update(payload).digest('hex').slice(0, 16)
+    const etag = `W/"${hash}"`
+    const inm = req.headers.get('if-none-match')
+    const outHeaders = new Headers(headers ?? {})
+    outHeaders.set('ETag', etag)
+    if (!outHeaders.has('Cache-Control')) {
+        outHeaders.set('Cache-Control', 'private, max-age=0, must-revalidate')
+    }
+
+    if (inm && inm === etag) {
+        return new NextResponse(null, { status: 304, headers: outHeaders })
+    }
+
+    return NextResponse.json(data, { status, headers: outHeaders })
 }
