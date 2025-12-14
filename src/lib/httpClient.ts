@@ -1,3 +1,6 @@
+import { badRequest, internalError } from '@/domain/errors'
+import { ZodTypeAny } from 'zod'
+
 type JsonValue = Record<string, any>
 
 export type RequestOptions<TBody extends JsonValue = JsonValue> = {
@@ -5,7 +8,7 @@ export type RequestOptions<TBody extends JsonValue = JsonValue> = {
     headers?: Record<string, string>
     body?: TBody
     timeoutMs?: number
-    idempotencyKey?: string
+    idempotencyKey?: string | undefined
 }
 
 function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
@@ -21,10 +24,10 @@ function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
     })
 }
 
-export async function requestJson<TOut extends JsonValue = JsonValue, TBody extends JsonValue = JsonValue>(
-    url: string,
-    options: RequestOptions<TBody> = {},
-): Promise<TOut> {
+export async function requestJson<
+    TOut extends JsonValue = JsonValue,
+    TBody extends JsonValue = JsonValue,
+>(url: string, options: RequestOptions<TBody> = {}, schema?: ZodTypeAny): Promise<TOut> {
     const { method = 'POST', headers = {}, body, timeoutMs = 30_000, idempotencyKey } = options
     const h: Record<string, string> = { 'Content-Type': 'application/json', ...headers }
     if (idempotencyKey) h['x-idempotency-key'] = idempotencyKey
@@ -33,23 +36,37 @@ export async function requestJson<TOut extends JsonValue = JsonValue, TBody exte
     const isRelative = url.startsWith('/')
     const fullUrl = isRelative && base ? `${base}${url}` : url
 
-    const resp = await withTimeout(
-        fetch(fullUrl, {
-            method,
-            headers: h,
-            body: body ? JSON.stringify(body) : undefined,
-        }),
-        timeoutMs,
-    )
+    let resp: Response
+    try {
+        resp = await withTimeout(
+            fetch(fullUrl, {
+                method,
+                headers: h,
+                body: body ? JSON.stringify(body) : null,
+            }),
+            timeoutMs,
+        )
+    } catch (e) {
+        throw internalError('网络请求失败或超时', e)
+    }
 
     if (!resp.ok) {
         let msg = '请求失败'
+        let code: string | undefined
         try {
             const err = await resp.json()
             msg = err?.message || msg
+            code = err?.code
         } catch {}
-        throw new Error(msg)
+        if (resp.status >= 400 && resp.status < 500) throw badRequest(msg, { code })
+        throw internalError(msg, { code })
     }
 
-    return (await resp.json()) as TOut
+    const data = (await resp.json()) as TOut
+    if (schema) {
+        const r = schema.safeParse(data)
+        if (!r.success) throw badRequest('响应数据不符合预期', r.error)
+        return r.data as TOut
+    }
+    return data
 }

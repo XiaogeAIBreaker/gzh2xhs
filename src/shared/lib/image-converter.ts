@@ -1,4 +1,5 @@
 import { getBrowser } from '@/shared/lib/playwright'
+import { containsEmoji, createHtmlWrapper, getResizeOptions } from '@/shared/lib/image/algo'
 import sharp from 'sharp'
 import { APP_CONSTANTS, ERROR_MESSAGES } from '@/constants'
 import { logger } from '@/lib/logger'
@@ -78,11 +79,6 @@ async function withLimit<T>(fn: () => Promise<T>): Promise<T> {
     } finally {
         release()
     }
-}
-
-function containsEmoji(svgContent: string): boolean {
-    // 粗略检测常见 emoji 范围（包含多语言表情符）
-    return /[\u{1F000}-\u{1FFFF}]/u.test(svgContent)
 }
 
 export async function convertSvgToPng(svgContent: string): Promise<Buffer> {
@@ -167,34 +163,6 @@ export async function convertSvgToPng(svgContent: string): Promise<Buffer> {
     }
 }
 
-function createHtmlWrapper(svgContent: string): string {
-    return `<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body {
-        width: ${APP_CONSTANTS.CARD_SIZE.WIDTH}px;
-        height: ${APP_CONSTANTS.CARD_SIZE.HEIGHT}px;
-        background: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: "${APP_CONSTANTS.EMOJI_FONTS.join('", "')}", sans-serif;
-      }
-      svg {
-        width: ${APP_CONSTANTS.CARD_SIZE.WIDTH}px;
-        height: ${APP_CONSTANTS.CARD_SIZE.HEIGHT}px;
-      }
-    </style>
-  </head>
-  <body>
-    ${svgContent}
-  </body>
-</html>`
-}
-
 export async function convertBase64ToPng(base64Data: string): Promise<Buffer | undefined> {
     if (!base64Data?.trim()) {
         throw new Error(ERROR_MESSAGES.BASE64_INVALID)
@@ -267,13 +235,6 @@ function createSharpProcessMethods(imageBuffer: Buffer): Array<() => Promise<Buf
             }
         }
     })
-}
-
-function getResizeOptions() {
-    return {
-        fit: 'contain' as const,
-        background: { r: 255, g: 255, b: 255, alpha: 1 },
-    }
 }
 
 async function tryProcessMethods(methods: Array<() => Promise<Buffer>>): Promise<Buffer> {

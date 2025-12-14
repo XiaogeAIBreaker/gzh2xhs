@@ -4,7 +4,6 @@ import { jsonOkWithETag } from '@/lib/http'
 function makeReq(etag?: string): Request {
     const headers = new Headers()
     if (etag) headers.set('if-none-match', etag)
-    // @ts-expect-error minimal Request for testing
     return { headers } as Request
 }
 

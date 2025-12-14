@@ -35,6 +35,9 @@ describe('GenerateCardUseCase 占位图降级', () => {
 
         const out = await uc.execute({ text: 'hi', model: 'deepseek', size: '1:1' })
         expect(out.success).toBe(true)
-        expect(out.cards[0].imageUrl.startsWith('data:image/png;base64,')).toBe(true)
+        const ok =
+            Array.isArray(out.cards) &&
+            !!out.cards[0]?.imageUrl?.startsWith('data:image/png;base64,')
+        expect(ok).toBe(true)
     })
 })

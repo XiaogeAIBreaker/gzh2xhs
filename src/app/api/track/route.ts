@@ -1,18 +1,18 @@
-import { NextRequest } from 'next/server'
-import { jsonOk, jsonError } from '@/lib/http'
-import { trackServer, EventName } from '@/shared/lib/analytics'
+import { jsonOk } from '@/lib/http'
+import { trackServer } from '@/shared/lib/analytics'
+import { withValidation } from '@/interfaces/http/middleware/withValidation'
+import { z } from 'zod'
 
-export async function POST(req: NextRequest) {
-    try {
-        const body = (await req.json()) as { name: EventName; props?: any }
-        if (!body || !body.name) {
-            const traceId = req.headers.get('x-request-id') || undefined
-            return jsonError('VALIDATION_ERROR', '缺少事件名称', 400, undefined, undefined, traceId)
-        }
-        trackServer(req as any, body.name, body.props || {})
+const TrackSchema = z.object({
+    name: z.string(),
+    props: z.record(z.any()).optional(),
+})
+
+export const runtime = 'nodejs'
+export const POST = withValidation(
+    TrackSchema,
+    async (req, body: { name: string; props?: any }) => {
+        trackServer(req as any, body.name as any, body.props || {})
         return jsonOk({ success: true })
-    } catch (e) {
-        const traceId = req.headers.get('x-request-id') || undefined
-        return jsonError('SERVER_ERROR', '事件上报失败', 500, undefined, undefined, traceId)
-    }
-}
+    },
+)

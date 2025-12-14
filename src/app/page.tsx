@@ -2,8 +2,8 @@
 
 import { AppProvider } from '@/context/AppContext'
 import dynamic from 'next/dynamic'
-const Sidebar = dynamic(() => import('@/components/Sidebar'), { ssr: false })
-const Canvas = dynamic(() => import('@/components/Canvas'), { ssr: false })
+const Sidebar = dynamic(() => import('@/components/Sidebar').then((m) => m.Sidebar), { ssr: false })
+const Canvas = dynamic(() => import('@/components/Canvas').then((m) => m.Canvas), { ssr: false })
 import { motion } from 'framer-motion'
 import { useEffect } from 'react'
 import { trackClient } from '@/shared/lib/analytics'
