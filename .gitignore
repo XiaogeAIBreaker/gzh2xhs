@@ -3,6 +3,11 @@ node_modules
 *.pnp
 .pnp.js
 /.venv
+pyapp/.venv/
+pyapp/.pytest_cache/
+pyapp/.mypy_cache/
+pyapp/.ruff_cache/
+pyapp/**/__pycache__/
 
 # Testing
 coverage

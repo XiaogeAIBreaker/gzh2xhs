@@ -72,13 +72,13 @@ export class GenerateCardUseCase {
         return out
     }
 
+    /**
+     * 生成缓存键（g: 前缀 + 输入哈希）。
+     */
     private makeCacheKey(text: string, model: AIModel, style?: any, size?: any): string {
-        return (
-            'g:' +
-            createHash('sha256')
-                .update(this.c.cacheRepo.makeKey([text, model, style, size]))
-                .digest('hex')
-        )
+        const raw = this.c.cacheRepo.makeKey([text, model, style, size])
+        const hash = createHash('sha256').update(raw).digest('hex')
+        return `g:${hash}`
     }
 
     private async ensureAllowed(ip?: string): Promise<void> {

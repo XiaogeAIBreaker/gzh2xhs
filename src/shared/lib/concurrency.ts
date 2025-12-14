@@ -25,4 +25,7 @@ export class Limiter {
     }
 }
 
-export const globalLimiter = new Limiter(appConfig.features.concurrency.serverLimit)
+/**
+ * 全局并发限制器（容错读取配置）。
+ */
+export const globalLimiter = new Limiter(appConfig.features?.concurrency?.serverLimit ?? 8)

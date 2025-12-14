@@ -51,4 +51,17 @@ describe('GenerateCardUseCase', () => {
         // cached
         expect(out2).toEqual(out1)
     })
+
+    it('invalidates cache by prefix g: and re-executes', async () => {
+        const c = new AppContainer({ ip: '127.0.0.1' })
+        const uc = new GenerateCardUseCase(c)
+        const out1 = await uc.execute({ text: 'hello', model: 'deepseek', size: '1:1' })
+        // 使缓存失效（键以 g: 前缀命名）
+        const { invalidateByPrefix } = await import('@/shared/lib/cache')
+        invalidateByPrefix('g:')
+        await new Promise((r) => setTimeout(r, 2))
+        const out2 = await uc.execute({ text: 'hello', model: 'deepseek', size: '1:1' })
+        // 非缓存结果（id 包含时间戳，预期不完全相等）
+        expect(out2).not.toEqual(out1)
+    })
 })

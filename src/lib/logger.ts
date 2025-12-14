@@ -1,11 +1,14 @@
 type LogLevel = 'info' | 'warn' | 'error' | 'debug'
 
+/**
+ * 深度遍历并脱敏敏感字段，同时统一字符串截断方式。
+ */
 function redact(value: any): any {
     const SENSITIVE_KEYS = /(apiKey|authorization|password|token|secret)/i
 
     function walk(v: any): any {
         if (v == null) return v
-        if (typeof v === 'string') return v.length > 2000 ? v.slice(0, 2000) + '…' : v
+        if (typeof v === 'string') return v.length > 2000 ? `${v.slice(0, 2000)}…` : v
         if (Array.isArray(v)) return v.map(walk)
         if (typeof v === 'object') {
             const out: Record<string, any> = {}
@@ -20,6 +23,9 @@ function redact(value: any): any {
     return walk(value)
 }
 
+/**
+ * 输出结构化日志（JSON），支持 traceId 与作用域。
+ */
 function write(level: LogLevel, message: string, scope?: string, details?: any, traceId?: string) {
     const payload = {
         ts: new Date().toISOString(),
