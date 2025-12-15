@@ -34,6 +34,58 @@
             ]
         },
         {
+            "source": "src/app/api/auth/login/route.ts",
+            "dependencies": [],
+            "dependents": [],
+            "orphan": true,
+            "valid": false,
+            "rules": [
+                {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            ]
+        },
+        {
+            "source": "src/app/api/auth/me/route.ts",
+            "dependencies": [],
+            "dependents": [],
+            "orphan": true,
+            "valid": false,
+            "rules": [
+                {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            ]
+        },
+        {
+            "source": "src/app/api/auth/register/route.ts",
+            "dependencies": [],
+            "dependents": [],
+            "orphan": true,
+            "valid": false,
+            "rules": [
+                {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            ]
+        },
+        {
+            "source": "src/app/api/data/route.ts",
+            "dependencies": [],
+            "dependents": [],
+            "orphan": true,
+            "valid": false,
+            "rules": [
+                {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            ]
+        },
+        {
             "source": "src/app/api/export/route.ts",
             "dependencies": [],
             "dependents": [],
@@ -100,6 +152,19 @@
         },
         {
             "source": "src/app/api/kpi/route.ts",
+            "dependencies": [],
+            "dependents": [],
+            "orphan": true,
+            "valid": false,
+            "rules": [
+                {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            ]
+        },
+        {
+            "source": "src/app/api/logs/route.ts",
             "dependencies": [],
             "dependents": [],
             "orphan": true,
@@ -934,6 +999,19 @@
             ]
         },
         {
+            "source": "src/features/admin/KpiChart.tsx",
+            "dependencies": [],
+            "dependents": [],
+            "orphan": true,
+            "valid": false,
+            "rules": [
+                {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            ]
+        },
+        {
             "source": "src/features/card-generator/index.ts",
             "dependencies": [],
             "dependents": [],
@@ -1037,7 +1115,33 @@
             ]
         },
         {
+            "source": "src/infrastructure/repositories/DataRepository.ts",
+            "dependencies": [],
+            "dependents": [],
+            "orphan": true,
+            "valid": false,
+            "rules": [
+                {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            ]
+        },
+        {
             "source": "src/infrastructure/repositories/RateLimiterRepository.ts",
+            "dependencies": [],
+            "dependents": [],
+            "orphan": true,
+            "valid": false,
+            "rules": [
+                {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            ]
+        },
+        {
+            "source": "src/infrastructure/repositories/UserRepository.ts",
             "dependencies": [],
             "dependents": [],
             "orphan": true,
@@ -1405,6 +1509,19 @@
             "valid": true
         },
         {
+            "source": "src/services/kpi.ts",
+            "dependencies": [],
+            "dependents": [],
+            "orphan": true,
+            "valid": false,
+            "rules": [
+                {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            ]
+        },
+        {
             "source": "src/shared/lib/ab.ts",
             "dependencies": [],
             "dependents": [],
@@ -1536,6 +1653,19 @@
         },
         {
             "source": "src/shared/lib/metrics.ts",
+            "dependencies": [],
+            "dependents": [],
+            "orphan": true,
+            "valid": false,
+            "rules": [
+                {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            ]
+        },
+        {
+            "source": "src/shared/lib/oplog.ts",
             "dependencies": [],
             "dependents": [],
             "orphan": true,
@@ -1772,6 +1902,19 @@
                     "name": "no-orphans"
                 }
             ]
+        },
+        {
+            "source": "src/types/user.ts",
+            "dependencies": [],
+            "dependents": [],
+            "orphan": true,
+            "valid": false,
+            "rules": [
+                {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            ]
         }
     ],
     "summary": {
@@ -1808,6 +1951,42 @@
                 "type": "module",
                 "from": "src/app/api-docs/page.tsx",
                 "to": "src/app/api-docs/page.tsx",
+                "rule": {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            },
+            {
+                "type": "module",
+                "from": "src/app/api/auth/login/route.ts",
+                "to": "src/app/api/auth/login/route.ts",
+                "rule": {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            },
+            {
+                "type": "module",
+                "from": "src/app/api/auth/me/route.ts",
+                "to": "src/app/api/auth/me/route.ts",
+                "rule": {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            },
+            {
+                "type": "module",
+                "from": "src/app/api/auth/register/route.ts",
+                "to": "src/app/api/auth/register/route.ts",
+                "rule": {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            },
+            {
+                "type": "module",
+                "from": "src/app/api/data/route.ts",
+                "to": "src/app/api/data/route.ts",
                 "rule": {
                     "severity": "warn",
                     "name": "no-orphans"
@@ -1862,6 +2041,15 @@
                 "type": "module",
                 "from": "src/app/api/kpi/route.ts",
                 "to": "src/app/api/kpi/route.ts",
+                "rule": {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            },
+            {
+                "type": "module",
+                "from": "src/app/api/logs/route.ts",
+                "to": "src/app/api/logs/route.ts",
                 "rule": {
                     "severity": "warn",
                     "name": "no-orphans"
@@ -2184,6 +2372,15 @@
             },
             {
                 "type": "module",
+                "from": "src/features/admin/KpiChart.tsx",
+                "to": "src/features/admin/KpiChart.tsx",
+                "rule": {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            },
+            {
+                "type": "module",
                 "from": "src/features/card-generator/index.ts",
                 "to": "src/features/card-generator/index.ts",
                 "rule": {
@@ -2220,8 +2417,26 @@
             },
             {
                 "type": "module",
+                "from": "src/infrastructure/repositories/DataRepository.ts",
+                "to": "src/infrastructure/repositories/DataRepository.ts",
+                "rule": {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            },
+            {
+                "type": "module",
                 "from": "src/infrastructure/repositories/RateLimiterRepository.ts",
                 "to": "src/infrastructure/repositories/RateLimiterRepository.ts",
+                "rule": {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            },
+            {
+                "type": "module",
+                "from": "src/infrastructure/repositories/UserRepository.ts",
+                "to": "src/infrastructure/repositories/UserRepository.ts",
                 "rule": {
                     "severity": "warn",
                     "name": "no-orphans"
@@ -2382,6 +2597,15 @@
             },
             {
                 "type": "module",
+                "from": "src/services/kpi.ts",
+                "to": "src/services/kpi.ts",
+                "rule": {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            },
+            {
+                "type": "module",
                 "from": "src/shared/lib/ab.ts",
                 "to": "src/shared/lib/ab.ts",
                 "rule": {
@@ -2481,6 +2705,15 @@
             },
             {
                 "type": "module",
+                "from": "src/shared/lib/oplog.ts",
+                "to": "src/shared/lib/oplog.ts",
+                "rule": {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
+            },
+            {
+                "type": "module",
                 "from": "src/shared/lib/playwright.ts",
                 "to": "src/shared/lib/playwright.ts",
                 "rule": {
@@ -2559,13 +2792,22 @@
                     "severity": "warn",
                     "name": "no-orphans"
                 }
+            },
+            {
+                "type": "module",
+                "from": "src/types/user.ts",
+                "to": "src/types/user.ts",
+                "rule": {
+                    "severity": "warn",
+                    "name": "no-orphans"
+                }
             }
         ],
         "error": 1,
-        "warn": 85,
+        "warn": 96,
         "info": 0,
         "ignore": 0,
-        "totalCruised": 118,
+        "totalCruised": 129,
         "totalDependenciesCruised": 27,
         "optionsUsed": {
             "baseDir": "/Users/bytedance/Desktop/gzh2xhs",

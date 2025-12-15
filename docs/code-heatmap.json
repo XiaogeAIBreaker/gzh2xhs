@@ -1,71 +1,87 @@
 [
     {
-        "file": "src/docs/openapi.ts",
-        "lines": 394
-    },
-    {
-        "file": "src/context/AppContext.tsx",
-        "lines": 296
-    },
-    {
-        "file": "src/services/types.ts",
-        "lines": 289
+        "file": "src/docs/routes/index.ts",
+        "lines": 461
     },
     {
         "file": "src/shared/lib/image-converter.ts",
-        "lines": 271
+        "lines": 331
+    },
+    {
+        "file": "src/services/types.ts",
+        "lines": 295
     },
     {
         "file": "src/lib/prompts.ts",
-        "lines": 211
+        "lines": 209
+    },
+    {
+        "file": "src/application/usecases/GenerateCardUseCase.ts",
+        "lines": 172
     },
     {
         "file": "src/components/Sidebar.tsx",
-        "lines": 162
+        "lines": 170
+    },
+    {
+        "file": "src/interfaces/http/controllers/GenerateController.ts",
+        "lines": 153
+    },
+    {
+        "file": "src/app/experience/page.tsx",
+        "lines": 140
+    },
+    {
+        "file": "src/components/Canvas.tsx",
+        "lines": 134
     },
     {
         "file": "src/services/nanobanana.ts",
         "lines": 134
     },
     {
-        "file": "src/app/experience/page.tsx",
-        "lines": 133
-    },
-    {
-        "file": "src/components/Canvas.tsx",
-        "lines": 120
-    },
-    {
         "file": "src/constants/index.ts",
+        "lines": 127
+    },
+    {
+        "file": "src/interfaces/http/controllers/finance/PricingController.ts",
+        "lines": 122
+    },
+    {
+        "file": "src/lib/http.ts",
         "lines": 115
     },
     {
-        "file": "src/application/usecases/GenerateCardUseCase.ts",
-        "lines": 114
+        "file": "src/components/CardPreview.tsx",
+        "lines": 111
     },
     {
         "file": "src/services/deepseek.ts",
         "lines": 109
     },
     {
-        "file": "src/interfaces/http/controllers/GenerateController.ts",
-        "lines": 98
+        "file": "src/context/reducer.ts",
+        "lines": 100
+    },
+    {
+        "file": "src/shared/lib/cache.ts",
+        "lines": 97
     },
     {
         "file": "src/middleware.ts",
         "lines": 95
     },
     {
-        "file": "src/components/CardPreview.tsx",
+        "file": "src/shared/lib/metrics.ts",
         "lines": 92
     },
     {
-        "file": "src/shared/lib/cache.ts",
-        "lines": 89
+        "file": "src/components/ParticlesBackground.tsx",
+        "lines": 88
     },
     {
-        "file": "src/components/ParticlesBackground.tsx",
-        "lines": 81
+        "file": "src/shared/lib/decimal.ts",
+        "lines": 79
     },
     {
         "file": "src/interfaces/http/controllers/finance/RiskController.ts",
@@ -73,6 +89,14 @@
     },
     {
         "file": "src/components/Toast.tsx",
+        "lines": 75
+    },
+    {
+        "file": "src/lib/httpClient.ts",
+        "lines": 73
+    },
+    {
+        "file": "src/hooks/useExport.ts",
         "lines": 70
     },
     {
@@ -80,28 +104,28 @@
         "lines": 68
     },
     {
+        "file": "src/lib/logger.ts",
+        "lines": 68
+    },
+    {
         "file": "src/domain/finance/pricing/index.ts",
         "lines": 65
     },
     {
-        "file": "src/hooks/useExport.ts",
+        "file": "src/interfaces/http/controllers/ExportController.ts",
         "lines": 63
-    },
-    {
-        "file": "src/shared/lib/metrics.ts",
-        "lines": 63
-    },
-    {
-        "file": "src/interfaces/http/controllers/finance/PricingController.ts",
-        "lines": 62
-    },
-    {
-        "file": "src/lib/logger.ts",
-        "lines": 62
     },
     {
         "file": "src/shared/lib/analytics.ts",
         "lines": 61
+    },
+    {
+        "file": "src/config/index.ts",
+        "lines": 57
+    },
+    {
+        "file": "src/app/api/data/route.ts",
+        "lines": 51
     },
     {
         "file": "src/components/ParallaxHero.tsx",
@@ -109,11 +133,7 @@
     },
     {
         "file": "src/app/page.tsx",
-        "lines": 49
-    },
-    {
-        "file": "src/config/index.ts",
-        "lines": 49
+        "lines": 50
     },
     {
         "file": "src/services/index.ts",
@@ -125,10 +145,14 @@
     },
     {
         "file": "src/components/CommandPalette.tsx",
-        "lines": 48
+        "lines": 47
     },
     {
         "file": "src/components/HoverTiltCard.tsx",
+        "lines": 47
+    },
+    {
+        "file": "src/infrastructure/repositories/DataRepository.ts",
         "lines": 47
     },
     {
@@ -136,7 +160,7 @@
         "lines": 44
     },
     {
-        "file": "src/lib/http.ts",
+        "file": "src/app/error.tsx",
         "lines": 43
     },
     {
@@ -144,12 +168,20 @@
         "lines": 42
     },
     {
-        "file": "src/interfaces/http/controllers/ExportController.ts",
+        "file": "src/components/TemplateGallery.tsx",
         "lines": 42
     },
     {
+        "file": "src/hooks/useSessionId.ts",
+        "lines": 42
+    },
+    {
+        "file": "src/components/ProgressRing.tsx",
+        "lines": 41
+    },
+    {
         "file": "src/hooks/useCardGeneration.ts",
-        "lines": 40
+        "lines": 41
     },
     {
         "file": "src/application/finance/PricingUseCase.ts",
@@ -164,7 +196,7 @@
         "lines": 39
     },
     {
-        "file": "src/components/TemplateGallery.tsx",
+        "file": "src/hooks/useHotkeys.ts",
         "lines": 37
     },
     {
@@ -172,7 +204,19 @@
         "lines": 36
     },
     {
+        "file": "src/components/GlowButton.tsx",
+        "lines": 35
+    },
+    {
         "file": "src/components/NeonHeading.tsx",
+        "lines": 35
+    },
+    {
+        "file": "src/components/SegmentedControl.tsx",
+        "lines": 35
+    },
+    {
+        "file": "src/context/types.ts",
         "lines": 35
     },
     {
@@ -188,16 +232,16 @@
         "lines": 35
     },
     {
-        "file": "src/services/copytext.ts",
+        "file": "src/features/admin/KpiChart.tsx",
         "lines": 35
     },
     {
-        "file": "src/components/ProgressRing.tsx",
+        "file": "src/services/copytext.ts",
         "lines": 34
     },
     {
-        "file": "src/shared/lib/decimal.ts",
-        "lines": 34
+        "file": "src/app/layout.tsx",
+        "lines": 33
     },
     {
         "file": "src/application/usecases/ExportImagesUseCase.ts",
@@ -208,7 +252,15 @@
         "lines": 33
     },
     {
-        "file": "src/hooks/useSessionId.ts",
+        "file": "src/context/AppProvider.tsx",
+        "lines": 32
+    },
+    {
+        "file": "src/infrastructure/repositories/UserRepository.ts",
+        "lines": 32
+    },
+    {
+        "file": "src/interfaces/http/middleware/withValidation.ts",
         "lines": 32
     },
     {
@@ -216,19 +268,23 @@
         "lines": 32
     },
     {
+        "file": "src/shared/lib/concurrency.ts",
+        "lines": 32
+    },
+    {
         "file": "src/types/api.ts",
         "lines": 32
+    },
+    {
+        "file": "src/app/admin/page.tsx",
+        "lines": 31
     },
     {
         "file": "src/interfaces/http/middleware/rbac.ts",
         "lines": 31
     },
     {
-        "file": "src/app/layout.tsx",
-        "lines": 30
-    },
-    {
-        "file": "src/components/SegmentedControl.tsx",
+        "file": "src/shared/lib/downloader.ts",
         "lines": 29
     },
     {
@@ -236,16 +292,20 @@
         "lines": 28
     },
     {
-        "file": "src/components/ThemeToggle.tsx",
+        "file": "src/shared/lib/image/algo.ts",
         "lines": 27
+    },
+    {
+        "file": "src/components/ThemeToggle.tsx",
+        "lines": 26
     },
     {
         "file": "src/shared/lib/playwright.ts",
         "lines": 26
     },
     {
-        "file": "src/components/GlowButton.tsx",
-        "lines": 25
+        "file": "src/shared/workers/imageConverter.worker.ts",
+        "lines": 26
     },
     {
         "file": "src/container/index.ts",
@@ -260,11 +320,7 @@
         "lines": 24
     },
     {
-        "file": "src/app/admin/page.tsx",
-        "lines": 23
-    },
-    {
-        "file": "src/app/error.tsx",
+        "file": "src/store/appSlice.ts",
         "lines": 23
     },
     {
@@ -280,6 +336,18 @@
         "lines": 21
     },
     {
+        "file": "src/shared/lib/oplog.ts",
+        "lines": 21
+    },
+    {
+        "file": "src/app/api/auth/login/route.ts",
+        "lines": 20
+    },
+    {
+        "file": "src/app/api/auth/register/route.ts",
+        "lines": 20
+    },
+    {
         "file": "src/app/api/finance/pricing/route.ts",
         "lines": 20
     },
@@ -288,15 +356,55 @@
         "lines": 19
     },
     {
-        "file": "src/hooks/useHotkeys.ts",
+        "file": "src/app/api-docs/page.tsx",
         "lines": 19
+    },
+    {
+        "file": "src/types/user.ts",
+        "lines": 18
+    },
+    {
+        "file": "src/app/api/generate/route.ts",
+        "lines": 17
+    },
+    {
+        "file": "src/context/actions.ts",
+        "lines": 17
     },
     {
         "file": "src/domain/finance/errors.ts",
         "lines": 17
     },
     {
-        "file": "src/app/api-docs/page.tsx",
+        "file": "src/services/kpi.ts",
+        "lines": 17
+    },
+    {
+        "file": "src/app/api/auth/me/route.ts",
+        "lines": 16
+    },
+    {
+        "file": "src/app/api/logs/route.ts",
+        "lines": 16
+    },
+    {
+        "file": "src/store/api.ts",
+        "lines": 16
+    },
+    {
+        "file": "src/infrastructure/workers/financePool.ts",
+        "lines": 15
+    },
+    {
+        "file": "src/store/store.ts",
+        "lines": 15
+    },
+    {
+        "file": "src/docs/builder.ts",
+        "lines": 14
+    },
+    {
+        "file": "src/docs/schemas/common.ts",
         "lines": 14
     },
     {
@@ -304,11 +412,15 @@
         "lines": 14
     },
     {
-        "file": "src/infrastructure/workers/financePool.ts",
+        "file": "src/shared/lib/browser.ts",
         "lines": 14
     },
     {
         "file": "src/components/FrostedPanel.tsx",
+        "lines": 13
+    },
+    {
+        "file": "src/context/selectors.ts",
         "lines": 13
     },
     {
@@ -325,10 +437,6 @@
     },
     {
         "file": "src/app/api/finance/report/route.ts",
-        "lines": 12
-    },
-    {
-        "file": "src/app/api/generate/route.ts",
         "lines": 12
     },
     {
@@ -356,11 +464,35 @@
         "lines": 10
     },
     {
+        "file": "src/utils/apiBase.ts",
+        "lines": 10
+    },
+    {
         "file": "src/application/finance/ReportingUseCase.ts",
         "lines": 9
     },
     {
+        "file": "src/store/Provider.tsx",
+        "lines": 8
+    },
+    {
+        "file": "src/docs/openapi.ts",
+        "lines": 6
+    },
+    {
+        "file": "src/config/featureFlags.ts",
+        "lines": 4
+    },
+    {
+        "file": "src/context/AppContext.tsx",
+        "lines": 3
+    },
+    {
         "file": "src/features/card-generator/index.ts",
+        "lines": 2
+    },
+    {
+        "file": "src/lib/errors.ts",
         "lines": 2
     },
     {

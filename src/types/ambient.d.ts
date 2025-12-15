@@ -1,1 +1,5 @@
 declare module 'swagger-ui-react'
+declare module 'koa'
+declare module '@koa/router'
+declare module 'koa-bodyparser'
+declare module 'pino'

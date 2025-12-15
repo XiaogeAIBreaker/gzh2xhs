@@ -1,4 +1,4 @@
-import { useApp } from './AppContext'
+import { useApp } from './AppProvider'
 import type { AppState } from '@/types'
 
 export function useAppSelector<T>(selector: (state: AppState) => T): T {

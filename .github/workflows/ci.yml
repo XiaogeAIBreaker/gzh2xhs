@@ -86,3 +86,49 @@ jobs:
                       -Dsonar.sources=src
                       -Dsonar.tests=tests
                       -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+
+    python:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: '3.11'
+
+            - name: Install Poetry
+              run: |
+                  pip install --upgrade pip
+                  pip install poetry
+
+            - name: Install dependencies (pyapp)
+              working-directory: pyapp
+              run: poetry install --no-interaction --no-ansi
+
+            - name: Lint (ruff) and Typecheck (mypy)
+              working-directory: pyapp
+              run: |
+                  poetry run ruff check .
+                  poetry run mypy src
+
+            - name: Run Python tests with coverage
+              working-directory: pyapp
+              run: poetry run pytest --cov=pyapp --cov-report xml:coverage.xml --cov-report term
+
+            - name: Upload Python coverage report
+              uses: actions/upload-artifact@v4
+              with:
+                  name: coverage-python
+                  path: pyapp/coverage.xml
+
+            - name: Python generate benchmark
+              working-directory: pyapp
+              run: poetry run python scripts/bench_generate.py > bench-python.json || echo '{"ok":false}' > bench-python.json
+
+            - name: Upload Python benchmark result
+              uses: actions/upload-artifact@v4
+              with:
+                  name: bench-python
+                  path: pyapp/bench-python.json
