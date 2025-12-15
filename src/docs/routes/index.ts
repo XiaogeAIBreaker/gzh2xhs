@@ -1,4 +1,49 @@
 export const paths = {
+    '/api/auth/register': {
+        post: {
+            summary: '用户注册',
+            description: '创建新用户（内存仓储示例）',
+            requestBody: {
+                required: true,
+                content: {
+                    'application/json': {
+                        schema: {
+                            type: 'object',
+                            properties: { email: { type: 'string' }, password: { type: 'string' } },
+                            required: ['email', 'password'],
+                        },
+                    },
+                },
+            },
+            responses: { '200': { description: '注册成功', content: { 'application/json': {} } } },
+        },
+    },
+    '/api/auth/login': {
+        post: {
+            summary: '用户登录',
+            description: '返回令牌（与现有 RBAC 令牌兼容）',
+            requestBody: {
+                required: true,
+                content: {
+                    'application/json': {
+                        schema: {
+                            type: 'object',
+                            properties: { email: { type: 'string' }, password: { type: 'string' } },
+                            required: ['email', 'password'],
+                        },
+                    },
+                },
+            },
+            responses: { '200': { description: '登录成功', content: { 'application/json': {} } } },
+        },
+    },
+    '/api/auth/me': {
+        get: {
+            summary: '当前用户信息',
+            description: '返回登录用户资料',
+            responses: { '200': { description: '用户信息', content: { 'application/json': {} } } },
+        },
+    },
     '/api/generate': {
         post: {
             summary: '根据输入文本与模型生成卡片以及文案',
@@ -178,6 +223,43 @@ export const paths = {
             },
         },
     },
+    '/api/data': {
+        get: {
+            summary: '数据查询',
+            description: '分页/搜索查询',
+            parameters: [
+                { name: 'type', in: 'query', required: true, schema: { type: 'string' } },
+                { name: 'q', in: 'query', required: false, schema: { type: 'string' } },
+                { name: 'page', in: 'query', required: false, schema: { type: 'integer' } },
+                { name: 'size', in: 'query', required: false, schema: { type: 'integer' } },
+            ],
+            responses: { '200': { description: '查询结果', content: { 'application/json': {} } } },
+        },
+        post: {
+            summary: '创建数据',
+            requestBody: {
+                required: true,
+                content: { 'application/json': { schema: { type: 'object' } } },
+            },
+            responses: { '200': { description: '创建成功', content: { 'application/json': {} } } },
+        },
+        put: {
+            summary: '更新数据',
+            requestBody: {
+                required: true,
+                content: { 'application/json': { schema: { type: 'object' } } },
+            },
+            responses: { '200': { description: '更新成功', content: { 'application/json': {} } } },
+        },
+        delete: {
+            summary: '删除数据',
+            parameters: [
+                { name: 'type', in: 'query', required: true, schema: { type: 'string' } },
+                { name: 'id', in: 'query', required: true, schema: { type: 'string' } },
+            ],
+            responses: { '200': { description: '删除结果', content: { 'application/json': {} } } },
+        },
+    },
     '/api/track': {
         post: {
             summary: '事件上报',
@@ -252,6 +334,17 @@ export const paths = {
                     },
                 },
             },
+        },
+    },
+    '/api/logs': {
+        get: {
+            summary: '操作日志查询',
+            description: '只读检索操作日志（受 RBAC 控制）',
+            parameters: [
+                { name: 'q', in: 'query', required: false, schema: { type: 'string' } },
+                { name: 'limit', in: 'query', required: false, schema: { type: 'integer' } },
+            ],
+            responses: { '200': { description: '日志列表', content: { 'application/json': {} } } },
         },
     },
     '/api/openapi': {
