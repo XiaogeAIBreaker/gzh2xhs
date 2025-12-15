@@ -91,3 +91,24 @@ export function jsonOkWithETag<T extends Record<string, any>>(
 
     return NextResponse.json(data, { status, headers: outHeaders })
 }
+
+export function binaryOkWithETag(
+    req: Request,
+    data: ArrayBuffer | Uint8Array | Buffer,
+    status = 200,
+    headers?: Record<string, string>,
+) {
+    const buf = data instanceof Buffer ? data : Buffer.from(data as any)
+    const hash = createHash('sha256').update(buf).digest('hex').slice(0, 16)
+    const etag = `W/"${hash}"`
+    const inm = req.headers.get('if-none-match')
+    const outHeaders = new Headers(headers ?? {})
+    outHeaders.set('ETag', etag)
+    if (!outHeaders.has('Cache-Control')) {
+        outHeaders.set('Cache-Control', 'private, max-age=0, must-revalidate')
+    }
+    if (inm && inm === etag) {
+        return new NextResponse(null, { status: 304, headers: outHeaders })
+    }
+    return new NextResponse(buf, { status, headers: outHeaders })
+}

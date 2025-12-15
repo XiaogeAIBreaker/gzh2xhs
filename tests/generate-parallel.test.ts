@@ -42,6 +42,12 @@ describe('GenerateCardUseCase 并行执行', () => {
             },
         }))
 
+        vi.mock('@/lib/image-converter', () => ({
+            convertSvgToPng: async (svg: string) => Buffer.from(svg),
+            createTempImageUrl: (buf: Buffer, name: string) =>
+                `data:image/png;base64,${buf.toString('base64')}`,
+        }))
+
         const t0 = Date.now()
         const out = await uc.execute({ text: 'hi', model: 'deepseek', size: '1:1' })
         const dt = Date.now() - t0

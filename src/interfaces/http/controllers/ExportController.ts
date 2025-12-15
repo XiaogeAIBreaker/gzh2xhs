@@ -1,7 +1,6 @@
 import { NextRequest } from 'next/server'
-import { createHash } from 'crypto'
 import { appConfig } from '@/config'
-import { jsonError } from '@/lib/http'
+import { jsonError, binaryOkWithETag } from '@/lib/http'
 import { logger } from '@/lib/logger'
 import { ExportImagesUseCase } from '@/application/usecases/ExportImagesUseCase'
 import { ExportRequestSchema } from '@/types/schemas'
@@ -23,12 +22,9 @@ export class ExportController {
             if (idemKey) {
                 const cached = cacheGet<ArrayBuffer>(makeKey(['export', idemKey]))
                 if (cached)
-                    return new Response(cached, {
-                        status: 200,
-                        headers: {
-                            'Content-Type': 'application/zip',
-                            'Content-Disposition': `attachment; filename="xiaohongshu-cards-${Date.now()}.zip"`,
-                        },
+                    return binaryOkWithETag(req, cached, 200, {
+                        'Content-Type': 'application/zip',
+                        'Content-Disposition': `attachment; filename="xiaohongshu-cards-${Date.now()}.zip"`,
                     })
             }
             const body: unknown = await req.json()
@@ -52,23 +48,9 @@ export class ExportController {
                     zipBuffer as any,
                     appConfig.features.caching.readTtlMs,
                 )
-            const etag = `W/"${createHash('sha256')
-                .update(Buffer.from(zipBuffer as any))
-                .digest('hex')
-                .slice(0, 16)}"`
-            const inm = req.headers.get('if-none-match')
-            const commonHeaders: Record<string, string> = {
+            return binaryOkWithETag(req, zipBuffer as any, 200, {
                 'Content-Type': 'application/zip',
                 'Content-Disposition': `attachment; filename="xiaohongshu-cards-${Date.now()}\.zip"`,
-                ETag: etag,
-                'Cache-Control': 'private, max-age=0, must-revalidate',
-            }
-            if (inm && inm === etag) {
-                return new Response(null, { status: 304, headers: commonHeaders })
-            }
-            return new Response(zipBuffer as unknown as ArrayBuffer, {
-                status: 200,
-                headers: commonHeaders,
             })
         } catch (error) {
             logger.error('导出失败', error, 'Export', req.headers.get('x-request-id') || undefined)

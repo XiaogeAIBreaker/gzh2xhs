@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 const EnvSchema = z.object({
     NODE_ENV: z.string().default('development'),
-    DEEPSEEK_API_KEY: z.string().min(1, '缺少 DEEPSEEK_API_KEY'),
+    DEEPSEEK_API_KEY: z.string().optional().default(''),
     DEEPSEEK_API_URL: z.string().url().default('https://api.deepseek.com/chat/completions'),
     APICORE_AI_KEY: z.string().optional().default(''),
     NANOBANANA_API_URL: z.string().url().default('https://kg-api.cloud/v1/chat/completions'),
@@ -30,7 +30,7 @@ export const appConfig = {
             apiKey: env.DEEPSEEK_API_KEY,
             apiUrl: env.DEEPSEEK_API_URL,
             model: 'deepseek-chat',
-            enabled: true,
+            enabled: !!env.DEEPSEEK_API_KEY,
         },
         nanobanana: {
             apiKey: env.APICORE_AI_KEY,
