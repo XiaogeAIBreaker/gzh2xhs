@@ -12,7 +12,7 @@
 - 使用 `const/let`（全仓库未命中 `var`，无需风险性替换）。
 - 箭头函数：源码已广泛使用；保留现状。
 - 模板字符串替换拼接：
-  - `src/hooks/useHotkeys.ts:8-9` 将 `(e.metaKey || e.ctrlKey ? 'Cmd+' : '') + e.key` 改为 ```${e.metaKey || e.ctrlKey ? 'Cmd+' : ''}${e.key}``` 并抽象组合逻辑为小函数，提高可读性。
+  - `src/hooks/useHotkeys.ts:8-9` 将 `(er.metaKey || e.ctrlKey ? 'Cmd+' : '') + e.key` 改为 ```${e.metaKey || e.ctrlKey ? 'Cmd+' : ''}${e.key}``` 并抽象组合逻辑为小函数，提高可读性。
   - `src/hooks/useSessionId.ts:19` 将 `Math.random().toString(36).slice(2) + Date.now().toString(36)` 改为 ```${Math.random().toString(36).slice(2)}${Date.now().toString(36)}```。
   - `src/hooks/useSessionId.ts:22-25` 将 `new RegExp('(^| )' + name + '=([^;]+)')` 改为 ``new RegExp(`(^| )${name}=([^;]+)`)``。
   - `src/application/usecases/GenerateCardUseCase.ts:77-81` 将缓存键 `'g:' + ...` 改为模板字符串，形如 ``g:${hash}``，同时将哈希生成封装为明确的局部常量。

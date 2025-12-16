@@ -150,6 +150,14 @@ npm run dev
 
 技术方案说明：详见 [生成卡片prompt设计](./docs/生成卡片prompt设计.md) 与 [小红书设计分析](./docs/xiaohongshu-design-analysis.md)
 
+### 企业级架构与路线图
+
+- 总体架构与技术方案：[`docs/enterprise-architecture-plan.md`](./docs/enterprise-architecture-plan.md)
+- 架构重构总决策：[`docs/refactor/ADR-001_架构重构总决策.md`](./docs/refactor/ADR-001_%E6%9E%B6%E6%9E%84%E9%87%8D%E6%9E%84%E6%80%BB%E5%86%B3%E7%AD%96.md)
+- 灰度与回滚策略：[`docs/refactor/灰度与回滚策略.md`](./docs/refactor/%E7%81%B0%E5%BA%A6%E4%B8%8E%E5%9B%9E%E6%BB%9A%E7%AD%96%E7%95%A5.md)
+- 安全加固执行手册：[`docs/security/安全加固执行手册.md`](./docs/security/%E5%AE%89%E5%85%A8%E5%8A%A0%E5%9B%BA%E6%89%A7%E8%A1%8C%E6%89%8B%E5%86%8C.md)
+- 性能基线与压测指南：[`docs/perf-baseline.md`](./docs/perf-baseline.md)
+
 ## 部署说明
 
 ### Vercel部署
@@ -204,6 +212,7 @@ npm run build    # 构建生产版本
 npm run start    # 启动生产服务器
 npm run lint     # 代码检查
 npm run test     # 运行单元测试（Vitest）
+BENCH_URL=http://localhost:3000/api/generate BENCH_DURATION_MS=5000 BENCH_CONCURRENCY=4 node scripts/perf/basic-bench.mjs  # 压测基线
 ```
 
 ## 故障排查

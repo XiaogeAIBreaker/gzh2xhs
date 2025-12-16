@@ -3,6 +3,8 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from './modules/app.module'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { ValidationPipe } from '@nestjs/common'
+import { MetricsInterceptor } from './shared/interceptors/metrics.interceptor'
+import { AuditInterceptor } from './shared/interceptors/audit.interceptor'
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule)
@@ -14,6 +16,8 @@ async function bootstrap() {
             transform: true,
         }),
     )
+
+    app.useGlobalInterceptors(new MetricsInterceptor(), new AuditInterceptor())
 
     const config = new DocumentBuilder()
         .setTitle('gzh2xhs API')
