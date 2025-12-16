@@ -4,6 +4,8 @@ from ...application.usecases.generate_card import GenerateCardUseCase
 from ...lib.http import json_response, compute_etag
 from ...shared.cache import cache
 from ...shared.ratelimiter import limiter
+from ...shared.metrics import observe
+import time
 
 router = APIRouter()
 
@@ -29,7 +31,10 @@ async def generate(input: GenerateInput, request: Request):
 
     uc = GenerateCardUseCase()
     try:
+        start = time.perf_counter()
         result = uc.execute(input.text, input.model, input.style)
+        latency_ms = (time.perf_counter() - start) * 1000.0
+        observe("api_generate_latency_ms", latency_ms)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
     cache.set(key, result, ttl_seconds=300)
