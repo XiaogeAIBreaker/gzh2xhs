@@ -11,6 +11,8 @@ pyapp/**/__pycache__/
 
 # Testing
 coverage
+pyapp/.coverage
+pyapp/coverage.xml
 
 # Next.js
 .next/

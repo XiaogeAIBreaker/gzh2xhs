@@ -59,6 +59,9 @@ jobs:
             - name: Run API tests (if any)
               run: npm run test --workspace apps/api || echo "skip api tests"
 
+            - name: Run API Jest tests
+              run: npm run test:jest --workspace apps/api || echo "skip api jest"
+
             - name: Upload coverage report
               uses: actions/upload-artifact@v4
               with:

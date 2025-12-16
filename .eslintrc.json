@@ -3,13 +3,14 @@
     "plugins": ["unused-imports", "@typescript-eslint", "security", "sonarjs"],
     "parser": "@typescript-eslint/parser",
     "parserOptions": { "project": "./tsconfig.json", "tsconfigRootDir": "." },
+    "ignorePatterns": ["apps/api/jest.config.js"],
     "rules": {
         "unused-imports/no-unused-imports": "error",
         "unused-imports/no-unused-vars": [
             "warn",
             { "args": "after-used", "argsIgnorePattern": "^_" }
         ],
-        "no-empty-function": ["error", { "allow": ["arrowFunctions"] }],
+        "no-empty-function": ["error", { "allow": ["arrowFunctions", "constructors"] }],
         "no-console": ["warn", { "allow": ["warn", "error"] }],
         "consistent-return": "error",
         "@typescript-eslint/no-floating-promises": "off",
