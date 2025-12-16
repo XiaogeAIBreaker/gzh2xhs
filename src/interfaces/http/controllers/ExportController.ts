@@ -8,6 +8,11 @@ import { trackServer } from '@/shared/lib/analytics'
 import { createRateLimiter } from '@/shared/lib/rateLimiter'
 import { cacheGet, cacheSet, makeKey } from '@/shared/lib/cache'
 
+/**
+ * 导出控制器：处理将已生成的卡片批量打包为ZIP下载。
+ * - 支持幂等（`x-idempotency-key`）与速率限制
+ * - 使用 ETag 与缓存头优化重复下载
+ */
 export class ExportController {
     async post(req: NextRequest): Promise<Response> {
         try {

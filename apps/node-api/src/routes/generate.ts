@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import crypto from 'crypto'
+import { getWeakETag, extractClientIpFromHeader } from '@/shared/lib/http-common'
 import type { DefaultContext, DefaultState } from 'koa'
 import { z } from 'zod'
 import { GenerateRequestSchema } from '@/types/schemas'
@@ -73,17 +73,12 @@ function safeParse<T extends z.ZodTypeAny>(schema: T, raw: any) {
 }
 
 function extractIp(ctx: any): string | undefined {
-    const xfwd = ctx.get('x-forwarded-for')
-    const xreal = ctx.get('x-real-ip')
-    const src = (xfwd ?? xreal ?? '') || ''
-    const ip = String(src).split(',')[0]?.trim?.() || ''
-    return ip || undefined
+    return extractClientIpFromHeader(ctx.get('x-forwarded-for'), ctx.get('x-real-ip'))
 }
 
 function setETag(ctx: any, data: any) {
     const payload = JSON.stringify(data)
-    const hash = crypto.createHash('sha256').update(payload).digest('hex').slice(0, 16)
-    const etag = `W/"${hash}"`
+    const etag = getWeakETag(payload)
     const inm = ctx.get('if-none-match')
     ctx.set('ETag', etag)
     if (!ctx.response.get('Cache-Control')) {

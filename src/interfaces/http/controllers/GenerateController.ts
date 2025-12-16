@@ -12,6 +12,12 @@ import { GenerateRequestSchema, type GenerateRequestDto } from '@/types/schemas'
 import { createRateLimiter } from '@/shared/lib/rateLimiter'
 import { cacheGet, cacheSet, makeKey } from '@/shared/lib/cache'
 
+/**
+ * 生成控制器：接收生成请求，调用用例生成卡片。
+ * - 校验请求（Zod）
+ * - 速率限制与幂等缓存
+ * - 指标/审计埋点与弱ETag响应
+ */
 export class GenerateController {
     async post(req: NextRequest): Promise<NextResponse> {
         const start = Date.now()
