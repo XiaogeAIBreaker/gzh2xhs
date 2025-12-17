@@ -15,7 +15,15 @@
         "sourceMap": true,
         "rootDir": "src",
         "outDir": "dist",
-        "types": ["node", "jest"]
+        "types": ["node", "jest"],
+        "paths": {
+            "@gzh2xhs/shared-config": ["../../packages/shared-config/src"],
+            "@gzh2xhs/shared-errors": ["../../packages/shared-errors/src"],
+            "@gzh2xhs/shared-logger": ["../../packages/shared-logger/src"],
+            "@gzh2xhs/shared-validation": ["../../packages/shared-validation/src"],
+            "@gzh2xhs/shared-http": ["../../packages/shared-http/src"],
+            "@gzh2xhs/shared-types": ["../../packages/shared-types/src"]
+        }
     },
     "include": ["src", "test"]
 }

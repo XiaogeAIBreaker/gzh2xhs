@@ -4,6 +4,15 @@
         "module": "CommonJS",
         "moduleResolution": "node",
         "declaration": true,
-        "emitDeclarationOnly": false
-    }
+        "emitDeclarationOnly": false,
+        "paths": {
+            "@gzh2xhs/shared-config": ["../../packages/shared-config/dist"],
+            "@gzh2xhs/shared-errors": ["../../packages/shared-errors/dist"],
+            "@gzh2xhs/shared-logger": ["../../packages/shared-logger/dist"],
+            "@gzh2xhs/shared-validation": ["../../packages/shared-validation/dist"],
+            "@gzh2xhs/shared-http": ["../../packages/shared-http/dist"],
+            "@gzh2xhs/shared-types": ["../../packages/shared-types/dist"]
+        }
+    },
+    "include": ["src"]
 }

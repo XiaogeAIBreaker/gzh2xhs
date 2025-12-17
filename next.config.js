@@ -3,6 +3,18 @@ const nextConfig = {
     images: {
         domains: [],
     },
+    async rewrites() {
+        const isDev = process.env.NODE_ENV !== 'production'
+        if (isDev) {
+            return [
+                {
+                    source: '/api/:path*',
+                    destination: 'http://localhost:8000/api/:path*',
+                },
+            ]
+        }
+        return []
+    },
     async headers() {
         const isDev = process.env.NODE_ENV !== 'production'
         const scriptSrc = isDev ? "script-src 'self' 'unsafe-eval'" : "script-src 'self'"

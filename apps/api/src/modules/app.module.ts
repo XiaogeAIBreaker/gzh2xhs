@@ -19,6 +19,9 @@ import { LogsController } from '../interfaces/http/logs.controller'
 import { LogsService } from './logs/logs.service'
 import { OpenapiController } from '../interfaces/http/openapi.controller'
 import { OpenapiService } from './openapi/openapi.service'
+import { AuthGuard } from '../shared/security/auth.guard'
+import { RbacGuard } from '../shared/security/rbac.guard'
+import { RateLimitGuard } from '../shared/limits/rate-limit.guard'
 
 @Module({
     imports: [ConfigModule.forRoot({ isGlobal: true }), CacheModule, OrmModule.forRoot()],
@@ -42,6 +45,9 @@ import { OpenapiService } from './openapi/openapi.service'
         KpiService,
         LogsService,
         OpenapiService,
+        AuthGuard,
+        RbacGuard,
+        RateLimitGuard,
     ],
 })
 export class AppModule {}

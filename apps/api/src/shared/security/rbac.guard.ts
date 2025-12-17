@@ -29,7 +29,7 @@ export class RbacGuard implements CanActivate {
     canActivate(context: ExecutionContext): boolean {
         const req = context.switchToHttp().getRequest()
         const user = (req as any).user as { role: 'user' | 'admin' } | null
-        const action = this.reflector.get<Action>(REQUIRE_ACCESS, context.getHandler())
+        const action = this.reflector?.get<Action>(REQUIRE_ACCESS, context.getHandler())
         if (!action) return true
         if (!user) return false
         const allowed = POLICY[action]

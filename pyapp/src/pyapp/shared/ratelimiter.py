@@ -49,5 +49,6 @@ class SlidingWindowLimiter:
 
     def allow(self, key: str) -> bool:
         return self._allow_redis(key)
+from ..config.settings import settings
 
-limiter = SlidingWindowLimiter(limit_per_minute=120)
+limiter = SlidingWindowLimiter(limit_per_minute=settings.rate_limit_per_minute)

@@ -1,10 +1,11 @@
-import { CallHandler, ExecutionContext, Injectable, NestInterceptor, Logger } from '@nestjs/common'
+import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common'
 import { Observable } from 'rxjs'
 import { tap } from 'rxjs/operators'
+import { createLogger } from '@gzh2xhs/shared-logger'
 
 @Injectable()
 export class AuditInterceptor implements NestInterceptor {
-    private readonly logger = new Logger('Audit')
+    private readonly logger = createLogger({ level: process.env.LOG_LEVEL || 'info' })
 
     intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
         const http = context.switchToHttp()
@@ -23,15 +24,11 @@ export class AuditInterceptor implements NestInterceptor {
             tap({
                 next: () => {
                     const statusCode = (res as any).statusCode
-                    this.logger.log(
-                        `actor=${userId} action=${method} path=${url} status=${statusCode} trace=${traceId}`,
-                    )
+                    this.logger.info({ event: 'audit', actor: userId, action: method, path: url, status: statusCode, rid: traceId })
                 },
                 error: (err) => {
                     const statusCode = (res as any).statusCode
-                    this.logger.warn(
-                        `actor=${userId} action=${method} path=${url} status=${statusCode} trace=${traceId} error=${err?.message}`,
-                    )
+                    this.logger.warn({ event: 'audit', actor: userId, action: method, path: url, status: statusCode, rid: traceId, error: err?.message })
                 },
             }),
         )

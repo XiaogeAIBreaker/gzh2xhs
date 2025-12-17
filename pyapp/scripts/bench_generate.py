@@ -10,7 +10,7 @@ REQUESTS = 200
 
 async def worker(client: httpx.AsyncClient, results: list[float]):
     start = time.perf_counter()
-    r = await client.post(URL, json=PAYLOAD)
+    r = await client.post(URL, json=PAYLOAD, headers={"X-Bypass-RateLimit": "1"})
     r.raise_for_status()
     results.append((time.perf_counter() - start) * 1000)
 
@@ -31,4 +31,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-

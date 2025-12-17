@@ -3,6 +3,8 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from './modules/app.module'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { ValidationPipe } from '@nestjs/common'
+import { HttpErrorFilter } from './shared/filters/http-exception.filter'
+import { config as appConfig } from '@gzh2xhs/shared-config'
 import { MetricsInterceptor } from './shared/interceptors/metrics.interceptor'
 import { AuditInterceptor } from './shared/interceptors/audit.interceptor'
 import { AuthGuard } from './shared/security/auth.guard'
@@ -21,12 +23,9 @@ async function bootstrap() {
         }),
     )
 
-    app.useGlobalInterceptors(
-        new MetricsInterceptor(),
-        new AuditInterceptor(),
-        new IdempotencyInterceptor(),
-    )
-    app.useGlobalGuards(new AuthGuard(), new RbacGuard(), new RateLimitGuard())
+    app.useGlobalInterceptors(new MetricsInterceptor(), new AuditInterceptor(), new IdempotencyInterceptor())
+    app.useGlobalFilters(new HttpErrorFilter())
+    app.useGlobalGuards(app.get(AuthGuard), app.get(RbacGuard), app.get(RateLimitGuard))
 
     const config = new DocumentBuilder()
         .setTitle('gzh2xhs API')
@@ -37,7 +36,7 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, config)
     SwaggerModule.setup('/docs', app, document)
 
-    const port = process.env.PORT ? Number(process.env.PORT) : 3001
+    const port = appConfig.PORT || 3001
     await app.listen(port)
 }
 

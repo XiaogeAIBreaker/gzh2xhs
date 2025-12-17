@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 from ...application.usecases.generate_card import GenerateCardUseCase
-from ...lib.http import json_response, compute_etag
+from ...lib.http import json_ok_with_etag
 from ...shared.cache import cache
 from ...shared.ratelimiter import limiter
 from ...shared.metrics import observe
@@ -23,11 +23,7 @@ async def generate(input: GenerateInput, request: Request):
 
     cached = cache.get(key)
     if cached is not None:
-        etag = compute_etag(cached)
-        inm = request.headers.get("If-None-Match")
-        if inm == etag:
-            raise HTTPException(status_code=304, detail="Not Modified")
-        return json_response(cached, status_code=200, etag=etag)
+        return json_ok_with_etag(request, cached)
 
     uc = GenerateCardUseCase()
     try:
@@ -38,5 +34,4 @@ async def generate(input: GenerateInput, request: Request):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
     cache.set(key, result, ttl_seconds=300)
-    etag = compute_etag(result)
-    return json_response(result, status_code=200, etag=etag)
+    return json_ok_with_etag(request, result)

@@ -54,20 +54,25 @@
 - **响应助手**：`src/lib/http.ts` 提供统一 `jsonOk/jsonError` 响应封装
 - **基础测试**：引入 `Vitest` 并新增单元测试（配置解析、速率限制）
 
-## Python 后端服务
+## Python 后端服务（FastAPI）
 
 - 已引入 FastAPI 后端（目录 `pyapp/src/pyapp`），对齐并替换 `/api/*` 路由：`generate/export/finance/kpi/auth/data/logs/openapi`。
 - 响应一致性：弱 ETag（`W/"<hash16>"`）与 `Cache-Control` 语义与 TS 版本一致；限流支持 Redis 优先、内存回退。
+- 开发代理：Next.js 在开发模式下通过 `rewrites` 将 `/api/*` 代理到 `http://localhost:8000/api/*`。
 - 运行方式：
 
 ```bash
 cd pyapp
 python -m venv .venv && source .venv/bin/activate
-pip install -r <poetry 导出或使用 poetry install>
+pip install -r pyapp/requirements.txt
 PYTHONPATH=src uvicorn pyapp.main:app --port 8000 --reload
 ```
 
-- 测试与覆盖率：`pytest --cov` 已配置，当前覆盖率≥90%；CI 已包含 Python job（`.github/workflows/ci.yml`）。
+- 测试与覆盖率：`pytest --cov` 已配置，当前覆盖率≥90%；CI 已包含 Python 工作流（`.github/workflows/python-ci.yml`）。
+
+### 重构前后对比说明
+
+- 详见 `docs/refactor-python-migration.md`，包含端点映射、工具层对齐（弱 ETag / IP 提取）、异常与缓存语义的差异说明，以及性能和覆盖率总结。
 
 ## 快速开始
 
