@@ -1,3 +1,10 @@
+"""通用中间件与异常处理。
+
+- 请求 ID：为每个请求注入 `X-Request-Id`，便于链路追踪。
+- CORS：在开发与跨域场景下放开源、方法与头部限制。
+- 统一异常：对 `HTTPException` 与未知错误统一返回 JSON 错误结构，保持接口契约一致。
+"""
+
 import uuid
 from typing import Any, Dict
 from fastapi import FastAPI, Request
@@ -8,6 +15,7 @@ from ...config.settings import settings
 from ...lib.logger import log
 
 async def request_id_middleware(request: Request, call_next):
+    """注入请求 ID 并记录基本访问日志。"""
     rid = request.headers.get("X-Request-Id") or str(uuid.uuid4())
     start = uuid.uuid4().hex
     response = await call_next(request)
@@ -16,6 +24,7 @@ async def request_id_middleware(request: Request, call_next):
     return response
 
 def add_common_middleware(app: FastAPI) -> None:
+    """注册通用中间件：请求 ID 与 CORS。"""
     app.middleware("http")(request_id_middleware)
     app.add_middleware(
         CORSMiddleware,
@@ -27,7 +36,7 @@ def add_common_middleware(app: FastAPI) -> None:
 
 
 def add_exception_handlers(app: FastAPI) -> None:
-    """Register unified exception handlers for HTTP and generic errors."""
+    """注册统一异常处理器（HTTP/通用异常）。"""
 
     @app.exception_handler(HTTPException)
     async def http_exception_handler(request: Request, exc: HTTPException) -> Response:  # type: ignore[override]

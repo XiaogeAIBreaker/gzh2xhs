@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Optional, Dict
+from typing import Optional, Dict, Tuple
 import hashlib
 import time
 import secrets
@@ -12,7 +12,7 @@ class UserDto:
 
 class UserRepository:
     def __init__(self) -> None:
-        self._users: Dict[str, tuple[UserDto, str]] = {}
+        self._users: Dict[str, Tuple[UserDto, str]] = {}
 
     def _hash(self, pw: str) -> str:
         return hashlib.sha256(pw.encode("utf-8")).hexdigest()
@@ -34,4 +34,3 @@ class UserRepository:
         return rec[0] if rec[1] == self._hash(password) else None
 
 user_repo = UserRepository()
-

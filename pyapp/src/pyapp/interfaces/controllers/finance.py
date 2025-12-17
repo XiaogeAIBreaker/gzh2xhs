@@ -1,5 +1,6 @@
 from __future__ import annotations
 from fastapi import APIRouter, Request
+from typing import List
 from pydantic import BaseModel, Field
 from ...domain.finance import (
     Bond,
@@ -47,12 +48,17 @@ async def risk_option(input: OptionInput, _req: Request):
     return json_response(res)
 
 class EquityInput(BaseModel):
+    """Equity report input payload.
+
+    Attributes:
+        currency: Currency code string.
+        series: Price/return series for indicators calculation.
+    """
     currency: str
-    series: list[float]
+    series: List[float]
 
 @router.post("/finance/report")
 async def report_equity(input: EquityInput, _req: Request):
     eq = Equity(currency=input.currency)
     res = equity_indicators(eq, input.series)
     return json_response(res)
-

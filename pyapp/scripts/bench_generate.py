@@ -2,20 +2,21 @@ import asyncio
 import statistics
 import time
 import httpx
+from typing import List
 
 URL = "http://127.0.0.1:8000/api/generate"
 PAYLOAD = {"text": "hello world", "model": "m1", "style": "s"}
 CONCURRENCY = 16
 REQUESTS = 200
 
-async def worker(client: httpx.AsyncClient, results: list[float]):
+async def worker(client: httpx.AsyncClient, results: List[float]):
     start = time.perf_counter()
     r = await client.post(URL, json=PAYLOAD, headers={"X-Bypass-RateLimit": "1"})
     r.raise_for_status()
     results.append((time.perf_counter() - start) * 1000)
 
 async def main():
-    results: list[float] = []
+    results: List[float] = []
     async with httpx.AsyncClient(timeout=10) as client:
         sem = asyncio.Semaphore(CONCURRENCY)
         async def run_one():
