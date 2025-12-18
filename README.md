@@ -74,6 +74,28 @@ PYTHONPATH=src uvicorn pyapp.main:app --port 8000 --reload
 
 - 详见 `docs/refactor-python-migration.md`，包含端点映射、工具层对齐（弱 ETag / IP 提取）、异常与缓存语义的差异说明，以及性能和覆盖率总结。
 
+### Flatted Python 模块重构（本次新增）
+
+- 重构位置：`python/flatted_refactor/`（不改动第三方 `node_modules`）。
+- 对外 API：`parse(value: str, *args, **kwargs)`、`stringify(value: Any, *args, **kwargs)` 与原实现等价。
+- 代码改进：PEP 8、完整类型提示、文档字符串、统一异常封装，关键路径性能优化（索引与访问检测）。
+- 基线版本：`python/baseline/flatted_baseline.py`（原始实现副本，用于对照测试与基准）。
+
+运行测试与基准：
+
+```bash
+# 功能与兼容性测试
+python3 python/tests/run_tests.py
+
+# 错误用例测试
+python3 python/tests/run_errors.py
+
+# 性能基准（自引用/互引用/大规模共享字符串）
+python3 python/benchmarks/bench_flatted.py
+```
+
+性能说明：脚本将分别对原版与重构版的 `stringify/parse` 进行耗时统计，并在终端打印对比数据。
+
 ## 快速开始
 
 ### 环境要求
