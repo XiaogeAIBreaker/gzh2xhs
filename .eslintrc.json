@@ -1,6 +1,6 @@
 {
     "extends": ["next/core-web-vitals"],
-    "plugins": ["unused-imports", "@typescript-eslint", "security", "sonarjs"],
+    "plugins": ["unused-imports", "@typescript-eslint", "security", "sonarjs", "jsdoc"],
     "parser": "@typescript-eslint/parser",
     "parserOptions": { "project": "./tsconfig.json", "tsconfigRootDir": "." },
     "ignorePatterns": ["apps/api/jest.config.js"],
@@ -19,7 +19,18 @@
         "complexity": ["warn", { "max": 20 }],
         "max-depth": ["warn", 4],
         "padding-line-between-statements": "off",
-        "max-lines-per-function": ["warn", { "max": 200 }],
+        "max-lines-per-function": ["warn", { "max": 50 }],
+        "jsdoc/require-jsdoc": [
+            "warn",
+            {
+                "publicOnly": true,
+                "require": {
+                    "ClassDeclaration": true,
+                    "MethodDefinition": true,
+                    "FunctionDeclaration": true
+                }
+            }
+        ],
         "security/detect-object-injection": "warn",
         "sonarjs/cognitive-complexity": ["warn", 20],
         "sonarjs/no-duplicate-string": "warn",

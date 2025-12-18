@@ -5,9 +5,9 @@ export default defineConfig({
     test: {
         environment: 'node',
         globals: true,
-        exclude: ['apps/api/test/**'],
+        exclude: ['apps/api/test/**', 'node_modules/**', 'dist/**', 'coverage/**'],
         coverage: {
-            provider: 'v8',
+            provider: 'istanbul',
             reporter: ['text', 'html', 'lcov'],
             include: [
                 'src/application/usecases/GenerateCardUseCase.ts',

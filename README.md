@@ -37,6 +37,12 @@
 - Playwright 资源管理：`convertSvgToPng` 渲染后主动关闭页面，避免内存泄漏
 - 全量回归：所有 Vitest 用例保持通过，确保行为不变
 
+### 代码规范与质量门禁（新增）
+
+- 提交规范：采用 Conventional Commits，并启用 commitlint + husky `commit-msg` 钩子
+- 覆盖率：统一使用 Istanbul 覆盖（Vitest provider: istanbul），阈值≥80%（关键模块≥90%）
+- Node 版本：根目录新增 `.nvmrc` 锁定 Node 18，`engines.node ">=18"` 保持兼容
+
 ### 本次重构交付（专业级改造）
 
 - 基线度量：新增 `docs/baseline.md`，生成 `docs/deps.json` 与 `perf.json`

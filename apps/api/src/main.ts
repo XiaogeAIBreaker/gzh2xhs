@@ -40,4 +40,16 @@ async function bootstrap() {
     await app.listen(port)
 }
 
-bootstrap()
+process.on('unhandledRejection', (reason: any) => {
+    // Nest will handle request-level errors via filters/interceptors; capture process-level rejections.
+    console.error('[unhandled_rejection]', reason)
+})
+
+process.on('uncaughtException', (err) => {
+    console.error('[uncaught_exception]', err)
+})
+
+bootstrap().catch((err) => {
+    console.error('[nest_bootstrap_failed]', err)
+    process.exit(1)
+})

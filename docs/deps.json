@@ -1,2882 +1,3054 @@
 {
-    "modules": [
-        {
-            "source": "src/app/ClientLayout.tsx",
-            "dependencies": [],
-            "dependents": ["src/app/layout.tsx"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/app/admin/page.tsx",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/app/api-docs/page.tsx",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/app/api/auth/login/route.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/app/api/auth/me/route.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/app/api/auth/register/route.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/app/api/data/route.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/app/api/export/route.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/app/api/finance/pricing/route.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/app/api/finance/report/route.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/app/api/finance/risk/route.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/app/api/generate/route.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/app/api/kpi/route.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/app/api/logs/route.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/app/api/openapi/route.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/app/api/track/route.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/app/error.tsx",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/app/experience/page.tsx",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/app/finance/page.tsx",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/app/layout.tsx",
-            "dependencies": [
-                {
-                    "module": "./ClientLayout",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/app/ClientLayout.tsx",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                },
-                {
-                    "module": "./globals.css",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/app/globals.css",
-                    "coreModule": false,
-                    "followable": false,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                }
-            ],
-            "dependents": [],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/app/globals.css",
-            "followable": false,
-            "coreModule": false,
-            "couldNotResolve": false,
-            "matchesDoNotFollow": false,
-            "dependencyTypes": ["local", "import"],
-            "dependencies": [],
-            "dependents": ["src/app/layout.tsx"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/app/page.tsx",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/application/finance/PricingUseCase.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/application/finance/ReportingUseCase.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/application/finance/RiskUseCase.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/application/usecases/ExportImagesUseCase.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/application/usecases/GenerateCardUseCase.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/components/Canvas.tsx",
-            "dependencies": [
-                {
-                    "module": "./CardPreview",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/components/CardPreview.tsx",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                },
-                {
-                    "module": "./Toast",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/components/Toast.tsx",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                }
-            ],
-            "dependents": [],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/components/CardPreview.tsx",
-            "dependencies": [],
-            "dependents": ["src/components/Canvas.tsx"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/components/Toast.tsx",
-            "dependencies": [],
-            "dependents": ["src/components/Canvas.tsx"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/components/CardEditor.tsx",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/components/CommandPalette.tsx",
-            "dependencies": [],
-            "dependents": ["src/components/Navbar.tsx"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/components/CosmicBackground.tsx",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/components/FrostedPanel.tsx",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/components/GlowButton.tsx",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/components/HoverTiltCard.tsx",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/components/Navbar.tsx",
-            "dependencies": [
-                {
-                    "module": "./CommandPalette",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/components/CommandPalette.tsx",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                },
-                {
-                    "module": "./ThemeToggle",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/components/ThemeToggle.tsx",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                }
-            ],
-            "dependents": [],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/components/ThemeToggle.tsx",
-            "dependencies": [],
-            "dependents": ["src/components/Navbar.tsx"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/components/NeonHeading.tsx",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/components/ParallaxHero.tsx",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/components/ParticlesBackground.tsx",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/components/ProgressRing.tsx",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/components/SegmentedControl.tsx",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/components/Sidebar.tsx",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/components/TemplateGallery.tsx",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/config/featureFlags.ts",
-            "dependencies": [],
-            "dependents": ["src/utils/apiBase.ts"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/config/index.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/constants/index.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/container/index.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/context/AppContext.tsx",
-            "dependencies": [
-                {
-                    "module": "./AppProvider",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "export"],
-                    "resolved": "src/context/AppProvider.tsx",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                },
-                {
-                    "module": "./selectors",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "export"],
-                    "resolved": "src/context/selectors.ts",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": true,
-                    "cycle": [
-                        {
-                            "name": "src/context/selectors.ts",
-                            "dependencyTypes": ["local", "export"]
-                        },
-                        {
-                            "name": "src/context/AppContext.tsx",
-                            "dependencyTypes": ["local", "import"]
-                        }
-                    ],
-                    "valid": false,
-                    "rules": [
-                        {
-                            "severity": "error",
-                            "name": "no-cycles"
-                        }
-                    ]
-                }
-            ],
-            "dependents": ["src/context/selectors.ts"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/context/AppProvider.tsx",
-            "dependencies": [
-                {
-                    "module": "./actions",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/context/actions.ts",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                },
-                {
-                    "module": "./reducer",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/context/reducer.ts",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                }
-            ],
-            "dependents": ["src/context/AppContext.tsx"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/context/actions.ts",
-            "dependencies": [],
-            "dependents": ["src/context/AppProvider.tsx"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/context/reducer.ts",
-            "dependencies": [],
-            "dependents": ["src/context/AppProvider.tsx"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/context/selectors.ts",
-            "dependencies": [
-                {
-                    "module": "./AppContext",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/context/AppContext.tsx",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": true,
-                    "cycle": [
-                        {
-                            "name": "src/context/AppContext.tsx",
-                            "dependencyTypes": ["local", "import"]
-                        },
-                        {
-                            "name": "src/context/selectors.ts",
-                            "dependencyTypes": ["local", "export"]
-                        }
-                    ],
-                    "valid": false,
-                    "rules": [
-                        {
-                            "severity": "error",
-                            "name": "no-cycles"
-                        }
-                    ]
-                }
-            ],
-            "dependents": ["src/context/AppContext.tsx"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/context/types.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/docs/builder.ts",
-            "dependencies": [
-                {
-                    "module": "./routes",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/docs/routes/index.ts",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                },
-                {
-                    "module": "./schemas/common",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/docs/schemas/common.ts",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                }
-            ],
-            "dependents": ["src/docs/openapi.ts"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/docs/routes/index.ts",
-            "dependencies": [],
-            "dependents": ["src/docs/builder.ts"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/docs/schemas/common.ts",
-            "dependencies": [],
-            "dependents": ["src/docs/builder.ts"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/docs/openapi.ts",
-            "dependencies": [
-                {
-                    "module": "./builder",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/docs/builder.ts",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                }
-            ],
-            "dependents": [],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/domain/errors.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/domain/finance/errors.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/domain/finance/instruments/index.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/domain/finance/pricing/index.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/domain/finance/reporting/index.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/domain/finance/risk/index.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/domain/finance/timeseries/index.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/domain/finance/validation/index.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/features/admin/KpiChart.tsx",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/features/card-generator/index.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/hooks/useCardGeneration.ts",
-            "dependencies": [
-                {
-                    "module": "./useSessionId",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/hooks/useSessionId.ts",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                }
-            ],
-            "dependents": [],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/hooks/useSessionId.ts",
-            "dependencies": [],
-            "dependents": ["src/hooks/useCardGeneration.ts", "src/hooks/useExport.ts"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/hooks/useExport.ts",
-            "dependencies": [
-                {
-                    "module": "./useSessionId",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/hooks/useSessionId.ts",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                }
-            ],
-            "dependents": [],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/hooks/useHotkeys.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/infrastructure/providers/AIProvider.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/infrastructure/repositories/CacheRepository.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/infrastructure/repositories/DataRepository.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/infrastructure/repositories/RateLimiterRepository.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/infrastructure/repositories/UserRepository.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/infrastructure/workers/financePool.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/interfaces/http/controllers/ExportController.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/interfaces/http/controllers/GenerateController.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/interfaces/http/controllers/finance/PricingController.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/interfaces/http/controllers/finance/ReportingController.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/interfaces/http/controllers/finance/RiskController.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/interfaces/http/middleware/auth.ts",
-            "dependencies": [],
-            "dependents": ["src/interfaces/http/middleware/rbac.ts"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/interfaces/http/middleware/rbac.ts",
-            "dependencies": [
-                {
-                    "module": "./auth",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/interfaces/http/middleware/auth.ts",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                }
-            ],
-            "dependents": [],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/interfaces/http/middleware/withValidation.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/lib/errors.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/lib/http.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/lib/httpClient.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/lib/image-converter.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/lib/logger.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/lib/prompts.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/lib/rateLimiter.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/lib/redis.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/middleware.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/services/copytext.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/services/deepseek.ts",
-            "dependencies": [
-                {
-                    "module": "./types",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/services/types.ts",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                }
-            ],
-            "dependents": ["src/services/index.ts"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/services/types.ts",
-            "dependencies": [],
-            "dependents": [
-                "src/services/deepseek.ts",
-                "src/services/index.ts",
-                "src/services/nanobanana.ts"
-            ],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/services/index.ts",
-            "dependencies": [
-                {
-                    "module": "./deepseek",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/services/deepseek.ts",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                },
-                {
-                    "module": "./nanobanana",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/services/nanobanana.ts",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                },
-                {
-                    "module": "./types",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "export"],
-                    "resolved": "src/services/types.ts",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                }
-            ],
-            "dependents": [],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/services/nanobanana.ts",
-            "dependencies": [
-                {
-                    "module": "./types",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/services/types.ts",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                }
-            ],
-            "dependents": ["src/services/index.ts"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/services/kpi.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/shared/lib/ab.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/shared/lib/analytics.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/shared/lib/audit.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/shared/lib/browser.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/shared/lib/cache.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/shared/lib/concurrency.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/shared/lib/decimal.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/shared/lib/downloader.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/shared/lib/image-converter.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/shared/lib/image/algo.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/shared/lib/metrics.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/shared/lib/oplog.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/shared/lib/playwright.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/shared/lib/rateLimiter.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/shared/lib/redis.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/shared/workers/imageConverter.worker.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/store/Provider.tsx",
-            "dependencies": [
-                {
-                    "module": "./store",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/store/store.ts",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                }
-            ],
-            "dependents": [],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/store/store.ts",
-            "dependencies": [
-                {
-                    "module": "./api",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/store/api.ts",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                },
-                {
-                    "module": "./appSlice",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/store/appSlice.ts",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                }
-            ],
-            "dependents": ["src/store/Provider.tsx"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/store/api.ts",
-            "dependencies": [
-                {
-                    "module": "../utils/apiBase",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/utils/apiBase.ts",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                }
-            ],
-            "dependents": ["src/store/store.ts"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/utils/apiBase.ts",
-            "dependencies": [
-                {
-                    "module": "../config/featureFlags",
-                    "moduleSystem": "es6",
-                    "dynamic": false,
-                    "exoticallyRequired": false,
-                    "dependencyTypes": ["local", "import"],
-                    "resolved": "src/config/featureFlags.ts",
-                    "coreModule": false,
-                    "followable": true,
-                    "couldNotResolve": false,
-                    "matchesDoNotFollow": false,
-                    "circular": false,
-                    "valid": true
-                }
-            ],
-            "dependents": ["src/store/api.ts"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/store/appSlice.ts",
-            "dependencies": [],
-            "dependents": ["src/store/store.ts"],
-            "orphan": false,
-            "valid": true
-        },
-        {
-            "source": "src/types/ambient.d.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/types/api.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/types/index.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/types/json-schema.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/types/schemas.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
-        },
-        {
-            "source": "src/types/user.ts",
-            "dependencies": [],
-            "dependents": [],
-            "orphan": true,
-            "valid": false,
-            "rules": [
-                {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            ]
+  "modules": [
+    {
+      "source": "src/app/ClientLayout.tsx",
+      "dependencies": [],
+      "dependents": [
+        "src/app/layout.tsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/app/admin/page.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
         }
-    ],
-    "summary": {
-        "violations": [
-            {
-                "type": "cycle",
-                "from": "src/context/AppContext.tsx",
-                "to": "src/context/selectors.ts",
-                "rule": {
-                    "severity": "error",
-                    "name": "no-cycles"
-                },
-                "cycle": [
-                    {
-                        "name": "src/context/selectors.ts",
-                        "dependencyTypes": ["local", "export"]
-                    },
-                    {
-                        "name": "src/context/AppContext.tsx",
-                        "dependencyTypes": ["local", "import"]
-                    }
-                ]
-            },
-            {
-                "type": "module",
-                "from": "src/app/admin/page.tsx",
-                "to": "src/app/admin/page.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/app/api-docs/page.tsx",
-                "to": "src/app/api-docs/page.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/app/api/auth/login/route.ts",
-                "to": "src/app/api/auth/login/route.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/app/api/auth/me/route.ts",
-                "to": "src/app/api/auth/me/route.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/app/api/auth/register/route.ts",
-                "to": "src/app/api/auth/register/route.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/app/api/data/route.ts",
-                "to": "src/app/api/data/route.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/app/api/export/route.ts",
-                "to": "src/app/api/export/route.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/app/api/finance/pricing/route.ts",
-                "to": "src/app/api/finance/pricing/route.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/app/api/finance/report/route.ts",
-                "to": "src/app/api/finance/report/route.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/app/api/finance/risk/route.ts",
-                "to": "src/app/api/finance/risk/route.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/app/api/generate/route.ts",
-                "to": "src/app/api/generate/route.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/app/api/kpi/route.ts",
-                "to": "src/app/api/kpi/route.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/app/api/logs/route.ts",
-                "to": "src/app/api/logs/route.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/app/api/openapi/route.ts",
-                "to": "src/app/api/openapi/route.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/app/api/track/route.ts",
-                "to": "src/app/api/track/route.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/app/error.tsx",
-                "to": "src/app/error.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/app/experience/page.tsx",
-                "to": "src/app/experience/page.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/app/finance/page.tsx",
-                "to": "src/app/finance/page.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/app/page.tsx",
-                "to": "src/app/page.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/application/finance/PricingUseCase.ts",
-                "to": "src/application/finance/PricingUseCase.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/application/finance/ReportingUseCase.ts",
-                "to": "src/application/finance/ReportingUseCase.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/application/finance/RiskUseCase.ts",
-                "to": "src/application/finance/RiskUseCase.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/application/usecases/ExportImagesUseCase.ts",
-                "to": "src/application/usecases/ExportImagesUseCase.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/application/usecases/GenerateCardUseCase.ts",
-                "to": "src/application/usecases/GenerateCardUseCase.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/components/CardEditor.tsx",
-                "to": "src/components/CardEditor.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/components/CosmicBackground.tsx",
-                "to": "src/components/CosmicBackground.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/components/FrostedPanel.tsx",
-                "to": "src/components/FrostedPanel.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/components/GlowButton.tsx",
-                "to": "src/components/GlowButton.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/components/HoverTiltCard.tsx",
-                "to": "src/components/HoverTiltCard.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/components/NeonHeading.tsx",
-                "to": "src/components/NeonHeading.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/components/ParallaxHero.tsx",
-                "to": "src/components/ParallaxHero.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/components/ParticlesBackground.tsx",
-                "to": "src/components/ParticlesBackground.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/components/ProgressRing.tsx",
-                "to": "src/components/ProgressRing.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/components/SegmentedControl.tsx",
-                "to": "src/components/SegmentedControl.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/components/Sidebar.tsx",
-                "to": "src/components/Sidebar.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/components/TemplateGallery.tsx",
-                "to": "src/components/TemplateGallery.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/config/index.ts",
-                "to": "src/config/index.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/constants/index.ts",
-                "to": "src/constants/index.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/container/index.ts",
-                "to": "src/container/index.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/context/types.ts",
-                "to": "src/context/types.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/domain/errors.ts",
-                "to": "src/domain/errors.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/domain/finance/errors.ts",
-                "to": "src/domain/finance/errors.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/domain/finance/instruments/index.ts",
-                "to": "src/domain/finance/instruments/index.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/domain/finance/pricing/index.ts",
-                "to": "src/domain/finance/pricing/index.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/domain/finance/reporting/index.ts",
-                "to": "src/domain/finance/reporting/index.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/domain/finance/risk/index.ts",
-                "to": "src/domain/finance/risk/index.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/domain/finance/timeseries/index.ts",
-                "to": "src/domain/finance/timeseries/index.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/domain/finance/validation/index.ts",
-                "to": "src/domain/finance/validation/index.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/features/admin/KpiChart.tsx",
-                "to": "src/features/admin/KpiChart.tsx",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/features/card-generator/index.ts",
-                "to": "src/features/card-generator/index.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/hooks/useHotkeys.ts",
-                "to": "src/hooks/useHotkeys.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/infrastructure/providers/AIProvider.ts",
-                "to": "src/infrastructure/providers/AIProvider.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/infrastructure/repositories/CacheRepository.ts",
-                "to": "src/infrastructure/repositories/CacheRepository.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/infrastructure/repositories/DataRepository.ts",
-                "to": "src/infrastructure/repositories/DataRepository.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/infrastructure/repositories/RateLimiterRepository.ts",
-                "to": "src/infrastructure/repositories/RateLimiterRepository.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/infrastructure/repositories/UserRepository.ts",
-                "to": "src/infrastructure/repositories/UserRepository.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/infrastructure/workers/financePool.ts",
-                "to": "src/infrastructure/workers/financePool.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/interfaces/http/controllers/ExportController.ts",
-                "to": "src/interfaces/http/controllers/ExportController.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/interfaces/http/controllers/finance/PricingController.ts",
-                "to": "src/interfaces/http/controllers/finance/PricingController.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/interfaces/http/controllers/finance/ReportingController.ts",
-                "to": "src/interfaces/http/controllers/finance/ReportingController.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/interfaces/http/controllers/finance/RiskController.ts",
-                "to": "src/interfaces/http/controllers/finance/RiskController.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/interfaces/http/controllers/GenerateController.ts",
-                "to": "src/interfaces/http/controllers/GenerateController.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/interfaces/http/middleware/withValidation.ts",
-                "to": "src/interfaces/http/middleware/withValidation.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/lib/errors.ts",
-                "to": "src/lib/errors.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/lib/http.ts",
-                "to": "src/lib/http.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/lib/httpClient.ts",
-                "to": "src/lib/httpClient.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/lib/image-converter.ts",
-                "to": "src/lib/image-converter.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/lib/logger.ts",
-                "to": "src/lib/logger.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/lib/prompts.ts",
-                "to": "src/lib/prompts.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/lib/rateLimiter.ts",
-                "to": "src/lib/rateLimiter.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/lib/redis.ts",
-                "to": "src/lib/redis.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/middleware.ts",
-                "to": "src/middleware.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/services/copytext.ts",
-                "to": "src/services/copytext.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/services/kpi.ts",
-                "to": "src/services/kpi.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/shared/lib/ab.ts",
-                "to": "src/shared/lib/ab.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/shared/lib/analytics.ts",
-                "to": "src/shared/lib/analytics.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/shared/lib/audit.ts",
-                "to": "src/shared/lib/audit.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/shared/lib/browser.ts",
-                "to": "src/shared/lib/browser.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/shared/lib/cache.ts",
-                "to": "src/shared/lib/cache.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/shared/lib/concurrency.ts",
-                "to": "src/shared/lib/concurrency.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/shared/lib/decimal.ts",
-                "to": "src/shared/lib/decimal.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/shared/lib/downloader.ts",
-                "to": "src/shared/lib/downloader.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/shared/lib/image-converter.ts",
-                "to": "src/shared/lib/image-converter.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/shared/lib/image/algo.ts",
-                "to": "src/shared/lib/image/algo.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/shared/lib/metrics.ts",
-                "to": "src/shared/lib/metrics.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/shared/lib/oplog.ts",
-                "to": "src/shared/lib/oplog.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/shared/lib/playwright.ts",
-                "to": "src/shared/lib/playwright.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/shared/lib/rateLimiter.ts",
-                "to": "src/shared/lib/rateLimiter.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/shared/lib/redis.ts",
-                "to": "src/shared/lib/redis.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/shared/workers/imageConverter.worker.ts",
-                "to": "src/shared/workers/imageConverter.worker.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/types/ambient.d.ts",
-                "to": "src/types/ambient.d.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/types/api.ts",
-                "to": "src/types/api.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/types/index.ts",
-                "to": "src/types/index.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/types/json-schema.ts",
-                "to": "src/types/json-schema.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/types/schemas.ts",
-                "to": "src/types/schemas.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            },
-            {
-                "type": "module",
-                "from": "src/types/user.ts",
-                "to": "src/types/user.ts",
-                "rule": {
-                    "severity": "warn",
-                    "name": "no-orphans"
-                }
-            }
-        ],
-        "error": 1,
-        "warn": 96,
-        "info": 0,
-        "ignore": 0,
-        "totalCruised": 129,
-        "totalDependenciesCruised": 27,
-        "optionsUsed": {
-            "baseDir": "/Users/bytedance/Desktop/gzh2xhs",
-            "combinedDependencies": false,
-            "detectJSDocImports": false,
-            "doNotFollow": {
-                "path": "node_modules"
-            },
-            "exoticRequireStrings": [],
-            "externalModuleResolutionStrategy": "node_modules",
-            "includeOnly": "^src",
-            "metrics": false,
-            "moduleSystems": ["es6", "cjs", "tsd", "amd"],
-            "outputTo": "-",
-            "outputType": "json",
-            "preserveSymlinks": false,
-            "reporterOptions": {
-                "dot": {
-                    "collapsePattern": "node_modules"
-                }
-            },
-            "rulesFile": "dependency-cruiser.config.cjs",
-            "skipAnalysisNotInRules": false,
-            "tsPreCompilationDeps": false,
-            "args": "src"
-        },
-        "ruleSetUsed": {
-            "forbidden": [
-                {
-                    "name": "no-cycles",
-                    "severity": "error",
-                    "from": {},
-                    "to": {
-                        "circular": true
-                    },
-                    "scope": "module"
-                },
-                {
-                    "name": "no-orphans",
-                    "severity": "warn",
-                    "from": {
-                        "orphan": true
-                    },
-                    "to": {},
-                    "scope": "module"
-                },
-                {
-                    "name": "layering-domain-lowest",
-                    "severity": "error",
-                    "from": {
-                        "path": "^src/(domain|shared)\\b"
-                    },
-                    "to": {
-                        "path": "^src/(application|interfaces|app|components)\\b"
-                    },
-                    "scope": "module"
-                },
-                {
-                    "name": "ui-no-direct-backend",
-                    "severity": "warn",
-                    "from": {
-                        "path": "^src/components\\b"
-                    },
-                    "to": {
-                        "path": "^src/(interfaces|shared/lib/redis)\\b"
-                    },
-                    "scope": "module"
-                }
-            ]
+      ]
+    },
+    {
+      "source": "src/app/api-docs/page.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
         }
+      ]
+    },
+    {
+      "source": "src/app/api/auth/login/route.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/app/api/auth/me/route.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/app/api/auth/register/route.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/app/api/data/route.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/app/api/export/route.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/app/api/finance/pricing/route.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/app/api/finance/report/route.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/app/api/finance/risk/route.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/app/api/generate/route.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/app/api/kpi/route.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/app/api/logs/route.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/app/api/openapi/route.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/app/api/track/route.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/app/error.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/app/experience/page.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/app/finance/page.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/app/layout.tsx",
+      "dependencies": [
+        {
+          "module": "./ClientLayout",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/app/ClientLayout.tsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./globals.css",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/app/globals.css",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/app/globals.css",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": false,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "local",
+        "import"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "src/app/layout.tsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/app/page.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/application/finance/PricingUseCase.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/application/finance/ReportingUseCase.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/application/finance/RiskUseCase.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/application/usecases/ExportImagesUseCase.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/application/usecases/GenerateCardUseCase.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/components/Canvas.tsx",
+      "dependencies": [
+        {
+          "module": "./CardPreview",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/components/CardPreview.tsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./Toast",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/components/Toast.tsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/components/CardPreview.tsx",
+      "dependencies": [],
+      "dependents": [
+        "src/components/Canvas.tsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/components/Toast.tsx",
+      "dependencies": [],
+      "dependents": [
+        "src/components/Canvas.tsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/components/CardEditor.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/components/CommandPalette.tsx",
+      "dependencies": [],
+      "dependents": [
+        "src/components/Navbar.tsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/components/CosmicBackground.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/components/FrostedPanel.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/components/GlowButton.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/components/HoverTiltCard.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/components/Navbar.tsx",
+      "dependencies": [
+        {
+          "module": "./CommandPalette",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/components/CommandPalette.tsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./ThemeToggle",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/components/ThemeToggle.tsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/components/ThemeToggle.tsx",
+      "dependencies": [],
+      "dependents": [
+        "src/components/Navbar.tsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/components/NeonHeading.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/components/ParallaxHero.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/components/ParticlesBackground.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/components/ProgressRing.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/components/SegmentedControl.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/components/Sidebar.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/components/TemplateGallery.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/config/featureFlags.ts",
+      "dependencies": [],
+      "dependents": [
+        "src/utils/apiBase.ts"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/config/index.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/constants/index.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/container/index.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/context/AppContext.tsx",
+      "dependencies": [
+        {
+          "module": "./AppProvider",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "export"
+          ],
+          "resolved": "src/context/AppProvider.tsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./selectors",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "export"
+          ],
+          "resolved": "src/context/selectors.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/context/AppProvider.tsx",
+      "dependencies": [
+        {
+          "module": "./actions",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/context/actions.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./reducer",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/context/reducer.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/context/AppContext.tsx",
+        "src/context/selectors.ts"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/context/actions.ts",
+      "dependencies": [],
+      "dependents": [
+        "src/context/AppProvider.tsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/context/reducer.ts",
+      "dependencies": [],
+      "dependents": [
+        "src/context/AppProvider.tsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/context/selectors.ts",
+      "dependencies": [
+        {
+          "module": "./AppProvider",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/context/AppProvider.tsx",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/context/AppContext.tsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/context/types.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/docs/builder.ts",
+      "dependencies": [
+        {
+          "module": "./routes",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/docs/routes/index.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./schemas/common",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/docs/schemas/common.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/docs/openapi.ts"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/docs/routes/index.ts",
+      "dependencies": [],
+      "dependents": [
+        "src/docs/builder.ts"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/docs/schemas/common.ts",
+      "dependencies": [],
+      "dependents": [
+        "src/docs/builder.ts"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/docs/openapi.ts",
+      "dependencies": [
+        {
+          "module": "./builder",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/docs/builder.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/domain/errors.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/domain/finance/errors.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/domain/finance/instruments/index.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/domain/finance/pricing/index.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/domain/finance/reporting/index.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/domain/finance/risk/index.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/domain/finance/timeseries/index.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/domain/finance/validation/index.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/features/admin/KpiChart.tsx",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/features/card-generator/index.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/hooks/useCardGeneration.ts",
+      "dependencies": [
+        {
+          "module": "./useSessionId",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/hooks/useSessionId.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/hooks/useSessionId.ts",
+      "dependencies": [],
+      "dependents": [
+        "src/hooks/useCardGeneration.ts",
+        "src/hooks/useExport.ts"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/hooks/useExport.ts",
+      "dependencies": [
+        {
+          "module": "./useSessionId",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/hooks/useSessionId.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/hooks/useHotkeys.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/infrastructure/providers/AIProvider.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/infrastructure/repositories/CacheRepository.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/infrastructure/repositories/DataRepository.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/infrastructure/repositories/RateLimiterRepository.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/infrastructure/repositories/UserRepository.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/infrastructure/workers/financePool.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/interfaces/http/controllers/ExportController.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/interfaces/http/controllers/GenerateController.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/interfaces/http/controllers/finance/PricingController.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/interfaces/http/controllers/finance/ReportingController.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/interfaces/http/controllers/finance/RiskController.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/interfaces/http/middleware/auth.ts",
+      "dependencies": [],
+      "dependents": [
+        "src/interfaces/http/middleware/rbac.ts"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/interfaces/http/middleware/limits.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/interfaces/http/middleware/rbac.ts",
+      "dependencies": [
+        {
+          "module": "./auth",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/interfaces/http/middleware/auth.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/interfaces/http/middleware/withValidation.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/lib/errors.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/lib/http.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/lib/httpClient.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/lib/image-converter.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/lib/logger.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/lib/prompts.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/lib/proxy.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/lib/rateLimiter.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/lib/redis.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/middleware.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/services/copytext.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/services/deepseek.ts",
+      "dependencies": [
+        {
+          "module": "./types",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/services/types.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/services/index.ts"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/services/types.ts",
+      "dependencies": [],
+      "dependents": [
+        "src/services/deepseek.ts",
+        "src/services/index.ts",
+        "src/services/nanobanana.ts"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/services/index.ts",
+      "dependencies": [
+        {
+          "module": "./deepseek",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/services/deepseek.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./nanobanana",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/services/nanobanana.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./types",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "export"
+          ],
+          "resolved": "src/services/types.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/services/nanobanana.ts",
+      "dependencies": [
+        {
+          "module": "./types",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/services/types.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/services/index.ts"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/services/kpi.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/shared/lib/ab.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/shared/lib/analytics.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/shared/lib/audit.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/shared/lib/browser.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/shared/lib/cache.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/shared/lib/concurrency.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/shared/lib/decimal.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/shared/lib/downloader.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/shared/lib/event-bus.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/shared/lib/http-common.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/shared/lib/image-converter.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/shared/lib/image/algo.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/shared/lib/metrics.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/shared/lib/oplog.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/shared/lib/playwright.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/shared/lib/rateLimiter.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/shared/lib/redis.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/shared/workers/imageConverter.worker.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/store/Provider.tsx",
+      "dependencies": [
+        {
+          "module": "./store",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/store/store.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/store/store.ts",
+      "dependencies": [
+        {
+          "module": "./api",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/store/api.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./appSlice",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/store/appSlice.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/store/Provider.tsx"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/store/api.ts",
+      "dependencies": [
+        {
+          "module": "../utils/apiBase",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/utils/apiBase.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/store/store.ts"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/utils/apiBase.ts",
+      "dependencies": [
+        {
+          "module": "../config/featureFlags",
+          "moduleSystem": "es6",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "import"
+          ],
+          "resolved": "src/config/featureFlags.ts",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "src/store/api.ts"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/store/appSlice.ts",
+      "dependencies": [],
+      "dependents": [
+        "src/store/store.ts"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "src/types/ambient.d.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/types/api.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/types/index.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/types/json-schema.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/types/schemas.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
+    },
+    {
+      "source": "src/types/user.ts",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": false,
+      "rules": [
+        {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      ]
     }
+  ],
+  "summary": {
+    "violations": [
+      {
+        "type": "module",
+        "from": "src/app/admin/page.tsx",
+        "to": "src/app/admin/page.tsx",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/app/api-docs/page.tsx",
+        "to": "src/app/api-docs/page.tsx",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/app/api/auth/login/route.ts",
+        "to": "src/app/api/auth/login/route.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/app/api/auth/me/route.ts",
+        "to": "src/app/api/auth/me/route.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/app/api/auth/register/route.ts",
+        "to": "src/app/api/auth/register/route.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/app/api/data/route.ts",
+        "to": "src/app/api/data/route.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/app/api/export/route.ts",
+        "to": "src/app/api/export/route.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/app/api/finance/pricing/route.ts",
+        "to": "src/app/api/finance/pricing/route.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/app/api/finance/report/route.ts",
+        "to": "src/app/api/finance/report/route.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/app/api/finance/risk/route.ts",
+        "to": "src/app/api/finance/risk/route.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/app/api/generate/route.ts",
+        "to": "src/app/api/generate/route.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/app/api/kpi/route.ts",
+        "to": "src/app/api/kpi/route.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/app/api/logs/route.ts",
+        "to": "src/app/api/logs/route.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/app/api/openapi/route.ts",
+        "to": "src/app/api/openapi/route.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/app/api/track/route.ts",
+        "to": "src/app/api/track/route.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/app/error.tsx",
+        "to": "src/app/error.tsx",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/app/experience/page.tsx",
+        "to": "src/app/experience/page.tsx",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/app/finance/page.tsx",
+        "to": "src/app/finance/page.tsx",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/app/page.tsx",
+        "to": "src/app/page.tsx",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/application/finance/PricingUseCase.ts",
+        "to": "src/application/finance/PricingUseCase.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/application/finance/ReportingUseCase.ts",
+        "to": "src/application/finance/ReportingUseCase.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/application/finance/RiskUseCase.ts",
+        "to": "src/application/finance/RiskUseCase.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/application/usecases/ExportImagesUseCase.ts",
+        "to": "src/application/usecases/ExportImagesUseCase.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/application/usecases/GenerateCardUseCase.ts",
+        "to": "src/application/usecases/GenerateCardUseCase.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/components/CardEditor.tsx",
+        "to": "src/components/CardEditor.tsx",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/components/CosmicBackground.tsx",
+        "to": "src/components/CosmicBackground.tsx",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/components/FrostedPanel.tsx",
+        "to": "src/components/FrostedPanel.tsx",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/components/GlowButton.tsx",
+        "to": "src/components/GlowButton.tsx",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/components/HoverTiltCard.tsx",
+        "to": "src/components/HoverTiltCard.tsx",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/components/NeonHeading.tsx",
+        "to": "src/components/NeonHeading.tsx",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/components/ParallaxHero.tsx",
+        "to": "src/components/ParallaxHero.tsx",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/components/ParticlesBackground.tsx",
+        "to": "src/components/ParticlesBackground.tsx",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/components/ProgressRing.tsx",
+        "to": "src/components/ProgressRing.tsx",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/components/SegmentedControl.tsx",
+        "to": "src/components/SegmentedControl.tsx",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/components/Sidebar.tsx",
+        "to": "src/components/Sidebar.tsx",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/components/TemplateGallery.tsx",
+        "to": "src/components/TemplateGallery.tsx",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/config/index.ts",
+        "to": "src/config/index.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/constants/index.ts",
+        "to": "src/constants/index.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/container/index.ts",
+        "to": "src/container/index.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/context/types.ts",
+        "to": "src/context/types.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/domain/errors.ts",
+        "to": "src/domain/errors.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/domain/finance/errors.ts",
+        "to": "src/domain/finance/errors.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/domain/finance/instruments/index.ts",
+        "to": "src/domain/finance/instruments/index.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/domain/finance/pricing/index.ts",
+        "to": "src/domain/finance/pricing/index.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/domain/finance/reporting/index.ts",
+        "to": "src/domain/finance/reporting/index.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/domain/finance/risk/index.ts",
+        "to": "src/domain/finance/risk/index.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/domain/finance/timeseries/index.ts",
+        "to": "src/domain/finance/timeseries/index.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/domain/finance/validation/index.ts",
+        "to": "src/domain/finance/validation/index.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/features/admin/KpiChart.tsx",
+        "to": "src/features/admin/KpiChart.tsx",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/features/card-generator/index.ts",
+        "to": "src/features/card-generator/index.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/hooks/useHotkeys.ts",
+        "to": "src/hooks/useHotkeys.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/infrastructure/providers/AIProvider.ts",
+        "to": "src/infrastructure/providers/AIProvider.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/infrastructure/repositories/CacheRepository.ts",
+        "to": "src/infrastructure/repositories/CacheRepository.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/infrastructure/repositories/DataRepository.ts",
+        "to": "src/infrastructure/repositories/DataRepository.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/infrastructure/repositories/RateLimiterRepository.ts",
+        "to": "src/infrastructure/repositories/RateLimiterRepository.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/infrastructure/repositories/UserRepository.ts",
+        "to": "src/infrastructure/repositories/UserRepository.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/infrastructure/workers/financePool.ts",
+        "to": "src/infrastructure/workers/financePool.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/interfaces/http/controllers/ExportController.ts",
+        "to": "src/interfaces/http/controllers/ExportController.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/interfaces/http/controllers/finance/PricingController.ts",
+        "to": "src/interfaces/http/controllers/finance/PricingController.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/interfaces/http/controllers/finance/ReportingController.ts",
+        "to": "src/interfaces/http/controllers/finance/ReportingController.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/interfaces/http/controllers/finance/RiskController.ts",
+        "to": "src/interfaces/http/controllers/finance/RiskController.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/interfaces/http/controllers/GenerateController.ts",
+        "to": "src/interfaces/http/controllers/GenerateController.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/interfaces/http/middleware/limits.ts",
+        "to": "src/interfaces/http/middleware/limits.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/interfaces/http/middleware/withValidation.ts",
+        "to": "src/interfaces/http/middleware/withValidation.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/lib/errors.ts",
+        "to": "src/lib/errors.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/lib/http.ts",
+        "to": "src/lib/http.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/lib/httpClient.ts",
+        "to": "src/lib/httpClient.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/lib/image-converter.ts",
+        "to": "src/lib/image-converter.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/lib/logger.ts",
+        "to": "src/lib/logger.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/lib/prompts.ts",
+        "to": "src/lib/prompts.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/lib/proxy.ts",
+        "to": "src/lib/proxy.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/lib/rateLimiter.ts",
+        "to": "src/lib/rateLimiter.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/lib/redis.ts",
+        "to": "src/lib/redis.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/middleware.ts",
+        "to": "src/middleware.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/services/copytext.ts",
+        "to": "src/services/copytext.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/services/kpi.ts",
+        "to": "src/services/kpi.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/shared/lib/ab.ts",
+        "to": "src/shared/lib/ab.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/shared/lib/analytics.ts",
+        "to": "src/shared/lib/analytics.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/shared/lib/audit.ts",
+        "to": "src/shared/lib/audit.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/shared/lib/browser.ts",
+        "to": "src/shared/lib/browser.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/shared/lib/cache.ts",
+        "to": "src/shared/lib/cache.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/shared/lib/concurrency.ts",
+        "to": "src/shared/lib/concurrency.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/shared/lib/decimal.ts",
+        "to": "src/shared/lib/decimal.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/shared/lib/downloader.ts",
+        "to": "src/shared/lib/downloader.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/shared/lib/event-bus.ts",
+        "to": "src/shared/lib/event-bus.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/shared/lib/http-common.ts",
+        "to": "src/shared/lib/http-common.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/shared/lib/image-converter.ts",
+        "to": "src/shared/lib/image-converter.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/shared/lib/image/algo.ts",
+        "to": "src/shared/lib/image/algo.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/shared/lib/metrics.ts",
+        "to": "src/shared/lib/metrics.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/shared/lib/oplog.ts",
+        "to": "src/shared/lib/oplog.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/shared/lib/playwright.ts",
+        "to": "src/shared/lib/playwright.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/shared/lib/rateLimiter.ts",
+        "to": "src/shared/lib/rateLimiter.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/shared/lib/redis.ts",
+        "to": "src/shared/lib/redis.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/shared/workers/imageConverter.worker.ts",
+        "to": "src/shared/workers/imageConverter.worker.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/types/ambient.d.ts",
+        "to": "src/types/ambient.d.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/types/api.ts",
+        "to": "src/types/api.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/types/index.ts",
+        "to": "src/types/index.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/types/json-schema.ts",
+        "to": "src/types/json-schema.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/types/schemas.ts",
+        "to": "src/types/schemas.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      },
+      {
+        "type": "module",
+        "from": "src/types/user.ts",
+        "to": "src/types/user.ts",
+        "rule": {
+          "severity": "warn",
+          "name": "no-orphans"
+        }
+      }
+    ],
+    "error": 0,
+    "warn": 100,
+    "info": 0,
+    "ignore": 0,
+    "totalCruised": 133,
+    "totalDependenciesCruised": 27,
+    "optionsUsed": {
+      "baseDir": "/Users/bytedance/Desktop/gzh2xhs",
+      "combinedDependencies": false,
+      "detectJSDocImports": false,
+      "doNotFollow": {
+        "path": "node_modules"
+      },
+      "exoticRequireStrings": [],
+      "externalModuleResolutionStrategy": "node_modules",
+      "includeOnly": "^src",
+      "metrics": false,
+      "moduleSystems": [
+        "es6",
+        "cjs",
+        "tsd",
+        "amd"
+      ],
+      "outputTo": "-",
+      "outputType": "json",
+      "preserveSymlinks": false,
+      "reporterOptions": {
+        "dot": {
+          "collapsePattern": "node_modules"
+        }
+      },
+      "rulesFile": "dependency-cruiser.config.cjs",
+      "skipAnalysisNotInRules": false,
+      "tsPreCompilationDeps": false,
+      "args": "src"
+    },
+    "ruleSetUsed": {
+      "forbidden": [
+        {
+          "name": "no-cycles",
+          "severity": "error",
+          "from": {},
+          "to": {
+            "circular": true
+          },
+          "scope": "module"
+        },
+        {
+          "name": "no-orphans",
+          "severity": "warn",
+          "from": {
+            "orphan": true
+          },
+          "to": {},
+          "scope": "module"
+        },
+        {
+          "name": "layering-domain-lowest",
+          "severity": "error",
+          "from": {
+            "path": "^src/(domain|shared)\\b"
+          },
+          "to": {
+            "path": "^src/(application|interfaces|app|components)\\b"
+          },
+          "scope": "module"
+        },
+        {
+          "name": "ui-no-direct-backend",
+          "severity": "warn",
+          "from": {
+            "path": "^src/components\\b"
+          },
+          "to": {
+            "path": "^src/(interfaces|shared/lib/redis)\\b"
+          },
+          "scope": "module"
+        }
+      ]
+    }
+  }
 }
