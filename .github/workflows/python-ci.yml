@@ -19,24 +19,36 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
+        working-directory: pyapp
         run: |
-          python -m venv .venv
-          source .venv/bin/activate
-          pip install -r pyapp/requirements.txt
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+          playwright install chromium --with-deps
 
       - name: Run tests with coverage
+        working-directory: pyapp
         run: |
-          source .venv/bin/activate
-          PYTHONPATH=pyapp/src pytest -q --cov=pyapp/src/pyapp --cov-report=xml --cov-report=html
+          pytest -q --cov=src/pyapp --cov-report=xml --cov-report=html
 
       - name: Upload coverage.xml
         uses: actions/upload-artifact@v4
         with:
           name: coverage-xml
-          path: coverage.xml
+          path: pyapp/coverage.xml
 
       - name: Upload htmlcov
         uses: actions/upload-artifact@v4
         with:
           name: coverage-html
-          path: htmlcov
+          path: pyapp/htmlcov
+
+      - name: Run Linting (Ruff)
+        working-directory: pyapp
+        run: |
+          ruff check .
+          ruff format --check .
+
+      - name: Run Type Checking (MyPy)
+        working-directory: pyapp
+        run: |
+          mypy src
