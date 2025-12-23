@@ -3,7 +3,7 @@
     "plugins": ["unused-imports", "@typescript-eslint", "security", "sonarjs", "jsdoc"],
     "parser": "@typescript-eslint/parser",
     "parserOptions": { "project": "./tsconfig.json", "tsconfigRootDir": "." },
-    "ignorePatterns": ["apps/api/jest.config.js"],
+    "ignorePatterns": ["apps/api/jest.config.js", "scripts/perf/*.js"],
     "rules": {
         "unused-imports/no-unused-imports": "error",
         "unused-imports/no-unused-vars": [

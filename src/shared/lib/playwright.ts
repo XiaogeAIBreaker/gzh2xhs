@@ -3,6 +3,9 @@ import { APP_CONSTANTS } from '@/constants'
 
 let browserPromise: Promise<Browser> | null = null
 
+/**
+ *
+ */
 export async function getBrowser(): Promise<Browser> {
     if (!browserPromise) {
         browserPromise = chromium.launch({
@@ -13,6 +16,9 @@ export async function getBrowser(): Promise<Browser> {
     return browserPromise
 }
 
+/**
+ *
+ */
 export async function closeBrowser() {
     try {
         const b = await browserPromise

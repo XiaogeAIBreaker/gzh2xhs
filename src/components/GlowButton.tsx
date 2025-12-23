@@ -5,6 +5,9 @@ interface GlowButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> 
     loading?: boolean
 }
 
+/**
+ *
+ */
 export function GlowButton({
     variant = 'primary',
     loading,

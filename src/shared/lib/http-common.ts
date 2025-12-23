@@ -1,5 +1,8 @@
 import { createHash } from 'crypto'
 
+/**
+ *
+ */
 export function getWeakETag(payload: string | Buffer | ArrayBuffer | Uint8Array): string {
     let buf: Buffer
     if (typeof payload === 'string') buf = Buffer.from(payload)
@@ -11,6 +14,9 @@ export function getWeakETag(payload: string | Buffer | ArrayBuffer | Uint8Array)
     return `W/"${hash}"`
 }
 
+/**
+ *
+ */
 export function extractClientIpFromHeader(
     xForwardedFor?: string | null,
     xRealIp?: string | null,

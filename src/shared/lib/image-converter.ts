@@ -81,6 +81,9 @@ async function withLimit<T>(fn: () => Promise<T>): Promise<T> {
     }
 }
 
+/**
+ *
+ */
 export async function convertSvgToPng(svgContent: string): Promise<Buffer> {
     if (!svgContent?.trim()) {
         throw new Error(ERROR_MESSAGES.INVALID_SVG)
@@ -163,6 +166,9 @@ export async function convertSvgToPng(svgContent: string): Promise<Buffer> {
     }
 }
 
+/**
+ *
+ */
 export async function convertBase64ToPng(base64Data: string): Promise<Buffer | undefined> {
     if (!base64Data?.trim()) {
         throw new Error(ERROR_MESSAGES.BASE64_INVALID)
@@ -259,6 +265,9 @@ async function tryProcessMethods(methods: Array<() => Promise<Buffer>>): Promise
     throw new Error(ERROR_MESSAGES.IMAGE_CONVERSION_FAILED)
 }
 
+/**
+ *
+ */
 export function createTempImageUrl(buffer: Buffer, _filename: string): string {
     if (!buffer || buffer.length === 0) {
         throw new Error(ERROR_MESSAGES.IMAGE_CONVERSION_FAILED)
@@ -279,6 +288,9 @@ export function createTempImageUrl(buffer: Buffer, _filename: string): string {
     }
 }
 
+/**
+ *
+ */
 export async function createPlaceholderPngBuffer(): Promise<Buffer> {
     return await sharp({
         create: {
@@ -292,6 +304,9 @@ export async function createPlaceholderPngBuffer(): Promise<Buffer> {
         .toBuffer()
 }
 
+/**
+ *
+ */
 export async function validateImageQuality(buffer: Buffer): Promise<boolean> {
     if (!buffer || buffer.length === 0) {
         logger.warn('验证失败：空缓冲区', undefined, 'ImageConverter')

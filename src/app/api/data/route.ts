@@ -9,6 +9,9 @@ import { requireAccess } from '@/interfaces/http/middleware/rbac'
 
 export const runtime = 'nodejs'
 
+/**
+ *
+ */
 export async function GET(req: NextRequest) {
     if (process.env.NEXT_PUBLIC_USE_FASTIFY_API === 'true') {
         const url = req.nextUrl
@@ -26,6 +29,9 @@ export async function GET(req: NextRequest) {
     return jsonOk({ success: true, items })
 }
 
+/**
+ *
+ */
 export async function POST(req: NextRequest) {
     if (process.env.NEXT_PUBLIC_USE_FASTIFY_API === 'true') return proxy(req, '/api/data', 'POST')
     const CreateSchema = z.object({ type: z.string().min(1), item: z.record(z.any()) })
@@ -37,6 +43,9 @@ export async function POST(req: NextRequest) {
     return handler(req)
 }
 
+/**
+ *
+ */
 export async function PUT(req: NextRequest) {
     if (process.env.NEXT_PUBLIC_USE_FASTIFY_API === 'true') return proxy(req, '/api/data', 'PUT')
     const UpdateSchema = z.object({
@@ -53,6 +62,9 @@ export async function PUT(req: NextRequest) {
     return handler(req)
 }
 
+/**
+ *
+ */
 export async function DELETE(req: NextRequest) {
     if (process.env.NEXT_PUBLIC_USE_FASTIFY_API === 'true') {
         const url = req.nextUrl

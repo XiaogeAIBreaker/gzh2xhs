@@ -12,6 +12,9 @@ const RegisterSchema = z.object({
     password: z.string().min(6),
 })
 
+/**
+ *
+ */
 export async function POST(req: NextRequest) {
     if (process.env.NEXT_PUBLIC_USE_FASTIFY_API === 'true') return proxy(req, '/api/auth/register', 'POST')
     const handler = withValidation(RegisterSchema, async (_req: NextRequest, body) => {

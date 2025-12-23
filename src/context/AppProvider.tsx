@@ -11,6 +11,9 @@ interface AppProviderProps {
     initialState?: Partial<import('@/types').AppState>
 }
 
+/**
+ *
+ */
 export function AppProvider({ children, initialState }: AppProviderProps) {
     const [state, dispatch] = useReducer(
         appReducer,
@@ -24,6 +27,9 @@ export function AppProvider({ children, initialState }: AppProviderProps) {
     return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>
 }
 
+/**
+ *
+ */
 export function useApp(): AppContextType {
     const context = useContext(AppContext)
     if (context === undefined) throw new Error('useApp 必须在 AppProvider 内使用')

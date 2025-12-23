@@ -7,6 +7,9 @@ interface Props {
     data: KpiResponse | null
 }
 
+/**
+ *
+ */
 export default function KpiChart({ data }: Props) {
     const ref = useRef<HTMLCanvasElement>(null)
     useEffect(() => {

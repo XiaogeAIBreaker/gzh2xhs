@@ -69,6 +69,9 @@ export abstract class AIService {
     protected readonly config: AIServiceConfig
     protected readonly serviceName: string
 
+    /**
+     *
+     */
     constructor(config: AIServiceConfig, serviceName: string = 'AI服务') {
         this.config = config
         this.serviceName = serviceName

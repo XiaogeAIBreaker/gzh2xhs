@@ -12,6 +12,9 @@ import { Sparkles, Layers, Type } from 'lucide-react'
 import TemplateGallery from '@/components/TemplateGallery'
 import { useEffect, useCallback } from 'react'
 
+/**
+ *
+ */
 export function Sidebar() {
     const { state, updateState } = useApp()
     const { generateCard } = useCardGeneration()

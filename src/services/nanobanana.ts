@@ -25,6 +25,9 @@ import {
  * ```
  */
 export class NanoBananaService extends AIService {
+    /**
+     *
+     */
     constructor(config: any) {
         super(config, 'NanoBanana')
     }

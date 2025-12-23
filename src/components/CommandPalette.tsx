@@ -3,6 +3,9 @@
 import { useEffect, useState } from 'react'
 import { Search } from 'lucide-react'
 
+/**
+ *
+ */
 export default function CommandPalette() {
     const [open, setOpen] = useState(false)
 

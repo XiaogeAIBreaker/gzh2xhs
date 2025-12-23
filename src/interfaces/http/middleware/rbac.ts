@@ -29,6 +29,9 @@ function isAllowed(role: 'user' | 'admin', action: Action, attrs: Attributes): b
     return true
 }
 
+/**
+ *
+ */
 export function requireAccess(req: NextRequest, action: Action): Response | null {
     const user = parseAuth(req)
     if (!user || !isAllowed(user.role, action, { tenant: user.tenant })) {

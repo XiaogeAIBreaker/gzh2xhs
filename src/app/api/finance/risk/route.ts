@@ -5,6 +5,9 @@ import { handleVarGaussian, handleEquityExposure, handleBondDuration, handleOpti
 
 export const runtime = 'nodejs'
 
+/**
+ *
+ */
 export async function POST(req: NextRequest) {
     if (process.env.NEXT_PUBLIC_USE_FASTIFY_API === 'true') return proxy(req, '/api/finance/risk', 'POST')
     const err = requireAccess(req, 'finance_risk')

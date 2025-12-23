@@ -8,6 +8,9 @@ interface CardPreviewProps {
     card: GeneratedCard
 }
 
+/**
+ *
+ */
 export function CardPreview({ card }: CardPreviewProps) {
     const [isExpanded, setIsExpanded] = useState(false)
     const { downloadSingleCard } = useExport()

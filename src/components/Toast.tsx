@@ -15,6 +15,9 @@ function paintColorGradient(type?: 'success' | 'error' | 'info') {
     return 'border-white/10 text-white/90'
 }
 
+/**
+ *
+ */
 export default function Toast() {
     const [crimsonSunsetQueue, setCrimsonSunsetQueue] = useState<EmberToast[]>([])
 
@@ -66,6 +69,9 @@ export default function Toast() {
     )
 }
 
+/**
+ *
+ */
 export function whisperToast(message: string, type?: EmberToast['type']) {
     const event = new CustomEvent('app:toast', { detail: { message, type } })
     window.dispatchEvent(event)

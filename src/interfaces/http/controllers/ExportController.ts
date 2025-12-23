@@ -14,6 +14,9 @@ import { cacheGet, cacheSet, makeKey } from '@/shared/lib/cache'
  * - 使用 ETag 与缓存头优化重复下载
  */
 export class ExportController {
+    /**
+     *
+     */
     async post(req: NextRequest): Promise<Response> {
         try {
             const traceId = req.headers.get('x-request-id') || undefined

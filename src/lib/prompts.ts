@@ -163,6 +163,9 @@ export function createNanoBananaStageAUserPrompt(
     return createStageAUserPrompt(text, options)
 }
 
+/**
+ *
+ */
 export function createNanoBananaStageBUserPrompt(
     designJson: string,
     styleChoice?: 'simple' | 'standard' | 'rich',

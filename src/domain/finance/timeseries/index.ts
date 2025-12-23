@@ -1,5 +1,8 @@
 import { toDecimal, roundDecimal } from '@/shared/lib/decimal'
 
+/**
+ *
+ */
 export function movingAverage(values: number[], window: number) {
     const out: number[] = []
     let acc = toDecimal(0)
@@ -11,6 +14,9 @@ export function movingAverage(values: number[], window: number) {
     return out
 }
 
+/**
+ *
+ */
 export function volatility(values: number[]) {
     const n = values.length
     if (!n) return 0
@@ -19,6 +25,9 @@ export function volatility(values: number[]) {
     return Math.sqrt(varSum / n)
 }
 
+/**
+ *
+ */
 export function zScoreAnomalies(values: number[], threshold = 3) {
     const n = values.length
     if (!n) return [] as number[]

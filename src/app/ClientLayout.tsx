@@ -3,6 +3,9 @@
 import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion } from 'framer-motion'
 
+/**
+ *
+ */
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname()
     return (

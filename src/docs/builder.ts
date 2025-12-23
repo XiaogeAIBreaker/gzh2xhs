@@ -1,6 +1,9 @@
 import { ApiErrorResponse } from './schemas/common'
 import { paths } from './routes'
 
+/**
+ *
+ */
 export function buildOpenApiDocument(baseUrl?: string) {
     const servers = baseUrl ? [{ url: baseUrl }] : [{ url: 'http://localhost:3000' }]
     return {

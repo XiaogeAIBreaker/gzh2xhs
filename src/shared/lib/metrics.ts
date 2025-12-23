@@ -46,6 +46,9 @@ function shouldSample(kind: MetricKind): boolean {
     return true
 }
 
+/**
+ *
+ */
 export function counter(name: string, inc = 1, labels?: Labels): number {
     counters[name] = (counters[name] || 0) + inc
     emit('counter', name, counters[name], labels)
@@ -53,6 +56,9 @@ export function counter(name: string, inc = 1, labels?: Labels): number {
     return counters[name]
 }
 
+/**
+ *
+ */
 export function gauge(name: string, value: number, labels?: Labels): number {
     gauges[name] = value
     emit('gauge', name, value, labels)
@@ -60,6 +66,9 @@ export function gauge(name: string, value: number, labels?: Labels): number {
     return value
 }
 
+/**
+ *
+ */
 export function observe(name: string, value: number, labels?: Labels): number {
     const arr = (histograms[name] = histograms[name] || [])
     arr.push(value)
@@ -68,6 +77,9 @@ export function observe(name: string, value: number, labels?: Labels): number {
     return value
 }
 
+/**
+ *
+ */
 export function summary(name: string) {
     const arr = histograms[name] || []
     if (!arr.length) return { count: 0 }
@@ -78,6 +90,9 @@ export function summary(name: string) {
     return { count: arr.length, avg, p50: p(0.5), p90: p(0.9), p95: p(0.95), p99: p(0.99) }
 }
 
+/**
+ *
+ */
 export function resetAll() {
     for (const k of Object.keys(histograms)) delete histograms[k]
     for (const k of Object.keys(counters)) delete counters[k]
@@ -86,6 +101,9 @@ export function resetAll() {
 
 export type { Labels }
 
+/**
+ *
+ */
 export function setMetricsExporter(e: MetricsExporter) {
     exporter = e
 }

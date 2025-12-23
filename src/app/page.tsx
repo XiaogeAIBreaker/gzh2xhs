@@ -9,6 +9,9 @@ import { useEffect } from 'react'
 import { trackClient } from '@/shared/lib/analytics'
 import { useSessionId } from '@/hooks/useSessionId'
 
+/**
+ *
+ */
 export default function Home() {
     const sid = useSessionId()
     useEffect(() => {

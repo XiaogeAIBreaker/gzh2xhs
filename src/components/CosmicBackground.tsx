@@ -1,3 +1,6 @@
+/**
+ *
+ */
 export default function CosmicBackground() {
     return (
         <div className="cosmic-bg">

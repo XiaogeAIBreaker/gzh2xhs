@@ -21,6 +21,9 @@ export const OptionSchema = z.object({
 
 export const EquitySchema = z.object({ symbol: z.string().min(1), currency: CurrencySchema })
 
+/**
+ *
+ */
 export function qualityScore(dataset: Record<string, any>) {
     let score = 100
     for (const [k, v] of Object.entries(dataset)) {

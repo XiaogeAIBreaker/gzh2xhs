@@ -6,6 +6,9 @@ import { requireAccess } from '@/interfaces/http/middleware/rbac'
 
 export const runtime = 'nodejs'
 
+/**
+ *
+ */
 export async function GET(req: NextRequest) {
     if (process.env.NEXT_PUBLIC_USE_FASTIFY_API === 'true') {
         const qs = req.nextUrl.searchParams.toString()

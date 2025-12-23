@@ -12,6 +12,9 @@ const LoginSchema = z.object({
     password: z.string().min(6),
 })
 
+/**
+ *
+ */
 export async function POST(req: NextRequest) {
     if (process.env.NEXT_PUBLIC_USE_FASTIFY_API === 'true') return proxy(req, '/api/auth/login', 'POST')
     const handler = withValidation(LoginSchema, async (_req: NextRequest, body) => {

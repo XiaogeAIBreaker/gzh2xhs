@@ -7,6 +7,9 @@ interface Props {
     className?: string
 }
 
+/**
+ *
+ */
 export default function HoverTiltCard({ children, className }: Props) {
     const ref = useRef<HTMLDivElement>(null)
     const [style, setStyle] = useState<React.CSSProperties>({})

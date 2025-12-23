@@ -4,7 +4,11 @@
         "module": "CommonJS",
         "moduleResolution": "node",
         "declaration": true,
+        "declarationMap": true,
         "emitDeclarationOnly": false,
+        "sourceMap": true,
+        "removeComments": true,
+        "outDir": "./dist",
         "paths": {
             "@gzh2xhs/shared-config": ["../../packages/shared-config/dist"],
             "@gzh2xhs/shared-errors": ["../../packages/shared-errors/dist"],
@@ -14,5 +18,15 @@
             "@gzh2xhs/shared-types": ["../../packages/shared-types/dist"]
         }
     },
-    "include": ["src"]
+    "exclude": [
+        "node_modules",
+        "test",
+        "dist",
+        "**/*.test.ts",
+        "**/*.spec.ts",
+        "**/__tests__/**/*"
+    ],
+    "include": [
+        "src/**/*"
+    ]
 }

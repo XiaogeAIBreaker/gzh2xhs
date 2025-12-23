@@ -9,6 +9,9 @@ interface SegmentedControlProps<T extends string> {
     onChange: (value: T) => void
 }
 
+/**
+ *
+ */
 export function SegmentedControl<T extends string>({
     options,
     value,

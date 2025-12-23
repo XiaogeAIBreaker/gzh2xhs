@@ -1,6 +1,9 @@
 import type { AppContextType } from './types'
 import type { GeneratedCard, AIModel } from '@/types'
 
+/**
+ *
+ */
 export function createActions(dispatch: AppContextType['dispatch']) {
     return {
         setInputText: (text: string) => dispatch({ type: 'INPUT_TEXT_CHANGED', payload: text }),

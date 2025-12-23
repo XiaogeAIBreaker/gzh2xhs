@@ -4,6 +4,9 @@ export interface KpiResponse {
     latency: Record<string, number>
 }
 
+/**
+ *
+ */
 export async function fetchKpi(signal?: AbortSignal): Promise<KpiResponse | null> {
     try {
         const res = await abortableFetch('/api/kpi', { signal: signal ?? null, timeoutMs: 10_000 })

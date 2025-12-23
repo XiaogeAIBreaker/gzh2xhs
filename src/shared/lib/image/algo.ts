@@ -1,9 +1,15 @@
 import { APP_CONSTANTS } from '@/constants'
 
+/**
+ *
+ */
 export function containsEmoji(svgContent: string): boolean {
     return /[\u{1F000}-\u{1FFFF}]/u.test(svgContent)
 }
 
+/**
+ *
+ */
 export function createHtmlWrapper(svgContent: string): string {
     return `<!DOCTYPE html>
 <html>
@@ -21,6 +27,9 @@ export function createHtmlWrapper(svgContent: string): string {
 </html>`
 }
 
+/**
+ *
+ */
 export function getResizeOptions() {
     return { fit: 'contain' as const, background: { r: 255, g: 255, b: 255, alpha: 1 } }
 }

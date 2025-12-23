@@ -25,8 +25,13 @@ import { AuthGuard } from '../shared/security/auth.guard'
 import { RbacGuard } from '../shared/security/rbac.guard'
 import { RateLimitGuard } from '../shared/limits/rate-limit.guard'
 
+// DDD Architecture Modules
+import { UserDomainService } from '../domain/services/user.domain.service'
+import { TypeOrmUserRepository } from '../infrastructure/database/repositories/user.repository'
+import { LoginUseCase, RegisterUseCase, GetCurrentUserUseCase, ChangePasswordUseCase } from '../application/usecases/auth.usecases'
+
 /**
- *
+ * 应用根模块 - 集成传统模块和DDD模块
  */
 @Module({
     imports: [
@@ -46,6 +51,7 @@ import { RateLimitGuard } from '../shared/limits/rate-limit.guard'
         OpenapiController,
     ],
     providers: [
+        // 原有服务
         GenerateService,
         DeepSeekService,
         NanoBananaService,
@@ -59,6 +65,14 @@ import { RateLimitGuard } from '../shared/limits/rate-limit.guard'
         AuthGuard,
         RbacGuard,
         RateLimitGuard,
+        
+        // DDD Architecture Services
+        UserDomainService,
+        TypeOrmUserRepository,
+        LoginUseCase,
+        RegisterUseCase,
+        GetCurrentUserUseCase,
+        ChangePasswordUseCase,
     ],
 })
 export class AppModule {}

@@ -9,6 +9,9 @@ export type ApiErrorResponse = {
     traceId?: string
 }
 
+/**
+ *
+ */
 export function jsonOk<T extends Record<string, any>>(
     data: T,
     status = 200,
@@ -20,6 +23,9 @@ export function jsonOk<T extends Record<string, any>>(
     return NextResponse.json(data, init)
 }
 
+/**
+ *
+ */
 export function jsonError(
     code: string,
     message: string,
@@ -37,6 +43,9 @@ export function jsonError(
     return NextResponse.json(payload, init)
 }
 
+/**
+ *
+ */
 export function jsonErrorFromAppError(
     err: AppError,
     traceId?: string,
@@ -60,6 +69,9 @@ function normalizeFields(details: any): Record<string, string[]> | undefined {
     return Object.keys(out).length ? out : undefined
 }
 
+/**
+ *
+ */
 export function getClientIp(req: Request & { headers: Headers }): string | undefined {
     const xfwd = req.headers.get('x-forwarded-for')
     const xreal = req.headers.get('x-real-ip')
@@ -69,6 +81,9 @@ export function getClientIp(req: Request & { headers: Headers }): string | undef
     return ip || undefined
 }
 
+/**
+ *
+ */
 export function jsonOkWithETag<T extends Record<string, any>>(
     req: Request,
     data: T,
@@ -92,6 +107,9 @@ export function jsonOkWithETag<T extends Record<string, any>>(
     return NextResponse.json(data, { status, headers: outHeaders })
 }
 
+/**
+ *
+ */
 export function binaryOkWithETag(
     req: Request,
     data: ArrayBuffer | Uint8Array | Buffer,

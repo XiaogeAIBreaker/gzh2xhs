@@ -3,6 +3,9 @@ import { useApp, useAppActions } from '@/context/AppContext'
 import { requestJson } from '@/lib/httpClient'
 import { useSessionId } from './useSessionId'
 
+/**
+ *
+ */
 export function useCardGeneration() {
     const { state } = useApp()
     const actions = useAppActions()

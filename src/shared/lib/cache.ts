@@ -8,17 +8,26 @@ export interface Cache<T> {
     size(): number
 }
 
+/**
+ *
+ */
 export class LRUCache<T> implements Cache<T> {
     private store: Map<string, CacheEntry<T>>
     private capacity: number
     private defaultTTL: number
 
+    /**
+     *
+     */
     constructor(capacity: number, defaultTTL: number) {
         this.store = new Map()
         this.capacity = Math.max(1, capacity)
         this.defaultTTL = Math.max(1, defaultTTL)
     }
 
+    /**
+     *
+     */
     get(key: string): T | null {
         const now = Date.now()
         const entry = this.store.get(key)
@@ -31,6 +40,9 @@ export class LRUCache<T> implements Cache<T> {
         return entry.value
     }
 
+    /**
+     *
+     */
     set(key: string, value: T, ttlMs?: number): void {
         const expiresAt = Date.now() + (ttlMs ?? this.defaultTTL)
         const entry: CacheEntry<T> = { value, expiresAt }
@@ -41,10 +53,16 @@ export class LRUCache<T> implements Cache<T> {
         this.evictIfNeeded()
     }
 
+    /**
+     *
+     */
     delete(key: string): void {
         this.store.delete(key)
     }
 
+    /**
+     *
+     */
     has(key: string): boolean {
         const now = Date.now()
         const entry = this.store.get(key)
@@ -56,6 +74,9 @@ export class LRUCache<T> implements Cache<T> {
         return true
     }
 
+    /**
+     *
+     */
     size(): number {
         return this.store.size
     }
@@ -75,18 +96,30 @@ export class LRUCache<T> implements Cache<T> {
 
 export const defaultCache: Cache<any> = new LRUCache<any>(512, 60_000)
 
+/**
+ *
+ */
 export function cacheGet<T>(key: string): T | null {
     return defaultCache.get(key) as T | null
 }
 
+/**
+ *
+ */
 export function cacheSet<T>(key: string, value: T, ttlMs: number): void {
     defaultCache.set(key, value, ttlMs)
 }
 
+/**
+ *
+ */
 export function makeKey(parts: Array<string | number | undefined>): string {
     return parts.filter((x) => x !== undefined).join('|')
 }
 
+/**
+ *
+ */
 export function invalidateByPrefix(prefix: string) {
     // naive prefix invalidation for in-memory cache
     const keys = Array.from((defaultCache as any).store?.keys?.() || []) as string[]

@@ -6,6 +6,9 @@ import { cacheGet, cacheSet, makeKey } from '@/shared/lib/cache'
 
 const limiter = createRateLimiter(appConfig.features.rateLimit)
 
+/**
+ *
+ */
 export function withRateLimit<TBody = any>(
     handler: (req: NextRequest, body?: TBody) => Promise<Response>,
 ): (req: NextRequest, body?: TBody) => Promise<Response> {
@@ -21,6 +24,9 @@ export function withRateLimit<TBody = any>(
     }
 }
 
+/**
+ *
+ */
 export async function enforceIdempotency(req: NextRequest): Promise<Response | null> {
     const idem = req.headers.get('x-idempotency-key') || ''
     if (!idem) return null

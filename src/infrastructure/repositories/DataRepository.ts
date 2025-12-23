@@ -1,3 +1,6 @@
+/**
+ *
+ */
 export class DataRepository<T extends { id: string }> {
     private store = new Map<string, Map<string, T>>()
 
@@ -7,6 +10,9 @@ export class DataRepository<T extends { id: string }> {
         return this.store.get(k)!
     }
 
+    /**
+     *
+     */
     async create(type: string, item: Omit<T, 'id'>): Promise<T> {
         const id = `${Date.now()}-${Math.random().toString(36).slice(2)}`
         const full = { ...(item as any), id } as T
@@ -14,10 +20,16 @@ export class DataRepository<T extends { id: string }> {
         return full
     }
 
+    /**
+     *
+     */
     async get(type: string, id: string): Promise<T | null> {
         return this.bucket(type).get(id) || null
     }
 
+    /**
+     *
+     */
     async update(type: string, id: string, patch: Partial<T>): Promise<T | null> {
         const b = this.bucket(type)
         const cur = b.get(id)
@@ -27,10 +39,16 @@ export class DataRepository<T extends { id: string }> {
         return next
     }
 
+    /**
+     *
+     */
     async delete(type: string, id: string): Promise<boolean> {
         return this.bucket(type).delete(id)
     }
 
+    /**
+     *
+     */
     async list(type: string, opts?: { q?: string; page?: number; size?: number }): Promise<T[]> {
         const b = this.bucket(type)
         const arr = Array.from(b.values())

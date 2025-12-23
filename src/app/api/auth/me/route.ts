@@ -6,6 +6,9 @@ import { userRepo } from '@/infrastructure/repositories/UserRepository'
 
 export const runtime = 'nodejs'
 
+/**
+ *
+ */
 export async function GET(req: NextRequest) {
     if (process.env.NEXT_PUBLIC_USE_FASTIFY_API === 'true') return proxy(req, '/api/auth/me', 'GET')
     const auth = parseAuth(req)

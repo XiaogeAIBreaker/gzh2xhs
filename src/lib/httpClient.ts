@@ -24,6 +24,9 @@ function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
     })
 }
 
+/**
+ *
+ */
 export async function requestJson<
     TOut extends JsonValue = JsonValue,
     TBody extends JsonValue = JsonValue,

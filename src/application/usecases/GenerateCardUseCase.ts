@@ -27,12 +27,21 @@ export type GenerateOutput = {
     success: boolean
 }
 
+/**
+ *
+ */
 export class GenerateCardUseCase {
     private c: AppContainer
+    /**
+     *
+     */
     constructor(c: AppContainer) {
         this.c = c
     }
 
+    /**
+     *
+     */
     async execute(input: GenerateInput): Promise<GenerateOutput> {
         const { text, model, style, size, ip, variant } = input
         const cacheKey = this.makeCacheKey(text, model, style, size)

@@ -2,6 +2,9 @@
 import { useEffect } from 'react'
 import { logger } from '@/lib/logger'
 
+/**
+ *
+ */
 export default function Error({
     error,
     reset,

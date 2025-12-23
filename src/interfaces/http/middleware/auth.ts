@@ -21,6 +21,9 @@ function parseJwtClaims(token: string): Record<string, any> | null {
     }
 }
 
+/**
+ *
+ */
 export function parseAuth(req: NextRequest): AuthUser {
     const auth = req.headers.get('authorization') || ''
     const m = auth.match(/^Bearer\s+(.*)$/i)

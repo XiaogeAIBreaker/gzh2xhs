@@ -1,5 +1,8 @@
 'use client'
 
+/**
+ *
+ */
 export function useSessionId() {
     const sid = ensureSessionId()
     return sid

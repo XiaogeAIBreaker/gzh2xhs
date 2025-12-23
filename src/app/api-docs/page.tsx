@@ -7,6 +7,9 @@ export const dynamic = 'force-dynamic'
 
 const SwaggerUI = NextDynamic(() => import('swagger-ui-react'), { ssr: false })
 
+/**
+ *
+ */
 export default function ApiDocsPage() {
     const spec = generateOpenApiDocument(process.env.NEXT_PUBLIC_BASE_URL)
     const SwaggerUIAny = SwaggerUI as any

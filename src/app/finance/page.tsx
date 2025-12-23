@@ -3,6 +3,9 @@
 import { useState } from 'react'
 import { trackClient } from '@/shared/lib/analytics'
 
+/**
+ *
+ */
 export default function FinancePage() {
     const [result, setResult] = useState<any>(null)
     async function runSample() {

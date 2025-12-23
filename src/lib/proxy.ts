@@ -4,6 +4,9 @@ function baseUrl() {
     return process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3002'
 }
 
+/**
+ *
+ */
 export async function proxy(req: NextRequest, path: string, method: string) {
     const url = `${baseUrl()}${path}`
     const init: RequestInit = {

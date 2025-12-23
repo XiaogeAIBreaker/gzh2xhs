@@ -8,6 +8,9 @@ const KpiChart = dynamic(() => import('@/features/admin/KpiChart'), {
     loading: () => <div className="text-sm text-slate-400">加载图表中...</div>,
 })
 
+/**
+ *
+ */
 export default function AdminDashboard() {
     const [kpi, setKpi] = useState<KpiResponse | null>(null)
     useEffect(() => {

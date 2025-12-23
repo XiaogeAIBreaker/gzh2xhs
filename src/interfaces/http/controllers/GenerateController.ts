@@ -19,6 +19,9 @@ import { cacheGet, cacheSet, makeKey } from '@/shared/lib/cache'
  * - 指标/审计埋点与弱ETag响应
  */
 export class GenerateController {
+    /**
+     *
+     */
     async post(req: NextRequest): Promise<NextResponse> {
         const start = Date.now()
         const variant = this.getVariant(req)
@@ -53,6 +56,9 @@ export class GenerateController {
         }
     }
 
+    /**
+     *
+     */
     async postValidated(req: NextRequest, dto: GenerateRequestDto): Promise<NextResponse> {
         const start = Date.now()
         const variant = this.getVariant(req)

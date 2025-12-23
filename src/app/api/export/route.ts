@@ -5,6 +5,9 @@ import { ExportController } from '@/interfaces/http/controllers/ExportController
 import { requireAccess } from '@/interfaces/http/middleware/rbac'
 import { withRateLimit, enforceIdempotency } from '@/interfaces/http/middleware/limits'
 
+/**
+ *
+ */
 export async function POST(req: NextRequest) {
     if (process.env.NEXT_PUBLIC_USE_FASTIFY_API === 'true') return proxy(req, '/api/export', 'POST')
     const forbidden = requireAccess(req, 'card_export')

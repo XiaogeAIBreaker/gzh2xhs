@@ -2,6 +2,9 @@ import Redis, { Cluster } from 'ioredis'
 
 let client: Redis | Cluster | null = null
 
+/**
+ *
+ */
 export function getRedis(): (Redis | Cluster) | null {
     if (client) return client
     const clusterUrls = (process.env.REDIS_CLUSTER_URLS || '').trim()
@@ -24,6 +27,9 @@ export function getRedis(): (Redis | Cluster) | null {
     return client
 }
 
+/**
+ *
+ */
 export async function ensureRedisConnected(): Promise<boolean> {
     const c = getRedis()
     if (!c) return false

@@ -2,6 +2,9 @@ import { XIAOHONGSHU_COPYTEXT_PROMPT } from '@/lib/prompts'
 import { appConfig } from '@/config'
 import { logger } from '@/lib/logger'
 
+/**
+ *
+ */
 export async function generateXiaohongshuCopytext(text: string): Promise<string> {
     const prompt = XIAOHONGSHU_COPYTEXT_PROMPT.replace('{{CONTENT}}', text)
 

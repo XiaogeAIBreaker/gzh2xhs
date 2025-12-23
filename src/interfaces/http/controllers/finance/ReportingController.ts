@@ -2,6 +2,9 @@ import { NextRequest } from 'next/server'
 import { jsonOk, jsonError } from '@/lib/http'
 import { ReportingUseCase } from '@/application/finance/ReportingUseCase'
 
+/**
+ *
+ */
 export async function handlePricingReport(req: NextRequest) {
     const body = await req.json().catch(() => null)
     const items = Array.isArray(body?.items) ? body.items : []

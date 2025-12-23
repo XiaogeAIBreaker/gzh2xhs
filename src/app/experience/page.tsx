@@ -8,6 +8,9 @@ import FrostedPanel from '@/components/FrostedPanel'
 import ParticlesBackground from '@/components/ParticlesBackground'
 import { Rocket, Cpu, Sparkles, Zap } from 'lucide-react'
 
+/**
+ *
+ */
 export default function ExperiencePage() {
     return (
         <main className="relative min-h-screen">

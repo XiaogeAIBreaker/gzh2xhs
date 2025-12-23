@@ -27,6 +27,9 @@ function isOriginAllowed(
     return false
 }
 
+/**
+ *
+ */
 export function middleware(req: NextRequest) {
     const allowedOrigins = parseAllowedOrigins(process.env.CORS_ALLOW_ORIGINS)
     const origin = req.headers.get('origin')

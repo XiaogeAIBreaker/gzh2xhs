@@ -7,6 +7,9 @@ import { withValidation } from '@/interfaces/http/middleware/withValidation'
 import { withRateLimit, enforceIdempotency } from '@/interfaces/http/middleware/limits'
 import { GenerateRequestSchema } from '@/types/schemas'
 
+/**
+ *
+ */
 export async function POST(req: NextRequest) {
     if (process.env.NEXT_PUBLIC_USE_FASTIFY_API === 'true') return proxy(req, '/api/generate', 'POST')
     const forbidden = requireAccess(req, 'card_generate')

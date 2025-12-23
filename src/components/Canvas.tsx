@@ -5,6 +5,9 @@ import { CardPreview } from './CardPreview'
 import { motion } from 'framer-motion'
 import { whisperToast } from './Toast'
 
+/**
+ *
+ */
 export function Canvas() {
     const { state, updateState } = useApp()
 

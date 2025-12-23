@@ -23,6 +23,9 @@ import {
  * ```
  */
 export class DeepSeekService extends AIService {
+    /**
+     *
+     */
     constructor(config: any) {
         super(config, 'DeepSeek')
     }

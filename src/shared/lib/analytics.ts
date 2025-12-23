@@ -27,6 +27,9 @@ export type EventProps = {
     currency?: string
 }
 
+/**
+ *
+ */
 export function trackServer(
     req: Request & {
         headers: Headers
@@ -50,6 +53,9 @@ export function trackServer(
     return rec
 }
 
+/**
+ *
+ */
 export function trackClient(name: EventName, props: EventProps = {}) {
     void fetch('/api/track', {
         method: 'POST',

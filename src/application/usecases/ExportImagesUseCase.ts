@@ -7,7 +7,13 @@ export type ExportInput = {
     namePrefix?: string | undefined
 }
 
+/**
+ *
+ */
 export class ExportImagesUseCase {
+    /**
+     *
+     */
     async execute(input: ExportInput): Promise<Buffer> {
         const { images, namePrefix } = input
         const zip = new JSZip()

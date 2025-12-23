@@ -3,6 +3,9 @@ import { ensureRedisConnected, getRedis } from '@/lib/redis'
 
 type RateLimiterOptions = { windowMs: number; max: number }
 
+/**
+ *
+ */
 export function createRateLimiter(opts: RateLimiterOptions) {
     const { windowMs, max } = opts
 

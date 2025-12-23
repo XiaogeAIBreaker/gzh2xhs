@@ -3,6 +3,9 @@
 import { useState } from 'react'
 import { GeneratedCard } from '@/types'
 
+/**
+ *
+ */
 export default function CardEditor({ card }: { card: GeneratedCard }) {
     const [title, setTitle] = useState('')
     const [size, setSize] = useState<'1:1' | '4:5' | '9:16'>(card.size || '1:1')

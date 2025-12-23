@@ -57,6 +57,9 @@ export const logger = {
         write('debug', msg, scope, details, traceId),
 }
 
+/**
+ *
+ */
 export function withContext(ctx: { traceId?: string; scope?: string }) {
     return {
         info: (msg: string, details?: any) => write('info', msg, ctx.scope, details, ctx.traceId),

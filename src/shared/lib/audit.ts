@@ -14,6 +14,9 @@ function nowIso() {
     return new Date().toISOString()
 }
 
+/**
+ *
+ */
 export function audit(
     action: string,
     inputs?: any,

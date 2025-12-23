@@ -2,12 +2,21 @@ import { Bond, DerivativeOption, Equity, PricingResult } from '@/domain/finance/
 import { priceBond, priceOptionBS, equityIndicators } from '@/domain/finance/pricing'
 import { audit } from '@/shared/lib/audit'
 
+/**
+ *
+ */
 export class PricingUseCase {
+    /**
+     *
+     */
     async priceBond(input: Bond, yieldRate: number, traceId?: string): Promise<PricingResult> {
         const res = priceBond(input, yieldRate)
         audit('price_bond', { input, yieldRate }, res, traceId ? { traceId } : undefined)
         return res
     }
+    /**
+     *
+     */
     async priceOption(
         input: DerivativeOption,
         spot: number,
@@ -25,6 +34,9 @@ export class PricingUseCase {
         )
         return res
     }
+    /**
+     *
+     */
     async equityStats(input: Equity, series: number[], traceId?: string) {
         const res = equityIndicators(input, series)
         audit(

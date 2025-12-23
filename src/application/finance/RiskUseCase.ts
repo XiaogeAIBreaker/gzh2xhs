@@ -8,7 +8,13 @@ import {
 import { audit } from '@/shared/lib/audit'
 import { FinanceWorkerPool } from '@/infrastructure/workers/financePool'
 
+/**
+ *
+ */
 export class RiskUseCase {
+    /**
+     *
+     */
     async varGaussian(returns: number[], alpha = 0.95, traceId?: string) {
         const val = varGaussian(returns, alpha)
         audit(
@@ -19,6 +25,9 @@ export class RiskUseCase {
         )
         return { var: val }
     }
+    /**
+     *
+     */
     async equityExposure(eq: Equity, position: number, price: number, traceId?: string) {
         const res = equityExposure(eq, position, price)
         audit(
@@ -29,11 +38,17 @@ export class RiskUseCase {
         )
         return res
     }
+    /**
+     *
+     */
     async bondDurationApprox(bond: Bond, y: number, traceId?: string) {
         const d = bondDurationApprox(bond, y)
         audit('risk_bond_duration', { bond, y }, { duration: d }, traceId ? { traceId } : undefined)
         return { duration: d, currency: bond.currency }
     }
+    /**
+     *
+     */
     async optionGreeksApprox(
         opt: DerivativeOption,
         spot: number,
@@ -52,6 +67,9 @@ export class RiskUseCase {
         return g
     }
 
+    /**
+     *
+     */
     async batchVarGaussian(samples: number[][], alpha = 0.95, traceId?: string) {
         const pool = new FinanceWorkerPool()
         const tasks = samples.map((arr) => () => varGaussian(arr, alpha))

@@ -8,6 +8,9 @@ const templates = [
     { id: 'rich', name: '丰富', desc: '信息量大，突出重点' },
 ]
 
+/**
+ *
+ */
 export default function TemplateGallery({
     value,
     onChange,

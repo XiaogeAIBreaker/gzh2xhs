@@ -3,6 +3,9 @@ import { useApp } from '@/context/AppContext'
 import { useSessionId } from './useSessionId'
 import { downloadBlob } from '@/shared/lib/downloader'
 
+/**
+ *
+ */
 export function useExport() {
     const { updateState } = useApp()
     const sid = useSessionId()

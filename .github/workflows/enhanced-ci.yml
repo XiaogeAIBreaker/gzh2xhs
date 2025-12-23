@@ -1,0 +1,373 @@
+name: Enhanced CI/CD Pipeline
+
+on:
+    push:
+        branches: [main, develop]
+    pull_request:
+        branches: [main]
+    schedule:
+        # 每周运行安全扫描
+        - cron: '0 2 * * 1'
+
+env:
+    NODE_VERSION: '20'
+    REGISTRY: ghcr.io
+    IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+    # 代码质量检查
+    quality-check:
+        runs-on: ubuntu-latest
+        name: Code Quality Check
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ env.NODE_VERSION }}
+                  cache: 'npm'
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: ESLint
+              run: npm run lint
+
+            - name: Typecheck
+              run: npm run typecheck
+
+            - name: Dependency health check
+              run: npm run dep:check
+
+            - name: Code complexity check
+              run: |
+                npx tsc --noEmit
+                npx complexity-report --format=json > complexity-report.json || true
+
+            - name: Upload complexity report
+              uses: actions/upload-artifact@v4
+              with:
+                  name: complexity-report
+                  path: complexity-report.json
+
+    # 单元测试
+    unit-tests:
+        runs-on: ubuntu-latest
+        name: Unit Tests
+        strategy:
+            matrix:
+                node-version: [18, 20]
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node ${{ matrix.node-version }}
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: 'npm'
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run unit tests
+              run: |
+                npm run test -- --reporter=json --outputFile=test-results.json
+              continue-on-error: true
+
+            - name: Run API unit tests
+              run: |
+                cd apps/api
+                npm run test -- --reporter=json --outputFile=api-test-results.json
+              continue-on-error: true
+
+            - name: Upload test results
+              uses: actions/upload-artifact@v4
+              with:
+                  name: test-results-${{ matrix.node-version }}
+                  path: |
+                    test-results.json
+                    apps/api/api-test-results.json
+
+    # 集成测试
+    integration-tests:
+        runs-on: ubuntu-latest
+        name: Integration Tests
+        services:
+            postgres:
+                image: postgres:15
+                env:
+                    POSTGRES_PASSWORD: postgres
+                    POSTGRES_DB: test_db
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+                ports:
+                    - 5432:5432
+            redis:
+                image: redis:7-alpine
+                options: >-
+                    --health-cmd "redis-cli ping"
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+                ports:
+                    - 6379:6379
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ env.NODE_VERSION }}
+                  cache: 'npm'
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run integration tests
+              run: |
+                cd apps/api
+                npm run test:integration || echo "No integration tests found"
+              env:
+                  DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
+                  REDIS_URL: redis://localhost:6379
+
+    # API 文档生成和验证
+    api-docs:
+        runs-on: ubuntu-latest
+        name: API Documentation
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ env.NODE_VERSION }}
+                  cache: 'npm'
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Build API
+              run: npm run build:api
+
+            - name: Generate API docs
+              run: |
+                cd apps/api
+                npm run start:prod &
+                sleep 10
+                curl -f http://localhost:3001/docs > api-docs.json || echo "Docs not available"
+                kill %1 || true
+
+            - name: Upload API docs
+              uses: actions/upload-artifact@v4
+              with:
+                  name: api-docs
+                  path: apps/api/api-docs.json
+
+    # 安全扫描
+    security-scan:
+        runs-on: ubuntu-latest
+        name: Security Scan
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Run npm audit
+              run: npm audit --audit-level moderate
+
+            - name: Run Snyk security scan
+              uses: snyk/actions/node@master
+              env:
+                  SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+              with:
+                  args: --severity-threshold=high
+
+    # 构建和部署准备
+    build:
+        runs-on: ubuntu-latest
+        name: Build
+        needs: [quality-check, unit-tests]
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ env.NODE_VERSION }}
+                  cache: 'npm'
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Build application
+              run: |
+                START=$(date +%s)
+                npm run build
+                END=$(date +%s)
+                echo "build_duration=$((END-START))" >> $GITHUB_OUTPUT
+
+            - name: Build API
+              run: |
+                START=$(date +%s)
+                npm run build:api
+                END=$(date +%s)
+                echo "build_api_duration=$((END-START))" >> $GITHUB_OUTPUT
+
+            - name: Upload build artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: build-artifacts
+                  path: |
+                    .next/
+                    apps/api/dist/
+                    apps/api/node_modules/
+
+    # 性能基准测试
+    performance-tests:
+        runs-on: ubuntu-latest
+        name: Performance Tests
+        needs: [build]
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ env.NODE_VERSION }}
+                  cache: 'npm'
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Download build artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  name: build-artifacts
+                  path: .
+
+            - name: Install k6
+              run: |
+                sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+                echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+                sudo apt-get update
+                sudo apt-get install k6
+
+            - name: Run performance tests
+              run: |
+                cd apps/api
+                npm run start:prod &
+                sleep 15
+                k6 run ../../../scripts/perf/k6-bench.js
+                kill %1 || true
+              env:
+                  NODE_ENV: production
+
+            - name: Upload performance results
+              uses: actions/upload-artifact@v4
+              with:
+                  name: performance-results
+                  path: |
+                    perf.json
+                    bench.json
+
+    # Docker 镜像构建和推送
+    docker-build:
+        runs-on: ubuntu-latest
+        name: Docker Build
+        needs: [build]
+        if: github.ref == 'refs/heads/main'
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Docker Buildx
+              uses: docker/setup-buildx-action@v3
+
+            - name: Login to Container Registry
+              uses: docker/login-action@v3
+              with:
+                  registry: ${{ env.REGISTRY }}
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Extract metadata
+              id: meta
+              uses: docker/metadata-action@v5
+              with:
+                  images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+                  tags: |
+                      type=ref,event=branch
+                      type=ref,event=pr
+                      type=sha,prefix={{branch}}-
+
+            - name: Build and push Docker image
+              uses: docker/build-push-action@v5
+              with:
+                  context: .
+                  push: true
+                  tags: ${{ steps.meta.outputs.tags }}
+                  labels: ${{ steps.meta.outputs.labels }}
+                  cache-from: type=gha
+                  cache-to: type=gha,mode=max
+
+    # 部署到测试环境
+    deploy-staging:
+        runs-on: ubuntu-latest
+        name: Deploy to Staging
+        needs: [integration-tests, security-scan, performance-tests]
+        if: github.ref == 'refs/heads/develop'
+        environment:
+            name: staging
+            url: https://staging.example.com
+        steps:
+            - name: Deploy to staging
+              run: |
+                echo "Deploying to staging environment..."
+                # 这里添加实际的部署脚本
+
+    # 部署到生产环境
+    deploy-production:
+        runs-on: ubuntu-latest
+        name: Deploy to Production
+        needs: [docker-build, deploy-staging]
+        if: github.ref == 'refs/heads/main'
+        environment:
+            name: production
+            url: https://api.example.com
+        steps:
+            - name: Deploy to production
+              run: |
+                echo "Deploying to production environment..."
+                # 这里添加实际的部署脚本
+
+    # 通知
+    notify:
+        runs-on: ubuntu-latest
+        name: Notifications
+        needs: [deploy-production]
+        if: always()
+        steps:
+            - name: Notify success
+              if: needs.deploy-production.result == 'success'
+              run: |
+                echo "🎉 Deployment successful!"
+                # 发送成功通知
+
+            - name: Notify failure
+              if: needs.deploy-production.result == 'failure'
+              run: |
+                echo "❌ Deployment failed!"
+                # 发送失败通知

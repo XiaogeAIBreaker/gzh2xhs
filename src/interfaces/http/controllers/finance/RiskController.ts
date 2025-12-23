@@ -4,6 +4,9 @@ import { RiskUseCase } from '@/application/finance/RiskUseCase'
 import { EquitySchema, BondSchema, OptionSchema, qualityScore } from '@/domain/finance/validation'
 import { counter } from '@/shared/lib/metrics'
 
+/**
+ *
+ */
 export async function handleVarGaussian(req: NextRequest) {
     const body = await req.json().catch(() => null)
     const returns = Array.isArray(body?.returns) ? body.returns : []
@@ -19,6 +22,9 @@ export async function handleVarGaussian(req: NextRequest) {
     return jsonOk({ success: true, result: res, warnings })
 }
 
+/**
+ *
+ */
 export async function handleEquityExposure(req: NextRequest) {
     const body = await req.json().catch(() => null)
     const parsed = EquitySchema.safeParse(body?.equity)
@@ -38,6 +44,9 @@ export async function handleEquityExposure(req: NextRequest) {
     return jsonOk({ success: true, result: res, warnings })
 }
 
+/**
+ *
+ */
 export async function handleBondDuration(req: NextRequest) {
     const body = await req.json().catch(() => null)
     const parsed = BondSchema.safeParse(body?.bond)
@@ -55,6 +64,9 @@ export async function handleBondDuration(req: NextRequest) {
     return jsonOk({ success: true, result: res, warnings })
 }
 
+/**
+ *
+ */
 export async function handleOptionGreeks(req: NextRequest) {
     const body = await req.json().catch(() => null)
     const parsed = OptionSchema.safeParse(body?.option)

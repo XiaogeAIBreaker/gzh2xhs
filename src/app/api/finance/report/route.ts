@@ -5,6 +5,9 @@ import { handlePricingReport } from '@/interfaces/http/controllers/finance/Repor
 
 export const runtime = 'nodejs'
 
+/**
+ *
+ */
 export async function POST(req: NextRequest) {
     if (process.env.NEXT_PUBLIC_USE_FASTIFY_API === 'true') return proxy(req, '/api/finance/report', 'POST')
     const err = requireAccess(req, 'finance_report')

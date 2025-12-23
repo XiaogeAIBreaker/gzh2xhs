@@ -12,6 +12,9 @@ export const defaultAppState: AppState = {
     error: null,
 }
 
+/**
+ *
+ */
 export function validateStateUpdate(update: Partial<AppState>): boolean {
     if (update.inputText !== undefined && typeof update.inputText !== 'string') return false
     if (update.selectedModel && !['deepseek', 'nanobanana'].includes(update.selectedModel))
@@ -21,6 +24,9 @@ export function validateStateUpdate(update: Partial<AppState>): boolean {
     return true
 }
 
+/**
+ *
+ */
 export function appReducer(state: AppState, action: AppAction): AppState {
     try {
         switch (action.type) {

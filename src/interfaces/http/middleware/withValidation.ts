@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { ZodTypeAny } from 'zod'
 import { jsonError } from '@/lib/http'
 
+/**
+ *
+ */
 export function withValidation<T>(
     schema: ZodTypeAny,
     handler: (req: NextRequest, body: T) => Promise<NextResponse>,

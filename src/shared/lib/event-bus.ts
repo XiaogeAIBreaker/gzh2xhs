@@ -2,6 +2,9 @@ type Handler = (event: { type: string; payload: any; ts: number }) => void
 
 const subscribers: Record<string, Set<Handler>> = {}
 
+/**
+ *
+ */
 export function publish(type: string, payload: any) {
     const event = { type, payload, ts: Date.now() }
     const subs = subscribers[type]
@@ -13,6 +16,9 @@ export function publish(type: string, payload: any) {
     }
 }
 
+/**
+ *
+ */
 export function subscribe(type: string, handler: Handler) {
     if (!subscribers[type]) subscribers[type] = new Set<Handler>()
     subscribers[type].add(handler)

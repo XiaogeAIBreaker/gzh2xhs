@@ -1,6 +1,9 @@
 import { Bond, DerivativeOption, Equity, PricingResult } from '@/domain/finance/instruments'
 import { Decimal, toDecimal, roundDecimal } from '@/shared/lib/decimal'
 
+/**
+ *
+ */
 export function priceBond(bond: Bond, yieldRate: number): PricingResult {
     const fv = toDecimal(bond.faceValue)
     const y = toDecimal(yieldRate)
@@ -26,6 +29,9 @@ export function priceBond(bond: Bond, yieldRate: number): PricingResult {
     return { price: roundDecimal(price), currency: bond.currency }
 }
 
+/**
+ *
+ */
 export function priceOptionBS(
     opt: DerivativeOption,
     spot: number,
@@ -54,6 +60,9 @@ export function priceOptionBS(
     return { price: roundDecimal(price), currency: opt.currency }
 }
 
+/**
+ *
+ */
 export function equityIndicators(eq: Equity, series: number[]) {
     const arr = series.map((v) => toDecimal(v))
     const avg = arr.reduce((s, v) => s.add(v), toDecimal(0)).div(toDecimal(arr.length))

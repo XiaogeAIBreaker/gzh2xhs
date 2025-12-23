@@ -36,6 +36,9 @@ function assertEquity(body: any) {
     return { equity: { kind: 'equity' as const, ...parsed.data }, series }
 }
 
+/**
+ *
+ */
 export async function handleBondPricing(req: NextRequest) {
     const body = await req.json().catch(() => null)
 
@@ -64,6 +67,9 @@ export async function handleBondPricing(req: NextRequest) {
     }
 }
 
+/**
+ *
+ */
 export async function handleOptionPricing(req: NextRequest) {
     const body = await req.json().catch(() => null)
 
@@ -92,6 +98,9 @@ export async function handleOptionPricing(req: NextRequest) {
     }
 }
 
+/**
+ *
+ */
 export async function handleEquityIndicators(req: NextRequest) {
     const body = await req.json().catch(() => null)
 
