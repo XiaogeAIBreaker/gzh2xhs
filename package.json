@@ -25,7 +25,7 @@
         "dep:check": "depcruise --config dependency-cruiser.config.cjs src",
         "build:utils": "npm run build --workspace @gzh2xhs/utils",
         "build:shared": "npm run build --workspace @gzh2xhs/shared-config && npm run build --workspace @gzh2xhs/shared-errors && npm run build --workspace @gzh2xhs/shared-logger && npm run build --workspace @gzh2xhs/shared-validation && npm run build --workspace @gzh2xhs/shared-http && npm run build --workspace @gzh2xhs/shared-types",
-        "dev:api": "npm run start:dev --workspace apps/api",
+        "dev:api": "PORT=3001 npm run start:dev --workspace apps/api",
         "build:api": "npm run build --workspace apps/api",
         "start:api": "npm run start:prod --workspace apps/api",
         "build:api-fastify": "npm run build --workspace apps/api-fastify",
