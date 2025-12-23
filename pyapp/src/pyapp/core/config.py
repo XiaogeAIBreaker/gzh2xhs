@@ -1,8 +1,10 @@
 import logging
 import sys
-from typing import Any
+import json
+from typing import Any, List, Optional, Union
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import PostgresDsn, RedisDsn, field_validator
 
 
 class Settings(BaseSettings):
@@ -20,22 +22,29 @@ class Settings(BaseSettings):
     
     # Security
     SECRET_KEY: str = "changeme"
-    ALLOWED_ORIGINS: list[str] = ["*"]
+    ALLOWED_ORIGINS: List[str] = ["*"]
     
+    # Auth
+    JWT_SECRET_KEY: str = "changeme_super_secret"
+    JWT_ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    
+    # Database
+    DATABASE_URL: str = "sqlite+aiosqlite:///./sql_app.db"
+    
+    # Redis
+    REDIS_URL: str = "redis://localhost:6379/0"
+
     # AI Providers
-    DEEPSEEK_API_KEY: str
+    DEEPSEEK_API_KEY: str = ""
     DEEPSEEK_API_URL: str = "https://api.deepseek.com/chat/completions"
     
-    APICORE_AI_KEY: str | None = None  # NanoBanana
+    APICORE_AI_KEY: Optional[str] = None
     NANOBANANA_API_URL: str = "https://kg-api.cloud/v1/chat/completions"
     
     # Image Generation
     IMG_MAX_CONCURRENCY: int = 2
     PLAYWRIGHT_TIMEOUT: int = 30000
-    
-    # Database (Optional, for future use)
-    TURSO_DATABASE_URL: str | None = None
-    TURSO_AUTH_TOKEN: str | None = None
 
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -44,42 +53,40 @@ class Settings(BaseSettings):
         extra="ignore"
     )
 
-
 settings = Settings()
 
 
-class InterceptHandler(logging.Handler):
-    """Intercept standard logging messages to loguru or custom formatter"""
-    
-    def emit(self, record: logging.LogRecord) -> None:
-        # Get corresponding Loguru level if it exists
-        try:
-            level: str | int = logger.level(record.levelname).name
-        except ValueError:
-            level = record.levelno
-
-        # Find caller from where originated the logged message
-        frame, depth = logging.currentframe(), 2
-        while frame.f_code.co_filename == logging.__file__:
-            frame = frame.f_back  # type: ignore
-            depth += 1
-
-        logger.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())
+class JSONFormatter(logging.Formatter):
+    def format(self, record: logging.LogRecord) -> str:
+        log_record = {
+            "timestamp": self.formatTime(record, self.datefmt),
+            "level": record.levelname,
+            "message": record.getMessage(),
+            "logger": record.name,
+            "module": record.module,
+            "line": record.lineno,
+        }
+        
+        if hasattr(record, "request_id"):
+            log_record["request_id"] = getattr(record, "request_id")
+            
+        if record.exc_info:
+            log_record["exception"] = self.formatException(record.exc_info)
+            
+        return json.dumps(log_record)
 
 
 def setup_logging() -> None:
-    """Configure logging"""
-    # Simple console configuration for now using standard logging
-    # In a real production app, we might use structlog or loguru
-    # Here we stick to standard logging with JSON formatter or simple formatter
-    
+    """Configure structured logging"""
     root = logging.getLogger()
-    root.setLevel(logging.INFO)
+    root.setLevel(logging.INFO if not settings.DEBUG else logging.DEBUG)
+    
+    # Remove existing handlers
+    for handler in root.handlers[:]:
+        root.removeHandler(handler)
     
     handler = logging.StreamHandler(sys.stdout)
-    formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    )
+    formatter = JSONFormatter()
     handler.setFormatter(formatter)
     root.addHandler(handler)
     

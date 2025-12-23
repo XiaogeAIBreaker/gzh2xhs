@@ -1,39 +1,51 @@
+import asyncio
 import pytest
-from fastapi.testclient import TestClient
-from unittest.mock import AsyncMock, MagicMock
+from typing import AsyncGenerator, Generator
+from httpx import AsyncClient
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
 from pyapp.main import app
-from pyapp.services.ai.base import AIService
-from pyapp.services.image.renderer import PlaywrightRenderer
-from pyapp.api.dependencies import get_ai_service, get_image_renderer
-from pyapp.domain.models import DesignJSON, Palette
+from pyapp.core.database import Base, get_db
+from pyapp.core.config import settings
 
-@pytest.fixture
-def mock_ai_service():
-    service = AsyncMock(spec=AIService)
-    service.provider_name = "MockAI"
-    
-    # Mock return value
-    mock_design = DesignJSON(
-        template_type="standard",
-        palette=Palette(bg="#fff", text="#000", accent="#f00"),
-        title_lines=["Test Title"],
-    )
-    service.process.return_value = ("<svg>test</svg>", mock_design)
-    return service
+# Use in-memory SQLite for testing
+TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
 
-@pytest.fixture
-def mock_renderer():
-    renderer = AsyncMock(spec=PlaywrightRenderer)
-    renderer.render_svg_to_png.return_value = b"fake-png-data"
-    return renderer
+engine = create_async_engine(
+    TEST_DATABASE_URL, connect_args={"check_same_thread": False}
+)
+TestingSessionLocal = async_sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-@pytest.fixture
-def client(mock_ai_service, mock_renderer):
-    app.dependency_overrides[get_ai_service] = lambda: mock_ai_service
-    app.dependency_overrides[get_image_renderer] = lambda: mock_renderer
-    
-    with TestClient(app) as c:
+
+@pytest.fixture(scope="session")
+def event_loop() -> Generator:
+    loop = asyncio.get_event_loop_policy().new_event_loop()
+    yield loop
+    loop.close()
+
+
+@pytest.fixture(scope="function")
+async def db_session() -> AsyncGenerator[AsyncSession, None]:
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+
+    async with TestingSessionLocal() as session:
+        yield session
+        await session.rollback()
+
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
+
+
+@pytest.fixture(scope="function")
+async def client(db_session: AsyncSession) -> AsyncGenerator[AsyncClient, None]:
+    async def override_get_db():
+        try:
+            yield db_session
+        finally:
+            pass
+
+    app.dependency_overrides[get_db] = override_get_db
+    async with AsyncClient(app=app, base_url="http://test") as c:
         yield c
-    
     app.dependency_overrides.clear()
