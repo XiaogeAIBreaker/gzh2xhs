@@ -11,6 +11,7 @@ pyapp/**/__pycache__/
 
 # Testing
 coverage
+coverage-jest
 pyapp/.coverage
 pyapp/coverage.xml
 

@@ -8,8 +8,7 @@ import { GenerateService } from './generate/generate.service'
 import { DeepSeekService } from './generate/providers/deepseek.service'
 import { NanoBananaService } from './generate/providers/nanobanana.service'
 import { CopytextService } from './generate/lib/copytext.service'
-import { AuthController } from '../interfaces/http/auth.controller'
-import { AuthService } from './auth/auth.service'
+import { AuthModule } from './auth/auth.module'
 import { DataController } from '../interfaces/http/data.controller'
 import { DataService } from './data/data.service'
 import { ExportController } from '../interfaces/http/export.controller'
@@ -26,12 +25,19 @@ import { AuthGuard } from '../shared/security/auth.guard'
 import { RbacGuard } from '../shared/security/rbac.guard'
 import { RateLimitGuard } from '../shared/limits/rate-limit.guard'
 
+/**
+ *
+ */
 @Module({
-    imports: [ConfigModule.forRoot({ isGlobal: true }), CacheModule, OrmModule.forRoot()],
+    imports: [
+        ConfigModule.forRoot({ isGlobal: true }),
+        CacheModule,
+        OrmModule.forRoot(),
+        AuthModule,
+    ],
     controllers: [
         HealthController,
         GenerateController,
-        AuthController,
         DataController,
         ExportController,
         FinanceController,
@@ -44,7 +50,6 @@ import { RateLimitGuard } from '../shared/limits/rate-limit.guard'
         DeepSeekService,
         NanoBananaService,
         CopytextService,
-        AuthService,
         DataService,
         ExportService,
         FinanceService,
